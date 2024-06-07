@@ -1,6 +1,17 @@
-<div class="flex flex-row gap-2 p-2 fixed">
-    <div class="flex-grow">Home</div>
-    <button>Mode</button>
-    <button>Language</button>
-    <button>Admin</button>
+<div
+    class="flex flex-row gap-4 p-2 fixed bg-stone-300 dark:bg-stone-700 shadow-lg w-full"
+>
+    <a
+        class="flex flex-grow gap-2 text-4xl font-semibold items-center"
+        href="/"
+    >
+        <span class="material-icons md-48">pets</span>
+        Kleine Sonne
+    </a>
+    <button
+        class="flex items-center"
+        on:click={() => console.error("Unimplemented!")}
+    >
+        <span class="material-icons">admin_panel_settings</span>
+    </button>
 </div>

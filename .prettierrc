@@ -1,5 +1,5 @@
 {
 	"tabWidth": 4,
-	"plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwind"],
+	"plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcc"],
 	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }

@@ -1,27 +1,38 @@
 <div
-    class="flex flex-col justify-center relative w-full bg-stone-100 px-6 py-24"
+    class="flex flex-col items-center justify-center gap-16 bg-stone-600 py-12 md:flex-row md:gap-8 md:px-8"
 >
-    <div class="flex flex-col md:flex-row items-center">
-        <div class="flex-none w-fit">
-            <!-- TODO: slideshow -->
-            <img
-                class="size-full object-cover shadow-md rounded-t md:rounded"
-                src="rand.jpg"
-                alt="header"
-            />
-        </div>
-        <div class="flex-auto">
-            <div class="rounded-b md:rounded-r shadow-md bg-stone-300 p-6">
-                <h1 class="text-4xl font-bold">Kennel Kleine Sonne</h1>
-                <p>Koerad ja asjavärgendused</p>
-            </div>
-        </div>
+    <div class="nav-container">
+        <img class="nav-image" src="kohver.jpg" alt="puppies" />
+        <div class="nav-button">Puppies</div>
     </div>
-    <div class="flex flex-col md:flex-row text-2xl gap-2 md:gap-4 mt-2 md:mt-6">
-        <div>Puppies</div>
-        <div>Dogs</div>
-        <div>Litters</div>
-        <div>Achievements</div>
-        <div>Passed</div>
+    <div class="nav-container">
+        <img class="nav-image" src="viisakas.jpg" alt="dogs" />
+        <div class="nav-button">Dogs</div>
+    </div>
+    <div class="nav-container">
+        <img class="nav-image" src="poisid.jpg" alt="Litters" />
+        <div class="nav-button">Litters</div>
+    </div>
+    <div class="nav-container">
+        <img class="nav-image" src="usin.jpg" alt="achievements" />
+        <div class="nav-button">Results</div>
+    </div>
+    <div class="nav-container">
+        <img class="nav-image" src="granda.jpg" alt="Passed" />
+        <div class="nav-button">Passed</div>
     </div>
 </div>
+
+<style lang="postcss">
+    .nav-container {
+        @apply shadow-lg shadow-stone-900 md:w-1/6 md:duration-500 md:ease-out md:hover:-translate-y-4 md:hover:scale-105 md:hover:shadow-none;
+    }
+
+    .nav-image {
+        @apply h-80 w-auto object-cover md:h-64;
+    }
+
+    .nav-button {
+        @apply flex justify-center bg-stone-200 py-2 text-2xl font-semibold;
+    }
+</style>

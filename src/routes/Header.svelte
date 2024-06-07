@@ -1,6 +1,6 @@
-<div class="flex justify-center">
-    <img src="light_header2.jpg" alt="light_header" />
-    <nav class="flex flex-row gap-8 size-min text-4xl absolute top-1/2">
+<div class="flex justify-center relative">
+    <img src="" alt="light_header" />
+    <nav class="flex flex-row gap-8 size-min text-4xl absolute top-2/3">
         <div>Puppies</div>
         <div>Dogs</div>
         <div>Litters</div>

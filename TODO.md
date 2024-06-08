@@ -1,5 +1,12 @@
 # TODO
 
+## Components
+
+* finish news preview
+* about
+* footer
+* nav targets and news
+
 ## Performance
 
 * text compression
@@ -11,4 +18,10 @@
 ## Accessability
 
 * add a title
+
+## Style
+
+* prettier text and font
+* header
+* button bg white on hover
 

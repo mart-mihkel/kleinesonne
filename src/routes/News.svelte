@@ -1,70 +1,57 @@
 <script lang="ts">
-    interface Item {
-        id: number;
-        src: string;
-        alt: string;
+    interface NewsPreview {
+        cover: string;
         title: string;
         date: string;
-        text: string;
     }
 
-    let items: Item[] = [
+    const items: NewsPreview[] = [
         {
-            id: 0,
-            src: "kohver.jpg",
-            alt: "pic_1",
+            cover: "kohver.webp",
             title: "Jubedad jüngrid käisid pikal rabaretkel ja nägid ahvenaid!",
             date: "12.04.2023",
-            text: "Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud. Nad on vangistatud.",
         },
         {
-            id: 1,
-            src: "dark_header.jpg",
-            alt: "pic_2",
+            cover: "poisid.webp",
             title: "Karm koer",
             date: "19.05.2024",
-            text: "Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. Ta on viisakas. ",
         },
         {
-            id: 2,
-            src: "",
-            alt: "pic_3",
-            title: "title_3",
+            cover: "viisakas.webp",
+            title: "Talvepäev",
             date: "03.06.2024",
-            text: "text_3",
         },
         {
-            id: 3,
-            src: "",
-            alt: "pic_4",
-            title: "title_4",
+            cover: "usin.webp",
+            title: "Uus pesakond berni apli karjakoeri",
             date: "04.06.2024",
-            text: "text_4",
         },
     ];
 </script>
 
-<div class="relative flex justify-center">
-    {#each items as item, i}
-        <button
-            class="absolute flex w-1/3 items-center justify-center rounded-r bg-sky-50 transition-all"
-            style:transform="translateX({(i / items.length) * 100}%)"
-            class:blur={i !== 0}
-            class:z-10={i === 0}
-            on:click={() => (items = [...items.slice(1), items[0]])}
+<div class="flex snap-x gap-8 overflow-x-auto bg-stone-400 py-12">
+    <div class="w-auto shrink-0 snap-center"></div>
+    {#each items as item}
+        <div
+            class="group relative w-2/3 shrink-0 snap-center bg-stone-100 shadow-lg shadow-stone-900 transition-all duration-500 ease-out md:w-1/3"
         >
-            <div class="relative w-1/3 flex-none">
-                <img
-                    class="absolute size-full object-cover"
-                    src={item.src}
-                    alt={item.alt}
-                />
-            </div>
-            <div class="flex w-2/3 flex-col gap-4">
-                <h2 class="text-2xl font-semibold">{item.title}</h2>
-                <h4 class="text-lg font-semibold">{item.date}</h4>
-                <p class="text-sm">{item.text}</p>
-            </div>
-        </button>
+            <h2
+                class="absolute left-1/2 top-1 z-10 w-full -translate-x-1/2 text-center text-sm font-bold text-stone-50 md:text-lg"
+            >
+                {item.title}
+            </h2>
+            <p
+                class="absolute bottom-1 left-1 z-10 -translate-y-full font-semibold text-stone-50 opacity-0 transition-all duration-700 group-hover:translate-y-0 group-hover:opacity-100"
+            >
+                {item.date}
+            </p>
+            <img
+                class="h-full w-full object-cover transition-all duration-500 group-hover:brightness-50"
+                src={item.cover}
+                alt={item.cover}
+                loading="lazy"
+            />
+        </div>
     {/each}
+    <div class="shrink-0 snap-center"></div>
 </div>

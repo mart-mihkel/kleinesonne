@@ -2,23 +2,23 @@
     class="flex flex-col items-center justify-center gap-16 bg-stone-600 py-12 md:flex-row md:gap-8 md:px-8"
 >
     <div class="nav-container">
-        <img class="nav-image" src="kohver.jpg" alt="puppies" />
+        <img class="nav-image" src="kohver.webp" alt="puppies" />
         <div class="nav-button">Puppies</div>
     </div>
     <div class="nav-container">
-        <img class="nav-image" src="viisakas.jpg" alt="dogs" />
+        <img class="nav-image" src="viisakas.webp" alt="dogs" />
         <div class="nav-button">Dogs</div>
     </div>
     <div class="nav-container">
-        <img class="nav-image" src="poisid.jpg" alt="Litters" />
+        <img class="nav-image" src="poisid.webp" alt="Litters" />
         <div class="nav-button">Litters</div>
     </div>
     <div class="nav-container">
-        <img class="nav-image" src="usin.jpg" alt="achievements" />
+        <img class="nav-image" src="usin.webp" alt="achievements" />
         <div class="nav-button">Results</div>
     </div>
     <div class="nav-container">
-        <img class="nav-image" src="granda.jpg" alt="Passed" />
+        <img class="nav-image" src="granda.webp" alt="Passed" />
         <div class="nav-button">Passed</div>
     </div>
 </div>
@@ -29,7 +29,7 @@
     }
 
     .nav-image {
-        @apply h-80 w-auto object-cover md:h-64;
+        @apply h-80 w-full object-cover md:h-64;
     }
 
     .nav-button {

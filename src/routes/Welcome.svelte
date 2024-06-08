@@ -6,7 +6,7 @@
             <!-- TODO: slideshow -->
             <img
                 class="size-full rounded-t object-cover shadow-md md:rounded"
-                src="rand.jpg"
+                src="rand.webp"
                 alt="header"
             />
         </div>

@@ -2,6 +2,8 @@
 
 ## Components
 
+* homepage introduction to breeds
+* nav item names and fontsize based on width
 * finish news preview
 * about
 * footer

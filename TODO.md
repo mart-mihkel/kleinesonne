@@ -16,6 +16,7 @@
 * material ui icons locally
 * back/forward cache
 * optimize image sizes
+* vite/svelte (enhanced)image handling
 
 ## Accessability
 
@@ -23,6 +24,7 @@
 
 ## Style
 
+* dark mode
 * prettier text and font
 * header
 * button bg white on hover

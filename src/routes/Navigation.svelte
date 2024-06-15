@@ -15,11 +15,11 @@
     </div>
     <div class="nav-container">
         <img class="nav-image" src="usin.webp" alt="achievements" />
-        <div class="nav-button">Results</div>
+        <div class="nav-button">Achievements</div>
     </div>
     <div class="nav-container">
         <img class="nav-image" src="granda.webp" alt="Passed" />
-        <div class="nav-button">Passed</div>
+        <div class="nav-button">On vacation</div>
     </div>
 </div>
 

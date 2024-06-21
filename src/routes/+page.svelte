@@ -10,5 +10,4 @@
 <Landing />
 <Navigation />
 <News />
-<!-- About -->
 <Footer />

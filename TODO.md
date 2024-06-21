@@ -24,6 +24,7 @@
 
 ## Style
 
+* custom/hidden scroller
 * dark mode
 * prettier text and font
 * header

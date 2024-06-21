@@ -1,11 +1,9 @@
 <script lang="ts">
-    import Header from "./Header.svelte";
-    import Landing from "./Landing.svelte";
-    import Navigation from "./Navigation.svelte";
-    import News from "./News.svelte";
-    import Footer from "./Footer.svelte";
-
-    // TODO: cutsom scroller
+    import Footer from "$lib/components/Footer.svelte";
+    import Header from "$lib/components/Header.svelte";
+    import Landing from "$lib/components/Landing.svelte";
+    import Navigation from "$lib/components/Navigation.svelte";
+    import News from "$lib/components/News.svelte";
 </script>
 
 <Header />

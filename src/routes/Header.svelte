@@ -1,5 +1,5 @@
 <div
-    class="fixed z-10 flex w-full flex-row gap-4 bg-stone-300 p-2 shadow-lg dark:bg-stone-700"
+    class="flex w-full flex-row gap-4 bg-stone-300 p-2 shadow-lg dark:bg-stone-700"
 >
     <a
         class="flex flex-grow items-center gap-2 text-4xl font-semibold"

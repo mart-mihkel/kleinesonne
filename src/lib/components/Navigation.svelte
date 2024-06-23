@@ -20,18 +20,22 @@
     ];
 </script>
 
-<div class="flex flex-row gap-8 p-2 dark:bg-black">
+<nav class="flex flex-row gap-8 md:px-44 lg:px-64 dark:bg-black">
     <a
         class="transition-colors duration-300 hover:text-slate-500 dark:text-white"
         href="/"
-        title="News">News</a
+        title="News"
     >
+        News
+    </a>
     <Dropdown items={puppies}>Puppies</Dropdown>
     <Dropdown items={puppies}>Dogs</Dropdown>
     <Dropdown items={puppies}>Litters</Dropdown>
     <a
         class="transition-colors duration-300 hover:text-slate-500 dark:text-white"
-        href="/"
-        title="Contact page">Contact</a
+        href="/contact"
+        title="Contact page"
     >
-</div>
+        Contact
+    </a>
+</nav>

@@ -25,7 +25,7 @@
     </h3>
     {#if show}
         <div
-            class="absolute top-full z-10 flex flex-col bg-white dark:bg-black"
+            class="absolute top-full z-10 flex flex-col bg-white p-1 dark:bg-black"
             transition:slide
         >
             {#each items as { href, text, title }}

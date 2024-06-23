@@ -1,3 +1,6 @@
+<h2 class="flex justify-center p-4 text-4xl dark:bg-black dark:text-white">
+    Puppies available
+</h2>
 <div class="flex flex-col md:h-[600px] md:flex-row">
     <div
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
@@ -7,11 +10,11 @@
         >
             <img class="size-full object-cover" src="usin.webp" alt="bernese" />
         </div>
-        <h2
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+        <h3
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
         >
             Bernese mountain dogs
-        </h2>
+        </h3>
     </div>
     <div
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
@@ -25,11 +28,11 @@
                 alt="entlebuch"
             />
         </div>
-        <h2
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+        <h3
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
         >
             Entlebucher cattle dogs
-        </h2>
+        </h3>
     </div>
     <div
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
@@ -43,10 +46,10 @@
                 alt="australian shepherd"
             />
         </div>
-        <h2
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+        <h3
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
         >
             Australian shpeherds
-        </h2>
+        </h3>
     </div>
 </div>

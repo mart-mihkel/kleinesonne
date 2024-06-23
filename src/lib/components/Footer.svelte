@@ -1,4 +1,6 @@
-<div class="flex flex-row justify-center gap-2 p-8 dark:bg-black">
+<div
+    class="flex flex-row justify-center gap-2 border-t border-t-black p-8 dark:border-t-white dark:bg-black"
+>
     <a href="tel:+37256226381" title="Contact phone">
         <svg
             class="fill-black transition-colors duration-300 hover:fill-slate-500 dark:fill-white"

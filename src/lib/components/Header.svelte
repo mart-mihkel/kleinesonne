@@ -1,4 +1,6 @@
-<div class="flex w-full flex-row items-center gap-8 p-2 dark:bg-black">
+<div
+    class="flex w-full flex-row items-center gap-8 p-2 md:px-44 lg:px-64 dark:bg-black"
+>
     <a
         class="text-2xl transition-colors duration-300 hover:text-slate-500 dark:text-white"
         href="/"

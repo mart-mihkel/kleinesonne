@@ -1,6 +1,8 @@
-<div class="flex flex-col gap-4 py-4 md:px-44 lg:px-64 dark:bg-black">
-    <h2 class="flex justify-center text-4xl dark:text-white">About</h2>
-    <p class="text-justify dark:text-white">
+<div
+    class="flex flex-col gap-4 py-4 md:px-44 lg:px-64 dark:bg-black dark:text-white"
+>
+    <h2 class="flex justify-center text-4xl">About</h2>
+    <p class="text-justify">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
         commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor.
         Vestibulum eros sapien, tempor in elit a, faucibus vehicula ipsum.
@@ -13,7 +15,7 @@
         malesuada turpis purus at tortor. Donec feugiat tempor ex vitae
         pellentesque.
     </p>
-    <p class="text-justify dark:text-white">
+    <p class="text-justify">
         Ut non arcu in massa faucibus aliquam at nec risus. Fusce vulputate
         lacinia aliquet. Proin viverra dolor mauris, at ultricies neque
         ullamcorper nec. Fusce egestas mi eu nunc lacinia, imperdiet gravida
@@ -27,7 +29,7 @@
         tristique pretium. Etiam dictum sagittis risus, non lacinia urna
         vestibulum et.
     </p>
-    <p class="text-justify dark:text-white">
+    <p class="text-justify">
         Phasellus facilisis euismod lectus eu tincidunt. Aenean in diam ac
         lectus molestie venenatis ac et sapien. Suspendisse justo elit,
         venenatis eget consectetur vitae, condimentum ac risus. Nullam ut dolor

@@ -1,4 +1,4 @@
-<div
+<header
     class="flex w-full flex-row items-center gap-8 p-2 md:px-44 lg:px-64 dark:bg-black"
 >
     <a
@@ -28,4 +28,4 @@
             />
         </svg>
     </a>
-</div>
+</header>

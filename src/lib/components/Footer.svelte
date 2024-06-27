@@ -1,4 +1,4 @@
-<div
+<footer
     class="flex flex-row justify-center gap-2 border-t border-t-black p-8 dark:border-t-white dark:bg-black"
 >
     <a href="tel:+37256226381" title="Contact phone">
@@ -63,4 +63,4 @@
             />
         </svg>
     </a>
-</div>
+</footer>

@@ -21,7 +21,7 @@
 </script>
 
 <nav
-    class="flex flex-row gap-8 border-b border-b-black md:px-44 lg:px-64 dark:bg-black dark:text-white"
+    class="flex flex-row gap-8 border-b border-b-black md:px-44 lg:px-64 dark:border-b-white dark:bg-black dark:text-white"
 >
     <a
         class="transition-colors duration-300 hover:text-slate-500"

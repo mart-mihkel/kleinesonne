@@ -18,6 +18,24 @@
             title: "Australian shepherd puppies",
         },
     ];
+
+    const dogs = [
+        {
+            href: "/dogs/bernese/",
+            text: "Bernese mountain dogs",
+            title: "Bernese mountain dogs",
+        },
+        {
+            href: "/dogs/entlebusher/",
+            text: "Entlebucher cattle dogs",
+            title: "Entlebucher cattle dogs",
+        },
+        {
+            href: "/dogs/australian/",
+            text: "Australian shepherds",
+            title: "Australian shepherds",
+        },
+    ];
 </script>
 
 <header
@@ -62,7 +80,7 @@
         News
     </a>
     <Dropdown items={puppies}>Puppies</Dropdown>
-    <Dropdown items={puppies}>Dogs</Dropdown>
+    <Dropdown items={dogs}>Dogs</Dropdown>
     <Dropdown items={puppies}>Litters</Dropdown>
     <a
         class="transition-colors duration-300 hover:text-slate-500"

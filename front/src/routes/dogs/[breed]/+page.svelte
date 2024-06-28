@@ -29,7 +29,7 @@
                 <Thumbnail
                     href={`${shortBreed}/${dog.nickname.toLowerCase()}`}
                     {...dog}
-                    {...dog.img}
+                    {...dog.thumbnail}
                 />
             {/each}
         </div>
@@ -39,7 +39,7 @@
                 <Thumbnail
                     href={`${shortBreed}/${dog.nickname.toLowerCase()}`}
                     {...dog}
-                    {...dog.img}
+                    {...dog.thumbnail}
                 />
             {/each}
         </div>
@@ -50,7 +50,7 @@
             <Thumbnail
                 href={`${shortBreed}/${dog.nickname.toLowerCase()}`}
                 {...dog}
-                {...dog.img}
+                {...dog.thumbnail}
             />
         {/each}
     </div>

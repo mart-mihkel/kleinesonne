@@ -9,13 +9,25 @@ export enum Breed {
 	ENTLEBUCHER = "Entlebucher Cattle Dog",
 }
 
-export interface Dog {
-	img: Image,
-	nickname: string,
+export interface DogPreview {
+	thumbnail: Image,
 	name: string,
+	nickname: string,
 	breed: string,
 	gender: Gender,
 	alive: boolean,
+}
+
+export interface Dog {
+	thumbnail: Image,
+	images: Image[],
+	name: string,
+	nickname: string,
+	breed: string,
+	gender: Gender,
+	alive: boolean,
+	dob: Date,
+	// various extra details
 }
 
 export interface Image {

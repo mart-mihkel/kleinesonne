@@ -1,7 +1,7 @@
 <div
     class="flex flex-col gap-4 py-4 md:px-44 lg:px-64 dark:bg-black dark:text-white"
 >
-    <h2 class="flex justify-center text-4xl">About</h2>
+    <h2>About</h2>
     <p class="text-justify">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
         commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor.

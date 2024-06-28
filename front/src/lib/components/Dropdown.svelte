@@ -18,11 +18,11 @@
     on:mouseenter={() => (show = true)}
     on:mouseleave={() => (show = false)}
 >
-    <h3
+    <p
         class="transition-colors duration-300 hover:text-slate-500 dark:text-white"
     >
         <slot />
-    </h3>
+    </p>
     {#if show}
         <div
             class="absolute top-full z-10 flex flex-col bg-white p-1 dark:bg-black"

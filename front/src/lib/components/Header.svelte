@@ -26,7 +26,7 @@
             title: "Bernese mountain dogs",
         },
         {
-            href: "/dogs/entlebusher/",
+            href: "/dogs/entlebucher/",
             text: "Entlebucher cattle dogs",
             title: "Entlebucher cattle dogs",
         },

@@ -4,6 +4,16 @@
     import Footer from "$lib/components/Footer.svelte";
 </script>
 
+<svelte:head>
+    <title>Kleine Sonne</title>
+    <meta
+        name="description"
+        content="Australian shepherd and Entlebucher mountain dog puppies available"
+    />
+</svelte:head>
+
 <Header />
-<slot />
+<main>
+    <slot />
+</main>
 <Footer />

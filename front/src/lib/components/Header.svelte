@@ -1,41 +1,42 @@
 <script lang="ts">
     import Dropdown from "./Dropdown.svelte";
     import { toggle, isDark } from "$lib/dark-mode";
+    import { ShortBreed } from "$lib/types";
     import { onMount } from "svelte";
 
     const puppies = [
         {
-            href: "/",
+            href: "/puppies/" + ShortBreed.AUSTRALIAN,
+            text: "Australian shepherd puppies",
+            title: "Australian shepherd puppies",
+        },
+        {
+            href: "/puppies/" + ShortBreed.BERNESE,
             text: "Bernese mountain dog puppies",
             title: "Bernese mountain dog puppies",
         },
         {
-            href: "/",
-            text: "Entlebucher cattle dog puppies",
-            title: "Entlebucher cattle dog puppies",
-        },
-        {
-            href: "/",
-            text: "Australian shepherd puppies",
-            title: "Australian shepherd puppies",
+            href: "/puppies/" + ShortBreed.ENTLEBUCHER,
+            text: "Entlebucher mountain dog puppies",
+            title: "Entlebucher mountain dog puppies",
         },
     ];
 
     const dogs = [
         {
-            href: "/dogs/bernese/",
+            href: "/dogs/" + ShortBreed.AUSTRALIAN,
+            text: "Australian shepherds",
+            title: "Australian shepherds",
+        },
+        {
+            href: "/dogs/" + ShortBreed.BERNESE,
             text: "Bernese mountain dogs",
             title: "Bernese mountain dogs",
         },
         {
-            href: "/dogs/entlebucher/",
-            text: "Entlebucher cattle dogs",
-            title: "Entlebucher cattle dogs",
-        },
-        {
-            href: "/dogs/australian/",
-            text: "Australian shepherds",
-            title: "Australian shepherds",
+            href: "/dogs/" + ShortBreed.ENTLEBUCHER,
+            text: "Entlebucher mountain dogs",
+            title: "Entlebucher mountain dogs",
         },
     ];
 

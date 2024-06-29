@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Gender } from "$lib/types";
+    import { shortBreed } from "$lib/util";
     import { page } from "$app/stores";
     import Thumbnail from "$lib/components/Thumbnail.svelte";
     import type { PageData } from "./$types";
@@ -7,10 +8,8 @@
     export let data: PageData;
 
     // eslint-disable-next-line svelte/valid-compile
-    $: shortBreed = $page.params.breed;
-    $: dogs = data.dogs.filter(
-        (d) => d.breed.split(" ")[0].toLowerCase() === shortBreed,
-    );
+    $: breed = $page.params.breed;
+    $: dogs = data.dogs.filter((d) => shortBreed(d.breed) === breed);
 
     $: retired = dogs.filter((d) => !d.alive);
     $: alive = dogs.filter((d) => d.alive);
@@ -27,7 +26,7 @@
             <h3>Female</h3>
             {#each female as dog}
                 <Thumbnail
-                    href={`${shortBreed}/${dog.nickname.toLowerCase()}`}
+                    href={`${breed}/${dog.nickname.toLowerCase()}`}
                     {...dog}
                     {...dog.thumbnail}
                 />
@@ -37,7 +36,7 @@
             <h3>Male</h3>
             {#each male as dog}
                 <Thumbnail
-                    href={`${shortBreed}/${dog.nickname.toLowerCase()}`}
+                    href={`${breed}/${dog.nickname.toLowerCase()}`}
                     {...dog}
                     {...dog.thumbnail}
                 />
@@ -48,7 +47,7 @@
         <h3>Retired</h3>
         {#each retired as dog}
             <Thumbnail
-                href={`${shortBreed}/${dog.nickname.toLowerCase()}`}
+                href={`${breed}/${dog.nickname.toLowerCase()}`}
                 {...dog}
                 {...dog.thumbnail}
             />

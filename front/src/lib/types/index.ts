@@ -9,6 +9,12 @@ export enum Breed {
     ENTLEBUCHER = "Entlebucher Cattle Dog",
 }
 
+export enum ShortBreed {
+    AUSTRALIAN = "australian",
+    BERNESE = "bernese",
+    ENTLEBUCHER = "entlebucher",
+}
+
 export interface DogPreview {
     thumbnail: Image;
     name: string;
@@ -27,7 +33,15 @@ export interface Dog {
     gender: Gender;
     alive: boolean;
     dob: Date;
-    // various extra details
+    dod?: Date;
+}
+
+export interface Puppy {
+    image: Image;
+    name: string;
+    breed: Breed;
+    gender: Gender;
+    available: boolean;
 }
 
 export interface Image {

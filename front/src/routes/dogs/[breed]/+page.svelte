@@ -1,8 +1,8 @@
 <script lang="ts">
+    import { Thumbnail } from "$lib/components";
     import { Gender } from "$lib/types";
     import { shortBreed } from "$lib/util";
     import { page } from "$app/stores";
-    import Thumbnail from "$lib/components/Thumbnail.svelte";
     import type { PageData } from "./$types";
 
     export let data: PageData;

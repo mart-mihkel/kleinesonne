@@ -9,14 +9,14 @@
             >
                 <img
                     class="size-full object-cover"
-                    src="/usin.webp"
-                    alt="bernese"
+                    src="/rand.webp"
+                    alt="australian shepherd"
                 />
             </div>
             <p
                 class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
             >
-                Bernese mountain dogs
+                Australian shpeherds
             </p>
         </div>
         <div
@@ -45,14 +45,14 @@
             >
                 <img
                     class="size-full object-cover"
-                    src="/rand.webp"
-                    alt="australian shepherd"
+                    src="/usin.webp"
+                    alt="bernese"
                 />
             </div>
             <p
                 class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
             >
-                Australian shpeherds
+                Bernese mountain dogs
             </p>
         </div>
     </div>

@@ -1,15 +1,14 @@
 <script lang="ts">
     import { Thumbnail } from "$lib/components";
-    import { Gender } from "$lib/types";
-    import { shortBreed } from "$lib/util";
+    import { Breed, Gender } from "$lib/types";
     import { page } from "$app/stores";
     import type { PageData } from "./$types";
 
     export let data: PageData;
 
     // eslint-disable-next-line svelte/valid-compile
-    $: breed = $page.params.breed;
-    $: dogs = data.dogs.filter((d) => shortBreed(d.breed) === breed);
+    $: breed = $page.params.breed as Breed;
+    $: dogs = data.dogs.filter((d) => d.breed === breed);
 
     $: retired = dogs.filter((d) => !d.alive);
     $: alive = dogs.filter((d) => d.alive);

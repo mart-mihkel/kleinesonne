@@ -1,22 +1,22 @@
 <script lang="ts">
-    import Dropdown from "./Dropdown.svelte";
+    import { Dropdown } from "$lib/components";
+    import { Breed } from "$lib/types";
     import { toggle, isDark } from "$lib/dark-mode";
-    import { ShortBreed } from "$lib/types";
     import { onMount } from "svelte";
 
     const puppies = [
         {
-            href: "/puppies/" + ShortBreed.AUSTRALIAN,
+            href: "/puppies/" + Breed.AUSTRALIAN,
             text: "Australian shepherd puppies",
             title: "Australian shepherd puppies",
         },
         {
-            href: "/puppies/" + ShortBreed.BERNESE,
+            href: "/puppies/" + Breed.BERNESE,
             text: "Bernese mountain dog puppies",
             title: "Bernese mountain dog puppies",
         },
         {
-            href: "/puppies/" + ShortBreed.ENTLEBUCHER,
+            href: "/puppies/" + Breed.ENTLEBUCHER,
             text: "Entlebucher mountain dog puppies",
             title: "Entlebucher mountain dog puppies",
         },
@@ -24,17 +24,17 @@
 
     const dogs = [
         {
-            href: "/dogs/" + ShortBreed.AUSTRALIAN,
+            href: "/dogs/" + Breed.AUSTRALIAN,
             text: "Australian shepherds",
             title: "Australian shepherds",
         },
         {
-            href: "/dogs/" + ShortBreed.BERNESE,
+            href: "/dogs/" + Breed.BERNESE,
             text: "Bernese mountain dogs",
             title: "Bernese mountain dogs",
         },
         {
-            href: "/dogs/" + ShortBreed.ENTLEBUCHER,
+            href: "/dogs/" + Breed.ENTLEBUCHER,
             text: "Entlebucher mountain dogs",
             title: "Entlebucher mountain dogs",
         },

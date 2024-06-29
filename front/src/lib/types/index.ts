@@ -1,25 +1,21 @@
+export type LongBreed = "Australian Shepherd" | "Bernese Mountain Dog" | "Entlebucher Mountain Dog"
+
 export enum Gender {
     MALE,
     FEMALE,
 }
 
 export enum Breed {
-    AUSTRALIAN = "Australian Shepherd",
-    BERNESE = "Bernese Mountain Dog",
-    ENTLEBUCHER = "Entlebucher Cattle Dog",
-}
-
-export enum ShortBreed {
-    AUSTRALIAN = "australian",
-    BERNESE = "bernese",
-    ENTLEBUCHER = "entlebucher",
+    AUSTRALIAN = "aus",
+    BERNESE = "bern",
+    ENTLEBUCHER = "entle",
 }
 
 export interface DogPreview {
     thumbnail: Image;
     name: string;
     nickname: string;
-    breed: string;
+    breed: Breed;
     gender: Gender;
     alive: boolean;
 }
@@ -29,7 +25,7 @@ export interface Dog {
     images: Image[];
     name: string;
     nickname: string;
-    breed: string;
+    breed: Breed;
     gender: Gender;
     alive: boolean;
     dob: Date;

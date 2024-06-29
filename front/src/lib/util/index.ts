@@ -1,13 +1,9 @@
-import { Breed, ShortBreed } from "$lib/types";
+import { Breed, type LongBreed } from "$lib/types";
 
-export function shortBreed(breed: string): string {
-	return breed.split(" ")[0].toLowerCase();
-}
-
-export function longBreed(breed: ShortBreed): Breed {
+export function longBreed(breed: Breed): LongBreed {
 	switch (breed) {
-		case ShortBreed.AUSTRALIAN: return Breed.AUSTRALIAN;
-		case ShortBreed.BERNESE: return Breed.BERNESE;
-		case ShortBreed.ENTLEBUCHER: return Breed.ENTLEBUCHER;
+		case Breed.AUSTRALIAN: return "Australian Shepherd";
+		case Breed.BERNESE: return "Bernese Mountain Dog";
+		case Breed.ENTLEBUCHER: return "Entlebucher Mountain Dog";
 	}
 }

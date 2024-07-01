@@ -1,4 +1,7 @@
-export type LongBreed = "Australian Shepherd" | "Bernese Mountain Dog" | "Entlebucher Mountain Dog"
+export type LongBreed =
+    | "Australian Shepherd"
+    | "Bernese Mountain Dog"
+    | "Entlebucher Mountain Dog";
 
 export enum Gender {
     MALE,
@@ -35,9 +38,17 @@ export interface Dog {
 export interface Puppy {
     image: Image;
     name: string;
-    breed: Breed;
     gender: Gender;
     available: boolean;
+}
+
+export interface Litter {
+    parents: Image;
+    father: string;
+    mother: string;
+    name: string;
+    breed: Breed;
+    puppies: Array<Puppy>;
 }
 
 export interface Image {

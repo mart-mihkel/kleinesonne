@@ -1,5 +1,5 @@
 <div class="flex flex-col md:px-44 lg:px-64 dark:bg-black dark:text-white">
-    <h2>Contact</h2>
+    <h2 class="  p-4 text-center text-4xl">Contact</h2>
     <p class="flex flex-row gap-2">
         <svg
             class="fill-black dark:fill-white"

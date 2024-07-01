@@ -10,18 +10,6 @@ body {
     height: 100%;
 }
 
-h2 {
-    @apply p-4 text-center text-4xl;
-}
-
-h3 {
-    @apply p-2 text-center text-2xl;
-}
-
-h4 {
-    @apply text-center text-lg;
-}
-
 ::-webkit-scrollbar {
     @apply w-2;
 }

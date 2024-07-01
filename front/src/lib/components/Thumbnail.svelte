@@ -18,7 +18,7 @@
     <div
         class="absolute bottom-0 w-10/12 bg-white bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0"
     >
-        <h3>{nickname}</h3>
-        <h4>{name}</h4>
+        <h3 class="p-2 text-center text-2xl">{nickname}</h3>
+        <h4 class="text-center text-lg">{name}</h4>
     </div>
 </a>

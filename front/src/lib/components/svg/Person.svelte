@@ -1,5 +1,5 @@
 <svg
-    class="fill-black dark:fill-white transition-colors duration-300"
+    class="fill-black transition-colors duration-300 dark:fill-white"
     xmlns="http://www.w3.org/2000/svg"
     height="24px"
     viewBox="0 -960 960 960"

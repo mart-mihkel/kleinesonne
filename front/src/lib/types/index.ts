@@ -14,6 +14,12 @@ export enum Breed {
     ENTLEBUCHER = "entle",
 }
 
+export enum Availability {
+    AVAILABLE,
+    UNAVAILABLE,
+    CO_OWNERSHIP,
+}
+
 export interface DogPreview {
     thumbnail: Image;
     name: string;
@@ -39,7 +45,7 @@ export interface Puppy {
     image: Image;
     name: string;
     gender: Gender;
-    available: boolean;
+    availability: Availability;
 }
 
 export interface Litter {

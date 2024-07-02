@@ -2,11 +2,13 @@
     import { Breed } from "$lib/types";
 </script>
 
-<h2 class="p-4 text-center text-4xl">Puppies available</h2>
+<a href="/puppies" class="flex justify-center p-4 text-4xl">
+    Puppies available
+</a>
 <div class="flex flex-col md:h-[600px] md:flex-row">
     <a
         href="/puppies/{Breed.AUSTRALIAN}"
-        title="Australian shpeherd puppies"
+        title="Australian Shpeherd puppies"
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
@@ -21,12 +23,12 @@
         <p
             class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
         >
-            Australian shpeherds
+            Australian Shepeherd puppies
         </p>
     </a>
     <a
         href="/puppies/{Breed.ENTLEBUCHER}"
-        title="Entlebucher mountain dog puppies"
+        title="Entlebucher Mountain dog puppies"
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
@@ -41,12 +43,12 @@
         <p
             class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
         >
-            Entlebucher cattle dogs
+            Entlebucher Mountain Dog puppies
         </p>
     </a>
     <a
         href="/puppies/{Breed.BERNESE}"
-        title="Bernese mountain dog puppies"
+        title="Bernese Mountain dog puppies"
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
@@ -61,7 +63,7 @@
         <p
             class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
         >
-            Bernese mountain dogs
+            Bernese Mountain Dog puppies
         </p>
     </a>
 </div>

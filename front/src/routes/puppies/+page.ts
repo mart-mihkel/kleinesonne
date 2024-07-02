@@ -1,7 +1,7 @@
 import { Gender, Breed, type Litter, Availability } from "$lib/types";
 import type { PageLoad } from "./$types";
 
-export const load: PageLoad = ({ params }) => {
+export const load: PageLoad = () => {
     const litters: Litter[] = [
         {
             name: "Entlebuch Marakratid",
@@ -63,7 +63,7 @@ export const load: PageLoad = ({ params }) => {
                 },
             ],
         },
-    ].filter((l) => l.breed === params.breed);
+    ];
 
     return { litters };
 };

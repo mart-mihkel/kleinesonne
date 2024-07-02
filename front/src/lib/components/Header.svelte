@@ -8,36 +8,36 @@
     const puppies = [
         {
             href: "/puppies/" + Breed.AUSTRALIAN,
-            text: "Australian shepherd puppies",
-            title: "Australian shepherd puppies",
-        },
-        {
-            href: "/puppies/" + Breed.BERNESE,
-            text: "Bernese mountain dog puppies",
-            title: "Bernese mountain dog puppies",
+            text: "Australian Shepherd puppies",
+            title: "Australian Shepherd puppies",
         },
         {
             href: "/puppies/" + Breed.ENTLEBUCHER,
-            text: "Entlebucher mountain dog puppies",
-            title: "Entlebucher mountain dog puppies",
+            text: "Entlebucher Mountain Dog puppies",
+            title: "Entlebucher Mountain Dog puppies",
+        },
+        {
+            href: "/puppies/" + Breed.BERNESE,
+            text: "Bernese Mountain Dog puppies",
+            title: "Bernese Mountain Dog puppies",
         },
     ];
 
     const dogs = [
         {
             href: "/dogs/" + Breed.AUSTRALIAN,
-            text: "Australian shepherds",
-            title: "Australian shepherds",
-        },
-        {
-            href: "/dogs/" + Breed.BERNESE,
-            text: "Bernese mountain dogs",
-            title: "Bernese mountain dogs",
+            text: "Australian Shepherds",
+            title: "Australian Shepherds",
         },
         {
             href: "/dogs/" + Breed.ENTLEBUCHER,
-            text: "Entlebucher mountain dogs",
-            title: "Entlebucher mountain dogs",
+            text: "Entlebucher Mountain Dogs",
+            title: "Entlebucher Mountain Dogs",
+        },
+        {
+            href: "/dogs/" + Breed.BERNESE,
+            text: "Bernese Mountain Dogs",
+            title: "Bernese Mountain Dogs",
         },
     ];
 
@@ -49,13 +49,13 @@
     class="flex w-full flex-row items-center gap-2 p-2 md:px-44 lg:px-64 dark:bg-black dark:text-white"
 >
     <a
-        class="text-2xl transition-colors duration-300 hover:text-slate-500"
+        class="text-2xl transition-colors duration-300 hover:text-gray-500"
         href="/"
         title="Kleine Sonne"
     >
         Kleine Sonne
     </a>
-    <div class="flex-grow"></div>
+    <span class="flex-grow"></span>
     <button on:click={() => (dark = toggle())}>
         {#if dark}
             <Moon />
@@ -74,11 +74,20 @@
 <nav
     class="flex flex-row gap-8 border-b border-b-black md:px-44 lg:px-64 dark:border-b-white dark:bg-black dark:text-white"
 >
-    <Dropdown items={puppies}>Puppies</Dropdown>
+    <a
+        class="transition-colors duration-300 hover:text-gray-500"
+        href="/news"
+        title="News"
+    >
+        News
+    </a>
+    <Dropdown href="/puppies" title="Available puppies" items={puppies}>
+        Puppies
+    </Dropdown>
     <Dropdown items={dogs}>Dogs</Dropdown>
     <Dropdown items={puppies}>Litters</Dropdown>
     <a
-        class="transition-colors duration-300 hover:text-slate-500"
+        class="transition-colors duration-300 hover:text-gray-500"
         href="/contact"
         title="Contact page"
     >

@@ -7,6 +7,8 @@
         title: string;
     }
 
+    export let href = "";
+    export let title = "";
     export let items: Item[];
 
     let show = false;
@@ -17,9 +19,13 @@
     on:mouseenter={() => (show = true)}
     on:mouseleave={() => (show = false)}
 >
-    <p class="transition-colors duration-300 hover:text-slate-500">
+    <a
+        {href}
+        {title}
+        class="transition-colors duration-300 hover:text-slate-500"
+    >
         <slot />
-    </p>
+    </a>
     {#if show}
         <div
             class="absolute top-full z-10 flex flex-col bg-white p-1 dark:bg-black dark:text-white"

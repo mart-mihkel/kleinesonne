@@ -10,24 +10,21 @@
     </div>
     <a
         href="mailto:ingeaun@gmail.com"
-        title="ingeaun@gmail.com"
-        class="group flex flex-row gap-2 transition-colors duration-300 hover:text-slate-500"
+        class="group flex flex-row gap-2 transition-colors duration-300 hover:text-gray-500"
     >
         <Mail />
         <p>ingeaun@gmail.com</p>
     </a>
     <a
         href="tel:+37256226381"
-        title="+372 5622 6381"
-        class="group flex flex-row gap-2 transition-colors duration-300 hover:text-slate-500"
+        class="group flex flex-row gap-2 transition-colors duration-300 hover:text-gray-500"
     >
         <Call />
         <p>+372 5622 6381</p>
     </a>
     <a
-        class="group flex flex-row gap-2 transition-colors duration-300 hover:text-slate-500"
+        class="group flex flex-row gap-2 transition-colors duration-300 hover:text-gray-500"
         href="https://www.google.com/maps/place/Kuusalu+Parish"
-        title="Kuusalu parish"
         target="_blank"
     >
         <MapPin />

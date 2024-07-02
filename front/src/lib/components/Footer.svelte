@@ -11,16 +11,11 @@
     <a href="mailto:ingeaun@gmail.com" title="ingeaun@gmail.com">
         <Mail />
     </a>
-    <a
-        href="https://www.google.com/maps/place/Kuusalu+Parish"
-        title="Kuusalu parish"
-        target="_blank"
-    >
+    <a href="https://www.google.com/maps/place/Kuusalu+Parish" target="_blank">
         <MapPin />
     </a>
     <a
         href="https://www.facebook.com/p/Kleine-Sonne-100064871220699/"
-        title="Kleinesonne Facebook"
         target="_blank"
     >
         <Facebook />

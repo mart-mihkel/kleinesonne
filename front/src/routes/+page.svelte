@@ -8,7 +8,6 @@
 <div class="flex flex-col md:h-[600px] md:flex-row">
     <a
         href="/puppies/{Breed.AUSTRALIAN}"
-        title="Australian Shpeherd puppies"
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
@@ -28,7 +27,6 @@
     </a>
     <a
         href="/puppies/{Breed.ENTLEBUCHER}"
-        title="Entlebucher Mountain dog puppies"
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
@@ -48,7 +46,6 @@
     </a>
     <a
         href="/puppies/{Breed.BERNESE}"
-        title="Bernese Mountain dog puppies"
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div

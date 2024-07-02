@@ -8,7 +8,6 @@
     }
 
     export let href = "";
-    export let title = "";
     export let items: Item[];
 
     let show = false;
@@ -19,11 +18,7 @@
     on:mouseenter={() => (show = true)}
     on:mouseleave={() => (show = false)}
 >
-    <a
-        {href}
-        {title}
-        class="transition-colors duration-300 hover:text-slate-500"
-    >
+    <a {href} class="transition-colors duration-300 hover:text-gray-500">
         <slot />
     </a>
     {#if show}
@@ -31,11 +26,10 @@
             class="absolute top-full z-10 flex flex-col bg-white p-1 dark:bg-black dark:text-white"
             transition:slide
         >
-            {#each items as { href, text, title }}
+            {#each items as { href, text }}
                 <a
-                    class="text-nowrap transition-colors duration-300 hover:text-slate-500"
+                    class="text-nowrap transition-colors duration-300 hover:text-gray-500"
                     {href}
-                    {title}
                 >
                     {text}
                 </a>

@@ -51,7 +51,6 @@
     <a
         class="text-2xl transition-colors duration-300 hover:text-gray-500"
         href="/"
-        title="Kleine Sonne"
     >
         Kleine Sonne
     </a>
@@ -65,7 +64,6 @@
     </button>
     <a
         href="https://www.facebook.com/p/Kleine-Sonne-100064871220699/"
-        title="Kleinesonne Facebook"
         target="_blank"
     >
         <Facebook />
@@ -74,11 +72,7 @@
 <nav
     class="flex flex-row gap-8 border-b border-b-black md:px-44 lg:px-64 dark:border-b-white dark:bg-black dark:text-white"
 >
-    <a
-        class="transition-colors duration-300 hover:text-gray-500"
-        href="/news"
-        title="News"
-    >
+    <a class="transition-colors duration-300 hover:text-gray-500" href="/news">
         News
     </a>
     <Dropdown href="/puppies" title="Available puppies" items={puppies}>
@@ -88,14 +82,12 @@
     <a
         class="transition-colors duration-300 hover:text-gray-500"
         href="/litters"
-        title="Litters"
     >
         Litters
     </a>
     <a
         class="transition-colors duration-300 hover:text-gray-500"
         href="/contact"
-        title="Contact page"
     >
         Contact
     </a>

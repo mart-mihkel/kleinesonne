@@ -1,5 +1,5 @@
 <svg
-    class="fill-black transition-colors duration-300 hover:fill-slate-500 dark:fill-white"
+    class="fill-black transition-colors duration-300 hover:fill-gray-500 group-hover:fill-gray-500 dark:fill-white"
     xmlns="http://www.w3.org/2000/svg"
     x="0px"
     y="0px"

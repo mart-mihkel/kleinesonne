@@ -16,7 +16,7 @@
 <div
     class="flex flex-col items-center gap-2 border-t border-t-black py-4 dark:border-t-white"
 >
-    <a href="/litters/{name}" title="Litter {name}" class="text-2xl">
+    <a href="/litters/{name}" class="text-2xl">
         Litter {name}
     </a>
     <div class="flex flex-row flex-wrap justify-center">

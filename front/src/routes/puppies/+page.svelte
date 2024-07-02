@@ -6,7 +6,7 @@
     const litters = data.litters;
 </script>
 
-<div class="md:px-44 lg:px-64">
+<div class="md:px-44 lg:px-96">
     {#if litters.length === 0}
         <h2 class="p-4 text-center text-4xl">
             There are no puppies available right now

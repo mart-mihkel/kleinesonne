@@ -16,7 +16,7 @@
     $: female = alive.filter((d) => d.gender === Gender.FEMALE);
 </script>
 
-<div class="flex flex-col items-center gap-4 md:px-44 lg:px-64">
+<div class="flex flex-col items-center gap-4 md:px-44 lg:px-96">
     <h2 class="p-4 text-center text-4xl">Australian Shepherds</h2>
     <div class="flex flex-col md:flex-row">
         <div class="flex flex-col gap-4 md:w-1/2">

@@ -9,7 +9,7 @@
 </script>
 
 <h2 class="p-4 text-center text-4xl">Litters</h2>
-<div class="flex flex-col md:flex-row md:px-44 lg:px-64">
+<div class="flex flex-col md:flex-row md:px-44 lg:px-96">
     <div
         class="hidden flex-col border-t border-t-black md:flex md:w-1/4 dark:border-t-white"
     >

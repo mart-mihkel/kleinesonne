@@ -46,7 +46,7 @@
 </script>
 
 <header
-    class="flex w-full flex-row items-center gap-2 p-2 md:px-44 lg:px-64 dark:bg-black dark:text-white"
+    class="flex w-full flex-row items-center gap-2 p-2 md:px-44 lg:px-96 dark:bg-black dark:text-white"
 >
     <a
         class="text-2xl transition-colors duration-300 hover:text-gray-500"
@@ -70,14 +70,12 @@
     </a>
 </header>
 <nav
-    class="flex flex-row gap-8 border-b border-b-black md:px-44 lg:px-64 dark:border-b-white dark:bg-black dark:text-white"
+    class="flex flex-row gap-8 border-b border-b-black md:px-44 lg:px-96 dark:border-b-white dark:bg-black dark:text-white"
 >
     <a class="transition-colors duration-300 hover:text-gray-500" href="/news">
         News
     </a>
-    <Dropdown href="/puppies" title="Available puppies" items={puppies}>
-        Puppies
-    </Dropdown>
+    <Dropdown href="/puppies" items={puppies}>Puppies</Dropdown>
     <Dropdown items={dogs}>Dogs</Dropdown>
     <a
         class="transition-colors duration-300 hover:text-gray-500"

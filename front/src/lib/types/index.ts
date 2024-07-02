@@ -55,6 +55,13 @@ export interface Litter {
     puppies: Array<Puppy>;
 }
 
+export interface NewsPiece {
+    title: string;
+    date: Date;
+    images: Image[];
+    text: string;
+}
+
 export interface Image {
     src: string;
     alt: string;

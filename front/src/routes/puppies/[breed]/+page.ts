@@ -6,8 +6,6 @@ export const load: PageLoad = ({ params }) => {
         {
             name: "Entlebuch Marakratid",
             parents: { src: "/parents.webp", alt: "parents" },
-            father: "Czech Made Swiss Tricolor",
-            mother: "Kleine Sonne Be The Shine of My Day",
             breed: Breed.ENTLEBUCHER,
             puppies: [
                 {
@@ -38,9 +36,7 @@ export const load: PageLoad = ({ params }) => {
         },
         {
             name: "Australian Mürakarud",
-            parents: { src: "", alt: "" },
-            father: "",
-            mother: "",
+            parents: { src: "/parents_aasa.webp", alt: "parents aasa" },
             breed: Breed.AUSTRALIAN,
             puppies: [
                 {

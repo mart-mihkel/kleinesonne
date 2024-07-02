@@ -50,8 +50,6 @@ export interface Puppy {
 
 export interface Litter {
     parents: Image;
-    father: string;
-    mother: string;
     name: string;
     breed: Breed;
     puppies: Array<Puppy>;

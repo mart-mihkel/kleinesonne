@@ -23,7 +23,7 @@
             Available {longBreed(breed)} puppies
         </h2>
         {#each litters as litter}
-            <Litter {litter} onlyAvailable={true} />
+            <Litter {litter} ad={true} />
         {/each}
     {/if}
 </div>

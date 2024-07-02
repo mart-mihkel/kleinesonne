@@ -85,7 +85,13 @@
         Puppies
     </Dropdown>
     <Dropdown items={dogs}>Dogs</Dropdown>
-    <Dropdown items={puppies}>Litters</Dropdown>
+    <a
+        class="transition-colors duration-300 hover:text-gray-500"
+        href="/litters"
+        title="Litters"
+    >
+        Litters
+    </a>
     <a
         class="transition-colors duration-300 hover:text-gray-500"
         href="/contact"

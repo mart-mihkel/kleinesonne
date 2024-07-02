@@ -1,4 +1,4 @@
-<div class="flex flex-col md:px-44 lg:px-64 dark:bg-black dark:text-white">
+<div class="flex flex-col md:px-44 lg:px-64">
     <h2 class="  p-4 text-center text-4xl">Contact</h2>
     <p class="flex flex-row gap-2">
         <svg

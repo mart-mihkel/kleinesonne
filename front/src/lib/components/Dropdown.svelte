@@ -12,25 +12,22 @@
     let show = false;
 </script>
 
-<div
-    role="navigation"
-    class="relative flex flex-col dark:bg-black"
+<nav
+    class="relative flex flex-col"
     on:mouseenter={() => (show = true)}
     on:mouseleave={() => (show = false)}
 >
-    <p
-        class="transition-colors duration-300 hover:text-slate-500 dark:text-white"
-    >
+    <p class="transition-colors duration-300 hover:text-slate-500">
         <slot />
     </p>
     {#if show}
         <div
-            class="absolute top-full z-10 flex flex-col bg-white p-1 dark:bg-black"
+            class="absolute top-full z-10 flex flex-col bg-white p-1 dark:bg-black dark:text-white"
             transition:slide
         >
             {#each items as { href, text, title }}
                 <a
-                    class="text-nowrap transition-colors duration-300 hover:text-slate-500 dark:text-white"
+                    class="text-nowrap transition-colors duration-300 hover:text-slate-500"
                     {href}
                     {title}
                 >
@@ -39,4 +36,4 @@
             {/each}
         </div>
     {/if}
-</div>
+</nav>

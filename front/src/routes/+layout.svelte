@@ -12,7 +12,7 @@
 </svelte:head>
 
 <Header />
-<main>
+<main class="dark:bg-black dark:text-white">
     <slot />
 </main>
 <Footer />

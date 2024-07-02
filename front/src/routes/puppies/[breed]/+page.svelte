@@ -13,7 +13,7 @@
     $: litters = data.litters.filter((l) => l.breed === breed);
 </script>
 
-<div class="md:px-44 lg:px-64 dark:bg-black dark:text-white">
+<div class="md:px-44 lg:px-64">
     {#if litters.length === 0}
         <h2 class="p-4 text-center text-4xl">
             There are no {longBreed(breed)} puppies available right now

@@ -1,65 +1,71 @@
-<div class="dark:bg-black dark:text-white">
-    <h2 class="p-4 text-center text-4xl">Puppies available</h2>
-    <div class="flex flex-col md:h-[600px] md:flex-row">
+<script>
+    import { Breed } from "$lib/types";
+</script>
+
+<h2 class="p-4 text-center text-4xl">Puppies available</h2>
+<div class="flex flex-col md:h-[600px] md:flex-row">
+    <a
+        href="/puppies/{Breed.AUSTRALIAN}"
+        title="Australian shpeherd puppies"
+        class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+    >
         <div
-            class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+            class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
         >
-            <div
-                class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
-            >
-                <img
-                    class="size-full object-cover"
-                    src="/rand.webp"
-                    alt="australian shepherd"
-                />
-            </div>
-            <p
-                class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
-            >
-                Australian shpeherds
-            </p>
+            <img
+                class="size-full object-cover"
+                src="/rand.webp"
+                alt="australian shepherd"
+            />
         </div>
+        <p
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+        >
+            Australian shpeherds
+        </p>
+    </a>
+    <a
+        href="/puppies/{Breed.ENTLEBUCHER}"
+        title="Entlebucher mountain dog puppies"
+        class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+    >
         <div
-            class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+            class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
         >
-            <div
-                class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
-            >
-                <img
-                    class="size-full object-cover"
-                    src="/viisakas.webp"
-                    alt="entlebuch"
-                />
-            </div>
-            <p
-                class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
-            >
-                Entlebucher cattle dogs
-            </p>
+            <img
+                class="size-full object-cover"
+                src="/viisakas.webp"
+                alt="entlebuch"
+            />
         </div>
+        <p
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+        >
+            Entlebucher cattle dogs
+        </p>
+    </a>
+    <a
+        href="/puppies/{Breed.BERNESE}"
+        title="Bernese mountain dog puppies"
+        class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+    >
         <div
-            class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+            class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
         >
-            <div
-                class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
-            >
-                <img
-                    class="size-full object-cover"
-                    src="/usin.webp"
-                    alt="bernese"
-                />
-            </div>
-            <p
-                class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
-            >
-                Bernese mountain dogs
-            </p>
+            <img
+                class="size-full object-cover"
+                src="/usin.webp"
+                alt="bernese"
+            />
         </div>
-    </div>
+        <p
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+        >
+            Bernese mountain dogs
+        </p>
+    </a>
 </div>
-<div
-    class="flex flex-col gap-4 py-4 md:px-44 lg:px-64 dark:bg-black dark:text-white"
->
+<div class="flex flex-col gap-4 py-4 md:px-44 lg:px-64">
     <h2 class="p-4 text-center text-4xl">About</h2>
     <p class="text-justify">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus

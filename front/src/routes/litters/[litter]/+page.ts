@@ -6,7 +6,7 @@ export const load: PageLoad = ({ params }) => {
 		{
 			name: "Entlebuch Marakratid",
 			parents: { src: "/parents.webp", alt: "parents" },
-			breed: Breed.ENTLEBUCHER,
+			breed: Breed.ENTLEBUCH,
 			puppies: [
 				{
 					image: { src: "/usin.webp", alt: "usin" },

@@ -15,7 +15,7 @@ export const load: PageLoad = () => {
             thumbnail: { src: "/kohver.webp", alt: "kohver" },
             nickname: "Katja",
             name: "Korolevstvo Gornih Psov Okatava",
-            breed: Breed.ENTLEBUCHER,
+            breed: Breed.ENTLEBUCH,
             gender: Gender.FEMALE,
             alive: true,
         },

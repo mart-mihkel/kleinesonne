@@ -26,7 +26,7 @@
         </p>
     </a>
     <a
-        href="/puppies/{Breed.ENTLEBUCHER}"
+        href="/puppies/{Breed.ENTLEBUCH}"
         class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
@@ -41,7 +41,7 @@
         <p
             class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
         >
-            Entlebucher Mountain Dog puppies
+            Entlebuch Cattle Dog puppies
         </p>
     </a>
     <a

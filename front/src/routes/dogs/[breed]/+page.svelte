@@ -1,13 +1,14 @@
 <script lang="ts">
     import { Thumbnail } from "$lib/components";
-    import { Gender } from "$lib/types";
+    import { Breed, Gender } from "$lib/types";
     import { page } from "$app/stores";
     import type { PageData } from "./$types";
+    import { longBreed } from "$lib/util";
 
     export let data: PageData;
 
     // eslint-disable-next-line svelte/valid-compile
-    $: breed = $page.params.breed;
+    $: breed = $page.params.breed as Breed;
     $: dogs = data.dogs.filter((d) => d.breed === breed);
 
     $: alive = dogs.filter((d) => d.alive);
@@ -19,7 +20,7 @@
 </script>
 
 <div class="flex flex-col items-center gap-4 md:px-[5%] lg:px-[25%]">
-    <h2 class="p-4 text-center text-4xl">Australian Shepherds</h2>
+    <h2 class="p-4 text-center text-4xl">Our {longBreed(breed)}s</h2>
     <div class="flex w-full flex-col pb-4 md:flex-row">
         {#each segregated as { t, dogs }}
             <div class="flex flex-col gap-4 md:w-1/3">

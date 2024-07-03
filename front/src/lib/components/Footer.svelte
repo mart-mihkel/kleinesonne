@@ -3,7 +3,7 @@
 </script>
 
 <footer
-    class="flex flex-row justify-center gap-2 border-t border-t-black p-8 dark:border-t-white dark:bg-black"
+    class="flex flex-row justify-center gap-2 border-t border-t-black p-8 md:px-[5%] lg:px-[25%] dark:border-t-white dark:bg-black"
 >
     <a href="tel:+37256226381" title="+372 5622 6381">
         <Call />

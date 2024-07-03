@@ -6,7 +6,7 @@
     const { name } = data.dog;
 </script>
 
-<div class="flex flex-col md:px-44 lg:px-96">
+<div class="flex flex-col md:px-[5%] lg:px-[25%]">
     <h2 class="p-4 text-center text-4xl">{name}</h2>
     <div>statsid</div>
     <div>medalid</div>

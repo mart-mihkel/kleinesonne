@@ -46,10 +46,10 @@
 </script>
 
 <header
-    class="flex w-full flex-row items-center gap-2 p-2 md:px-44 lg:px-96 dark:bg-black dark:text-white"
+    class="flex w-full flex-row items-center gap-2 p-2 md:px-[5%] lg:px-[25%] dark:bg-black dark:text-white"
 >
     <a
-        class="text-2xl transition-colors duration-300 hover:text-gray-500"
+        class="hover:text-g6ray-500 text-2xl transition-colors duration-300"
         href="/"
     >
         Kleine Sonne
@@ -70,7 +70,7 @@
     </a>
 </header>
 <nav
-    class="flex flex-row gap-8 border-b border-b-black md:px-44 lg:px-96 dark:border-b-white dark:bg-black dark:text-white"
+    class="flex flex-row gap-8 border-b border-b-black md:px-[5%] lg:px-[25%] dark:border-b-white dark:bg-black dark:text-white"
 >
     <a class="transition-colors duration-300 hover:text-gray-500" href="/news">
         News

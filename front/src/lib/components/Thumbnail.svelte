@@ -13,7 +13,7 @@
 >
     <div class="overflow-hidden">
         <img
-            class="size-full object-cover transition-transform duration-300 group-hover:scale-110"
+            class="aspect-square size-full object-cover transition-transform duration-300 group-hover:scale-110"
             loading="lazy"
             {src}
             {alt}

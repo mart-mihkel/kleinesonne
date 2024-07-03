@@ -64,7 +64,7 @@
         </p>
     </a>
 </div>
-<div class="flex flex-col gap-4 py-4 md:px-44 lg:px-96">
+<div class="flex flex-col gap-4 py-4 md:px-[5%] lg:px-[25%]">
     <h2 class="p-4 text-center text-4xl">About</h2>
     <p class="text-justify">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus

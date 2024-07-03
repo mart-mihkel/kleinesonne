@@ -19,9 +19,9 @@
     <a href="/litters/{name}" class="text-2xl">
         Litter {name}
     </a>
-    <div class="flex flex-row flex-wrap justify-center">
+    <div class="flex flex-row flex-wrap">
         {#each puppies as { name, gender, image, availability }}
-            <div class="flex w-full flex-col items-center py-4 md:w-96 md:px-4">
+            <div class="flex w-1/2 flex-col items-center p-1 lg:w-1/3">
                 <Thumbnail {name} src={image.src} alt={image.alt} />
                 <p>
                     {#if availability === Availability.AVAILABLE}

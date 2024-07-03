@@ -5,7 +5,7 @@
     export let data: PageData;
 </script>
 
-<div class="flex flex-col md:px-44 lg:px-96">
+<div class="flex flex-col md:px-[5%] lg:px-[25%]">
     <h2 class="p-4 text-center text-4xl">News</h2>
     {#each data.news as { title, date, text, images }}
         <div

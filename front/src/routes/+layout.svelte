@@ -7,12 +7,14 @@
     <title>Kleine Sonne</title>
     <meta
         name="description"
-        content="Australian shepherd and Entlebucher mountain dog puppies available"
+        content="Australian Shepherd and Entlebuch Cattle Dog puppies available"
     />
 </svelte:head>
 
-<Header />
-<main class="dark:bg-black dark:text-white">
-    <slot />
-</main>
-<Footer />
+<div class="flex h-screen flex-col dark:bg-black dark:text-white">
+    <Header />
+    <main class="mb-auto dark:bg-black">
+        <slot />
+    </main>
+    <Footer />
+</div>

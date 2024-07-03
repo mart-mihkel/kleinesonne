@@ -72,9 +72,6 @@
 <nav
     class="flex flex-row gap-8 border-b border-b-black md:px-[5%] lg:px-[25%] dark:border-b-white dark:bg-black dark:text-white"
 >
-    <a class="transition-colors duration-300 hover:text-gray-500" href="/news">
-        News
-    </a>
     <Dropdown href="/puppies" items={puppies}>Puppies</Dropdown>
     <Dropdown items={dogs}>Dogs</Dropdown>
     <a
@@ -82,6 +79,9 @@
         href="/litters"
     >
         Litters
+    </a>
+    <a class="transition-colors duration-300 hover:text-gray-500" href="/news">
+        News
     </a>
     <a
         class="transition-colors duration-300 hover:text-gray-500"

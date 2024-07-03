@@ -1,15 +1,87 @@
 <script lang="ts">
     import type { PageData } from "./$types";
+    import { Gallery } from "$lib/components";
+    import { longBreed } from "$lib/util";
+    import { Gender } from "$lib/types";
 
     export let data: PageData;
 
-    const { name } = data.dog;
+    const {
+        name,
+        nickname,
+        father,
+        mother,
+        breed,
+        gender,
+        dob,
+        thumbnail,
+        images,
+        health,
+        awards,
+    } = data.dog;
 </script>
 
 <div class="flex flex-col md:px-[5%] lg:px-[25%]">
-    <h2 class="p-4 text-center text-4xl">{name}</h2>
-    <div>statsid</div>
-    <div>medalid</div>
-    <div>gallery</div>
-    <div>sugupuu</div>
+    <div class="flex flex-col md:flex-row">
+        <div class="md:w-1/2 md:p-2">
+            <img
+                class="size-full object-cover"
+                src={thumbnail.src}
+                alt={thumbnail.alt}
+            />
+        </div>
+        <div class="flex flex-col md:w-1/2">
+            <h2 class="p-4 text-center text-4xl">{name}</h2>
+            <table class="size-full">
+                <tbody>
+                    <tr>
+                        <td>Nickname:</td>
+                        <td>{nickname}</td>
+                    </tr>
+                    <tr class="border-t border-t-black dark:border-t-white">
+                        <td>Father:</td>
+                        <td>{father}</td>
+                    </tr>
+                    <tr class="border-t border-t-black dark:border-t-white">
+                        <td>Mother:</td>
+                        <td>{mother}</td>
+                    </tr>
+                    <tr class="border-t border-t-black dark:border-t-white">
+                        <td>Date of birth:</td>
+                        <td>{dob.toDateString()}</td>
+                    </tr>
+                    <tr class="border-t border-t-black dark:border-t-white">
+                        <td>Breed:</td>
+                        <td>{longBreed(breed)}</td>
+                    </tr>
+                    <tr class="border-t border-t-black dark:border-t-white">
+                        <td>Gender:</td>
+                        <td>{gender === Gender.MALE ? "Male" : "Female"}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="flex flex-row border-y border-y-black pb-4 dark:border-y-white">
+        <div class="flex w-full flex-col">
+            <h2 class="p-4 text-center text-4xl">Health</h2>
+            <ul class="list-disc pl-[25%]">
+                {#each health as h}
+                    <li>{h}</li>
+                {/each}
+            </ul>
+        </div>
+        <div class="flex w-full flex-col">
+            <h2 class="p-4 text-center text-4xl">Awards</h2>
+            <ul class="list-disc pl-[25%]">
+                {#each awards as a}
+                    <li>{a}</li>
+                {/each}
+            </ul>
+        </div>
+    </div>
+    <Gallery {images} />
+    <div class="flex flex-col border-t border-t-black dark:border-t-white">
+        <h2 class="p-4 text-center text-4xl">Familiy Tree</h2>
+    </div>
 </div>

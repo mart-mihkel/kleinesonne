@@ -3,24 +3,7 @@ export type LongBreed =
     | "Bernese Mountain Dog"
     | "Entlebucher Mountain Dog";
 
-export enum Gender {
-    MALE,
-    FEMALE,
-}
-
-export enum Breed {
-    AUSTRALIAN = "aus",
-    BERNESE = "bern",
-    ENTLEBUCHER = "entle",
-}
-
-export enum Availability {
-    AVAILABLE,
-    UNAVAILABLE,
-    CO_OWNERSHIP,
-}
-
-export interface DogPreview {
+export type DogPreview = {
     thumbnail: Image;
     name: string;
     nickname: string;
@@ -29,40 +12,61 @@ export interface DogPreview {
     alive: boolean;
 }
 
-export interface Dog {
+export type Dog = {
     thumbnail: Image;
     images: Image[];
+    father: string;
+    mother: string;
     name: string;
     nickname: string;
     breed: Breed;
     gender: Gender;
     alive: boolean;
+    awards: string[];
+    health: string[];
     dob: Date;
     dod?: Date;
 }
 
-export interface Puppy {
+export type Puppy = {
     image: Image;
     name: string;
     gender: Gender;
     availability: Availability;
 }
 
-export interface Litter {
+export type Litter = {
     parents: Image;
     name: string;
     breed: Breed;
     puppies: Array<Puppy>;
 }
 
-export interface NewsPiece {
+export type NewsPiece = {
     title: string;
     date: Date;
     images: Image[];
     text: string;
 }
 
-export interface Image {
+export type Image = {
     src: string;
     alt: string;
+}
+
+export enum Gender {
+    MALE,
+    FEMALE,
+}
+
+export enum Breed {
+    AUSTRALIAN = "australian",
+    BERNESE = "bernese",
+    ENTLEBUCHER = "entlebucher",
+}
+
+export enum Availability {
+    AVAILABLE,
+    UNAVAILABLE,
+    CO_OWNERSHIP,
 }

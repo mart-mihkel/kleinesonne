@@ -59,7 +59,7 @@
 <div class="flex w-full flex-row flex-wrap">
     {#each images as { src, alt }, i}
         <button
-            class="aspect-square w-1/2 p-1 lg:w-1/3"
+            class="aspect-square w-1/2 p-1 outline-none lg:w-1/3"
             on:click={() => open(i)}
         >
             <img class="size-full object-cover" {src} {alt} loading="lazy" />

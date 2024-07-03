@@ -25,5 +25,11 @@
         {#each litters as litter}
             <Litter {litter} ad={true} />
         {/each}
+        <p>
+            The puppies will leave for their new homes healthy, having been
+            checked by a veterinarian, vaccinated and protected against
+            parasites. The puppies are chipped, FCI registered and have an euro
+            passport.
+        </p>
     {/if}
 </div>

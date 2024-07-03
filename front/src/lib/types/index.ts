@@ -1,7 +1,7 @@
 export type LongBreed =
     | "Australian Shepherd"
     | "Bernese Mountain Dog"
-    | "Entlebucher Mountain Dog";
+    | "Entlebuch Cattle Dog";
 
 export type DogPreview = {
     thumbnail: Image;
@@ -62,7 +62,7 @@ export enum Gender {
 export enum Breed {
     AUSTRALIAN = "australian",
     BERNESE = "bernese",
-    ENTLEBUCHER = "entlebucher",
+    ENTLEBUCH = "entlebuch",
 }
 
 export enum Availability {

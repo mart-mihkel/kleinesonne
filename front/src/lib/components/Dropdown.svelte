@@ -1,11 +1,11 @@
 <script lang="ts">
     import { slide } from "svelte/transition";
 
-    interface Item {
+    type Item = {
         href: string;
         text: string;
         title: string;
-    }
+    };
 
     export let href = "";
     export let items: Item[];
@@ -23,7 +23,7 @@
     </a>
     {#if show}
         <div
-            class="absolute top-full z-10 flex flex-col bg-white p-1 dark:bg-black dark:text-white"
+            class="absolute top-full flex flex-col bg-white p-1 dark:bg-black dark:text-white"
             transition:slide
         >
             {#each items as { href, text }}

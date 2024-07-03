@@ -38,14 +38,4 @@
     </div>
     <h3 class="text-center text-2xl">Parents</h3>
     <img src={parents.src} alt={parents.alt} />
-    {#if ad}
-        <p>
-            The puppies will leave for their new homes healthy, having been
-            checked by a veterinarian, vaccinated and protected against
-            parasites.
-        </p>
-        <p>
-            The puppies are chipped, FCI registered and have an euro passport.
-        </p>
-    {/if}
 </div>

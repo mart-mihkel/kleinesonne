@@ -12,9 +12,9 @@
             title: "Australian Shepherd puppies",
         },
         {
-            href: "/puppies/" + Breed.ENTLEBUCHER,
-            text: "Entlebucher Mountain Dog puppies",
-            title: "Entlebucher Mountain Dog puppies",
+            href: "/puppies/" + Breed.ENTLEBUCH,
+            text: "Entlebuch Cattle Dog puppies",
+            title: "Entlebuch Cattle Dog puppies",
         },
         {
             href: "/puppies/" + Breed.BERNESE,
@@ -30,9 +30,9 @@
             title: "Australian Shepherds",
         },
         {
-            href: "/dogs/" + Breed.ENTLEBUCHER,
-            text: "Entlebucher Mountain Dogs",
-            title: "Entlebucher Mountain Dogs",
+            href: "/dogs/" + Breed.ENTLEBUCH,
+            text: "Entlebuch Cattle Dogs",
+            title: "Entlebuch Cattle Dogs",
         },
         {
             href: "/dogs/" + Breed.BERNESE,
@@ -73,7 +73,7 @@
     class="flex flex-row gap-8 border-b border-b-black md:px-[5%] lg:px-[25%] dark:border-b-white dark:bg-black dark:text-white"
 >
     <Dropdown href="/puppies" items={puppies}>Puppies</Dropdown>
-    <Dropdown items={dogs}>Dogs</Dropdown>
+    <Dropdown href="/dogs" items={dogs}>Dogs</Dropdown>
     <a
         class="transition-colors duration-300 hover:text-gray-500"
         href="/litters"

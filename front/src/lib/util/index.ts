@@ -6,7 +6,7 @@ export function longBreed(breed: Breed): LongBreed {
             return "Australian Shepherd";
         case Breed.BERNESE:
             return "Bernese Mountain Dog";
-        case Breed.ENTLEBUCHER:
-            return "Entlebucher Mountain Dog";
+        case Breed.ENTLEBUCH:
+            return "Entlebuch Cattle Dog";
     }
 }

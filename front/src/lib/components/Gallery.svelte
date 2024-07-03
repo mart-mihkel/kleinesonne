@@ -1,39 +1,68 @@
 <script lang="ts">
     import type { Image } from "$lib/types";
+    import { Next, Prev, Close } from "$lib/components/svg";
 
     export let images: Image[];
 
     let count = images.length;
     let show = false;
-    let i = 0;
-    $: active = images[i];
+    let idx = 0;
+    $: active = images[idx];
 
-    function open(j: number) {
+    function open(i: number) {
         show = true;
-        i = j;
+        idx = i;
+    }
+
+    function close(e?: KeyboardEvent) {
+        if (e && e.key !== "Escape") {
+            return;
+        }
+
+        show = false;
     }
 </script>
+
+<svelte:window on:keydown={(e) => close(e)} />
 
 {#if show}
     <div
         class="fixed left-0 top-0 size-full overflow-hidden bg-black bg-opacity-50"
     >
-        <div class="flex size-full flex-row items-center justify-center gap-4">
-            <button on:click={() => (i = (i - 1 + count) % count)}>prev</button>
-            <img src={active.src} alt={active.alt} />
-            <button on:click={() => (i = (i + 1) % count)}>next</button>
-            <button
-                class="absolute right-2 top-2"
-                on:click={() => (show = false)}
-            >
-                close
+        <div class="flex size-full flex-row items-center justify-center">
+            <button on:click={() => (idx = (idx - 1 + count) % count)}>
+                <Prev />
+            </button>
+            <div class="flex flex-col p-4">
+                <img src={active.src} alt={active.alt} />
+                <div class="flex flex-row justify-center gap-3 p-4">
+                    {#each images as _img, i}
+                        <button
+                            on:click={() => open(i)}
+                            class="size-3 rounded-full transition-all duration-300"
+                            class:bg-white={i === idx}
+                            class:bg-gray-300={i !== idx}
+                            class:opacity-50={i !== idx}
+                        ></button>
+                    {/each}
+                </div>
+            </div>
+            <button on:click={() => (idx = (idx + 1) % count)}>
+                <Next />
+            </button>
+            <button class="absolute right-2 top-2" on:click={() => close()}>
+                <Close />
             </button>
         </div>
     </div>
-{:else}
-    {#each images as { src, alt }, j}
-        <button on:click={() => open(j)}>
-            <img {src} {alt} loading="lazy" />
+{/if}
+<div class="flex w-full flex-row flex-wrap">
+    {#each images as { src, alt }, i}
+        <button
+            class="aspect-square w-1/2 p-1 lg:w-1/3"
+            on:click={() => open(i)}
+        >
+            <img class="size-full object-cover" {src} {alt} loading="lazy" />
         </button>
     {/each}
-{/if}
+</div>

@@ -28,6 +28,12 @@ export type Dog = {
     dod?: Date;
 }
 
+export type Family = {
+    name: string;
+    father?: Family;
+    mother?: Family;
+};
+
 export type Puppy = {
     image: Image;
     name: string;

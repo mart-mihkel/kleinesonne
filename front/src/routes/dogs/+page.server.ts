@@ -1,7 +1,9 @@
 import { type Image } from "$lib/types";
-import type { PageLoad } from "./$types";
+import type { PageServerLoad } from "./$types";
 
-export const load: PageLoad = () => {
+export const prerender = true;
+
+export const load: PageServerLoad = () => {
 	const aus: Image[] = [
 		{ src: "/rand.webp", alt: "rand" },
 		{ src: "/rand.webp", alt: "rand" },

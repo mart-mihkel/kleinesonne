@@ -3,14 +3,8 @@
     import Thumbnail from "./Thumbnail.svelte";
 
     export let litter: Litter;
-    export let ad = false;
 
-    const { name, parents } = litter;
-    const puppies = !ad
-        ? litter.puppies
-        : litter.puppies.filter(
-              (p) => p.availability !== Availability.UNAVAILABLE,
-          );
+    const { name, parents, puppies } = litter;
 </script>
 
 <div

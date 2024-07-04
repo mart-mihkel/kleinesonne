@@ -16,7 +16,9 @@
         {:else}
             <h2 class="p-4 text-center text-4xl">Available puppies</h2>
             {#each litters as litter}
-                <Litter {litter} />
+                <div class="border-t border-black pb-10 dark:border-white">
+                    <Litter {litter} />
+                </div>
             {/each}
             <p>
                 The puppies will leave for their new homes healthy, having been

@@ -64,7 +64,7 @@
             orci id, fermentum neque. Proin bibendum id ipsum et eleifend.
         </p>
     </div>
-    <div class="flex flex-col border-t border-t-black dark:border-t-white">
+    <div class="flex flex-col border-t border-black dark:border-white">
         <h2 class="p-4 text-center text-4xl">Entlebuch Cattle Dog</h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
@@ -121,7 +121,7 @@
             orci id, fermentum neque. Proin bibendum id ipsum et eleifend.
         </p>
     </div>
-    <div class="flex flex-col border-t border-t-black dark:border-t-white">
+    <div class="flex flex-col border-t border-black dark:border-white">
         <h2 class="p-4 text-center text-4xl">Bernese Mounatin Dog</h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a

@@ -110,7 +110,7 @@
 <h2 class="p-4 text-center text-4xl">Litters</h2>
 <div class="flex flex-col md:flex-row md:px-[5%] lg:px-[25%]">
     <div
-        class="relative flex flex-col border-t border-t-black md:w-1/4 dark:border-t-white"
+        class="relative flex flex-col border-t border-black md:w-1/4 dark:border-white"
     >
         {#if extended}
             <div class="flex flex-col" transition:slide>
@@ -149,7 +149,7 @@
             </button>
         {/if}
     </div>
-    <div class="border-t border-t-black md:w-3/4 dark:border-t-white">
+    <div class="border-t border-black md:w-3/4 dark:border-white">
         {#await litter}
             <Loading text={"Loading litter..."} />
         {:then litter}

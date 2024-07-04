@@ -7,9 +7,7 @@
     const { name, images, parents, puppies } = litter;
 </script>
 
-<div
-    class="flex flex-col items-center gap-2 border-t border-t-black py-4 dark:border-t-white"
->
+<div class="flex flex-col items-center gap-2 py-4">
     <a href="/litters/{name}" class="text-2xl">
         Litter {name}
     </a>

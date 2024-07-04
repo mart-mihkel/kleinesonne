@@ -14,7 +14,7 @@
     {:then news}
         {#each news as { title, date, text, images }}
             <div
-                class="flex flex-col items-center border-t border-t-black pb-2 dark:border-t-white"
+                class="flex flex-col items-center border-t border-black pb-2 dark:border-white"
             >
                 <h3 class="pt-2 text-center text-2xl">{title}</h3>
                 <p class="pb-2">{date.toDateString()}</p>

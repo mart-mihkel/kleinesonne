@@ -28,23 +28,23 @@
                             <td>Nickname:</td>
                             <td>{nickname}</td>
                         </tr>
-                        <tr class="border-t border-t-black dark:border-t-white">
+                        <tr class="border-t border-black dark:border-white">
                             <td>Father:</td>
                             <td>{father}</td>
                         </tr>
-                        <tr class="border-t border-t-black dark:border-t-white">
+                        <tr class="border-t border-black dark:border-white">
                             <td>Mother:</td>
                             <td>{mother}</td>
                         </tr>
-                        <tr class="border-t border-t-black dark:border-t-white">
+                        <tr class="border-t border-black dark:border-white">
                             <td>Date of birth:</td>
                             <td>{dob.toDateString()}</td>
                         </tr>
-                        <tr class="border-t border-t-black dark:border-t-white">
+                        <tr class="border-t border-black dark:border-white">
                             <td>Breed:</td>
                             <td>{longBreed(breed)}</td>
                         </tr>
-                        <tr class="border-t border-t-black dark:border-t-white">
+                        <tr class="border-t border-black dark:border-white">
                             <td>Gender:</td>
                             <td>{gender === Gender.MALE ? "Male" : "Female"}</td
                             >
@@ -53,9 +53,7 @@
                 </table>
             </div>
         </div>
-        <div
-            class="flex flex-row border-y border-y-black pb-4 dark:border-y-white"
-        >
+        <div class="flex flex-row border-y border-black pb-4 dark:border-white">
             <div class="flex w-full flex-col">
                 <h2 class="p-4 text-center text-4xl">Health</h2>
                 <ul class="list-disc pl-[25%]">
@@ -77,7 +75,7 @@
     {:catch}
         <Error message="Failed to dog info, something went wrong" />
     {/await}
-    <div class="flex flex-col border-t border-t-black pb-4 dark:border-t-white">
+    <div class="flex flex-col border-t border-black pb-4 dark:border-white">
         <h2 class="p-4 text-center text-4xl">Familiy Tree</h2>
         {#await data.tree}
             <Loading text={"Loading family tree..."} />

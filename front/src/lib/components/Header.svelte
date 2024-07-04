@@ -70,7 +70,7 @@
     </a>
 </header>
 <nav
-    class="flex flex-row gap-8 border-b border-b-black md:px-[5%] lg:px-[25%] dark:border-b-white dark:bg-black dark:text-white"
+    class="flex flex-row gap-8 border-b border-black md:px-[5%] lg:px-[25%] dark:border-white dark:bg-black dark:text-white"
 >
     <Dropdown href="/puppies" items={puppies}>Puppies</Dropdown>
     <Dropdown href="/dogs" items={dogs}>Dogs</Dropdown>

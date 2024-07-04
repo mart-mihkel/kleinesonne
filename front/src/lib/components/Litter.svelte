@@ -27,5 +27,5 @@
         </div>
     {/if}
     <h3 class="text-center text-2xl">Parents</h3>
-    <img src={parents.src} alt={parents.alt} />
+    <img src={parents.src} alt={parents.alt} loading="lazy" />
 </div>

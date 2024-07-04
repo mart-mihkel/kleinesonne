@@ -17,6 +17,7 @@
                 class="size-full object-cover"
                 src="/rand.webp"
                 alt="australian shepherd"
+                loading="lazy"
             />
         </div>
         <p
@@ -36,6 +37,7 @@
                 class="size-full object-cover"
                 src="/viisakas.webp"
                 alt="entlebuch"
+                loading="lazy"
             />
         </div>
         <p
@@ -55,6 +57,7 @@
                 class="size-full object-cover"
                 src="/usin.webp"
                 alt="bernese"
+                loading="lazy"
             />
         </div>
         <p

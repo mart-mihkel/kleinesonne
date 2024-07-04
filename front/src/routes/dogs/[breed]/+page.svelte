@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Thumbnail, Loading, Error } from "$lib/components";
+    import { Thumbnail, Loading, Empty, Error } from "$lib/components";
     import { Breed } from "$lib/types";
     import { page } from "$app/stores";
     import type { PageData } from "./$types";
@@ -19,14 +19,18 @@
             {#await data.male}
                 <Loading text="Loading dogs..." />
             {:then dogs}
-                {#each dogs as { name, nickname, thumbnail }}
-                    <Thumbnail
-                        href={`${breed}/${nickname}`}
-                        {name}
-                        {nickname}
-                        image={thumbnail}
-                    />
-                {/each}
+                {#if dogs.length > 0}
+                    {#each dogs as { name, nickname, thumbnail }}
+                        <Thumbnail
+                            href={`${breed}/${nickname}`}
+                            {name}
+                            {nickname}
+                            image={thumbnail}
+                        />
+                    {/each}
+                {:else}
+                    <Empty />
+                {/if}
             {:catch}
                 <Error message="Failed to load dogs, something went wrong" />
             {/await}
@@ -36,14 +40,18 @@
             {#await data.female}
                 <Loading text={"Loading dogs..."} />
             {:then dogs}
-                {#each dogs as { name, nickname, thumbnail }}
-                    <Thumbnail
-                        href={`${breed}/${nickname}`}
-                        {name}
-                        {nickname}
-                        image={thumbnail}
-                    />
-                {/each}
+                {#if dogs.length > 0}
+                    {#each dogs as { name, nickname, thumbnail }}
+                        <Thumbnail
+                            href={`${breed}/${nickname}`}
+                            {name}
+                            {nickname}
+                            image={thumbnail}
+                        />
+                    {/each}
+                {:else}
+                    <Empty />
+                {/if}
             {:catch}
                 <Error message="Failed to load dogs, something went wrong" />
             {/await}
@@ -53,14 +61,18 @@
             {#await data.retired}
                 <Loading text={"Loading dogs..."} />
             {:then dogs}
-                {#each dogs as { name, nickname, thumbnail }}
-                    <Thumbnail
-                        href={`${breed}/${nickname}`}
-                        {name}
-                        {nickname}
-                        image={thumbnail}
-                    />
-                {/each}
+                {#if dogs.length > 0}
+                    {#each dogs as { name, nickname, thumbnail }}
+                        <Thumbnail
+                            href={`${breed}/${nickname}`}
+                            {name}
+                            {nickname}
+                            image={thumbnail}
+                        />
+                    {/each}
+                {:else}
+                    <Empty />
+                {/if}
             {:catch}
                 <Error message="Failed to load dogs, something went wrong" />
             {/await}

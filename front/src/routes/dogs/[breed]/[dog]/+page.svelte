@@ -17,6 +17,7 @@
                     class="size-full object-cover"
                     src={thumbnail.src}
                     alt={thumbnail.alt}
+                    loading="lazy"
                 />
             </div>
             <div class="flex flex-col md:w-1/2">

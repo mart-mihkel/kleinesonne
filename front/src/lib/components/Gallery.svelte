@@ -34,7 +34,7 @@
                 <Prev />
             </button>
             <div class="flex flex-col p-4">
-                <img src={active.src} alt={active.alt} />
+                <img src={active.src} alt={active.alt} loading="lazy" />
                 <div class="flex flex-row justify-center gap-3 p-4">
                     {#each images as _img, i}
                         <button

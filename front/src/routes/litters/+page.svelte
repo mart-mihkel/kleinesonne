@@ -2,6 +2,7 @@
     import type { PageData } from "./$types";
     import { Litter as LitterDisplay, Loading, Error } from "$lib/components";
     import { Availability, Breed, Gender, type Litter } from "$lib/types";
+    import { slide } from "svelte/transition";
 
     const LITTERS: Litter[] = [
         {
@@ -62,11 +63,11 @@
         },
     ];
 
-    // TODO: mobile list
     export let data: PageData;
 
     let litter: Promise<Litter | undefined>;
     let active = "";
+    let extended = true;
 
     async function fetchLitter(name: string) {
         const match = LITTERS.find((l) => l.name === name);
@@ -85,30 +86,44 @@
 <h2 class="p-4 text-center text-4xl">Litters</h2>
 <div class="flex flex-col md:flex-row md:px-[5%] lg:px-[25%]">
     <div
-        class="hidden flex-col border-t border-t-black md:flex md:w-1/4 dark:border-t-white"
+        class="relative flex flex-col border-t border-t-black md:w-1/4 dark:border-t-white"
     >
-        {#await data.names}
-            <Loading text={"Loading litter names..."} />
-        {:then names}
-            {#each names as name}
-                <button
-                    class="text-nowrap p-2"
-                    class:bg-black={active === name}
-                    class:text-white={active === name}
-                    class:dark:bg-white={active === name}
-                    class:dark:text-black={active === name}
-                    class:hover:bg-gray-300={active !== name}
-                    class:hover:dark:bg-gray-600={active !== name}
-                    on:click={() => (active = name)}
-                >
-                    {name}
-                </button>
-            {/each}
-        {:catch}
-            <Error
-                message="Failed to load litter names, something went wrong"
-            />
-        {/await}
+        {#if extended}
+            <div class="flex flex-col" transition:slide>
+                {#await data.names}
+                    <Loading text={"Loading litter names..."} />
+                {:then names}
+                    <button
+                        class="p-2 md:hidden"
+                        on:click={() => (extended = false)}
+                    >
+                        <p>Close litters menu</p>
+                    </button>
+                    {#each names as name}
+                        <button
+                            class="text-nowrap p-2"
+                            class:bg-black={active === name}
+                            class:text-white={active === name}
+                            class:dark:bg-white={active === name}
+                            class:dark:text-black={active === name}
+                            class:hover:bg-gray-300={active !== name}
+                            class:hover:dark:bg-gray-600={active !== name}
+                            on:click={() => (active = name)}
+                        >
+                            {name}
+                        </button>
+                    {/each}
+                {:catch}
+                    <Error
+                        message="Failed to load litter names, something went wrong"
+                    />
+                {/await}
+            </div>
+        {:else}
+            <button class="p-2" on:click={() => (extended = true)}>
+                Open litters menu
+            </button>
+        {/if}
     </div>
     <div class="border-t border-t-black md:w-3/4 dark:border-t-white">
         {#await litter}

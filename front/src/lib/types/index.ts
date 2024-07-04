@@ -10,7 +10,7 @@ export type DogPreview = {
     breed: Breed;
     gender: Gender;
     alive: boolean;
-}
+};
 
 export type Dog = {
     thumbnail: Image;
@@ -26,7 +26,7 @@ export type Dog = {
     health: string[];
     dob: Date;
     dod?: Date;
-}
+};
 
 export type Family = {
     name: string;
@@ -39,26 +39,27 @@ export type Puppy = {
     name: string;
     gender: Gender;
     availability: Availability;
-}
+};
 
 export type Litter = {
     parents: Image;
     name: string;
     breed: Breed;
-    puppies: Array<Puppy>;
-}
+    images: Image[];
+    puppies: Puppy[];
+};
 
 export type NewsPiece = {
     title: string;
     date: Date;
     images: Image[];
     text: string;
-}
+};
 
 export type Image = {
     src: string;
     alt: string;
-}
+};
 
 export enum Gender {
     MALE,

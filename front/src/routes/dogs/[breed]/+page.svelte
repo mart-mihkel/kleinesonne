@@ -24,8 +24,7 @@
                         href={`${breed}/${nickname}`}
                         {name}
                         {nickname}
-                        src={thumbnail.src}
-                        alt={thumbnail.alt}
+                        image={thumbnail}
                     />
                 {/each}
             {:catch}
@@ -42,8 +41,7 @@
                         href={`${breed}/${nickname}`}
                         {name}
                         {nickname}
-                        src={thumbnail.src}
-                        alt={thumbnail.alt}
+                        image={thumbnail}
                     />
                 {/each}
             {:catch}
@@ -60,8 +58,7 @@
                         href={`${breed}/${nickname}`}
                         {name}
                         {nickname}
-                        src={thumbnail.src}
-                        alt={thumbnail.alt}
+                        image={thumbnail}
                     />
                 {/each}
             {:catch}

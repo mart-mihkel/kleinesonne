@@ -9,6 +9,7 @@
             name: "Entlebuch Marakratid",
             parents: { src: "/parents.webp", alt: "parents" },
             breed: Breed.ENTLEBUCH,
+            images: [],
             puppies: [
                 {
                     image: { src: "/usin.webp", alt: "usin" },
@@ -40,6 +41,15 @@
             name: "Australian Mürakarud",
             parents: { src: "/parents_aasa.webp", alt: "parents aasa" },
             breed: Breed.AUSTRALIAN,
+            images: [
+                { src: "/rand.webp", alt: "rand" },
+                { src: "/rand.webp", alt: "rand" },
+                { src: "/rand.webp", alt: "rand" },
+                { src: "/rand.webp", alt: "rand" },
+                { src: "/rand.webp", alt: "rand" },
+                { src: "/rand.webp", alt: "rand" },
+                { src: "/rand.webp", alt: "rand" },
+            ],
             puppies: [
                 {
                     image: { src: "/rand.webp", alt: "rand" },
@@ -58,6 +68,20 @@
                     name: "Kleine Sonne All Might",
                     gender: Gender.FEMALE,
                     availability: Availability.UNAVAILABLE,
+                },
+            ],
+        },
+        {
+            name: "Olematud Olendid",
+            parents: { src: "", alt: "pole olemas" },
+            breed: Breed.AUSTRALIAN,
+            images: [],
+            puppies: [
+                {
+                    image: { src: "", alt: "mitte midagi" },
+                    name: "Kleine Sonne Not Real",
+                    gender: Gender.MALE,
+                    availability: Availability.CO_OWNERSHIP,
                 },
             ],
         },

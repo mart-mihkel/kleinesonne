@@ -6,6 +6,7 @@ const LITTERS: Litter[] = [
         name: "Entlebuch Marakratid",
         parents: { src: "/parents.webp", alt: "parents" },
         breed: Breed.ENTLEBUCH,
+        images: [],
         puppies: [
             {
                 image: { src: "/usin.webp", alt: "usin" },
@@ -37,6 +38,15 @@ const LITTERS: Litter[] = [
         name: "Australian Mürakarud",
         parents: { src: "/parents_aasa.webp", alt: "parents aasa" },
         breed: Breed.AUSTRALIAN,
+        images: [
+            { src: "/rand.webp", alt: "rand" },
+            { src: "/rand.webp", alt: "rand" },
+            { src: "/rand.webp", alt: "rand" },
+            { src: "/rand.webp", alt: "rand" },
+            { src: "/rand.webp", alt: "rand" },
+            { src: "/rand.webp", alt: "rand" },
+            { src: "/rand.webp", alt: "rand" },
+        ],
         puppies: [
             {
                 image: { src: "/rand.webp", alt: "rand" },
@@ -58,6 +68,20 @@ const LITTERS: Litter[] = [
             },
         ],
     },
+    {
+        name: "Olematud Olendid",
+        parents: { src: "", alt: "pole olemas" },
+        breed: Breed.AUSTRALIAN,
+        images: [],
+        puppies: [
+            {
+                image: { src: "", alt: "mitte midagi" },
+                name: "Kleine Sonne Not Real",
+                gender: Gender.MALE,
+                availability: Availability.CO_OWNERSHIP,
+            },
+        ],
+    },
 ];
 
 export const load: PageServerLoad = () => {
@@ -65,12 +89,14 @@ export const load: PageServerLoad = () => {
 };
 
 async function fetchAvailablePuppies(): Promise<Litter[]> {
-    const litters = LITTERS.map(l => {
-        const available = l.puppies.filter(p => p.availability !== Availability.UNAVAILABLE);
+    const litters = LITTERS.map((l) => {
+        const available = l.puppies.filter(
+            (p) => p.availability !== Availability.UNAVAILABLE,
+        );
         return { ...l, puppies: available };
     });
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(() => resolve(litters), 3000);
     });
 }

@@ -19,7 +19,15 @@ const SALSA: Dog = {
     gender: Gender.FEMALE,
     alive: true,
     awards: ["World Winner show 2017 Class Winner", "3 CACIB", "2 res. CACIB"],
-    health: ["HD-AA", "ED-00", "MDR1 +/+", "CEA carrier", "HC clear by parentage", "PRA clear by parentage", "Eyes clear"],
+    health: [
+        "HD-AA",
+        "ED-00",
+        "MDR1 +/+",
+        "CEA carrier",
+        "HC clear by parentage",
+        "PRA clear by parentage",
+        "Eyes clear",
+    ],
 };
 
 const KATJA: Dog = {
@@ -40,7 +48,15 @@ const KATJA: Dog = {
     gender: Gender.FEMALE,
     alive: true,
     awards: ["World Winner show 2018 Class Winner", "CACIB", "Jäätise Meister"],
-    health: ["HD-AA", "ED-00", "MDR1 +/+", "CEA carrier", "Built different", "PRA clear by parentage", "Eyes soggy"],
+    health: [
+        "HD-AA",
+        "ED-00",
+        "MDR1 +/+",
+        "CEA carrier",
+        "Built different",
+        "PRA clear by parentage",
+        "Eyes soggy",
+    ],
 };
 
 const FAMILY: Family = {
@@ -50,26 +66,26 @@ const FAMILY: Family = {
         father: {
             name: "Dreamstreets Season Ticket",
             father: { name: "Briarbrooks Valedictorian" },
-            mother: { name: "Mysharas Shameless" }
+            mother: { name: "Mysharas Shameless" },
         },
         mother: {
             name: "Mysharas Oh What a Night",
             father: { name: "Briarbrooks Copyright" },
             mother: { name: "Briarbrooks Finerthingsinlife" },
-        }
+        },
     },
     mother: {
         name: "Bleuroyal Creamy Vodkanilla",
         father: {
             name: "Thornapple Uncle Sam Wants You",
             father: { name: "Thornapple Single Barrel" },
-            mother: { name: "Thornapple Russian To a Party" }
+            mother: { name: "Thornapple Russian To a Party" },
         },
         mother: {
             name: "Thornapple Peachy Keen",
             father: { name: "Thornapple Hot Temptation" },
-            mother: { name: "Thornapple Pieces Of My Hearth" }
-        }
+            mother: { name: "Thornapple Pieces Of My Hearth" },
+        },
     },
 };
 
@@ -78,19 +94,19 @@ export const load: PageServerLoad = async ({ params }) => {
     return {
         dog: fetchDog(name),
         tree: fetchFamily(name, 4),
-    }
+    };
 };
 
 async function fetchDog(name: string): Promise<Dog> {
     const dog = name === "Salsa" ? SALSA : KATJA;
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(() => resolve(dog), 3000);
     });
 }
 
 async function fetchFamily(_name: string, _depth: number): Promise<Family> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(() => resolve(FAMILY), 5000);
     });
 }

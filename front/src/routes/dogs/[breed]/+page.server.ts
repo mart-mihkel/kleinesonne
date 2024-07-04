@@ -26,24 +26,26 @@ export const load: PageServerLoad = async ({ params }) => {
         male: fetchBreedDogs(breed, Gender.MALE),
         female: fetchBreedDogs(breed, Gender.FEMALE),
         retired: fetchBreedDogsRetired(breed),
-    }
+    };
 };
 
-async function fetchBreedDogs(breed: Breed, gender?: Gender): Promise<DogPreview[]> {
-    const dogs = DOGS
-        .filter(d => d.breed === breed)
-        .filter(d => d.alive)
-        .filter(d => d.gender === gender);
+async function fetchBreedDogs(
+    breed: Breed,
+    gender?: Gender,
+): Promise<DogPreview[]> {
+    const dogs = DOGS.filter((d) => d.breed === breed)
+        .filter((d) => d.alive)
+        .filter((d) => d.gender === gender);
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(() => resolve(dogs), 3000);
     });
 }
 
 async function fetchBreedDogsRetired(breed: Breed): Promise<DogPreview[]> {
-    const dogs = DOGS.filter(d => d.breed === breed).filter(d => !d.alive);
+    const dogs = DOGS.filter((d) => d.breed === breed).filter((d) => !d.alive);
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(() => resolve(dogs), 2000);
     });
 }

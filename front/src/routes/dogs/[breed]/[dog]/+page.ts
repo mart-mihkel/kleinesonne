@@ -1,8 +1,8 @@
 import { Breed, Gender, type Dog, type Family } from "$lib/types";
 import type { PageLoad } from "./$types";
 
-export const load: PageLoad = () => {
-    const dog: Dog = {
+export const load: PageLoad = ({ params }) => {
+    const dog1: Dog = {
         thumbnail: { src: "/rand.webp", alt: "rand" },
         images: [
             { src: "/rand.webp", alt: "rand" },
@@ -21,6 +21,27 @@ export const load: PageLoad = () => {
         alive: true,
         awards: ["World Winner show 2017 Class Winner", "3 CACIB", "2 res. CACIB"],
         health: ["HD-AA", "ED-00", "MDR1 +/+", "CEA carrier", "HC clear by parentage", "PRA clear by parentage", "Eyes clear"],
+    };
+
+    const dog2: Dog = {
+        thumbnail: { src: "/viisakas.webp", alt: "rand" },
+        images: [
+            { src: "/viisakas.webp", alt: "rand" },
+            { src: "/viisakas.webp", alt: "rand" },
+            { src: "/viisakas.webp", alt: "rand" },
+            { src: "/viisakas.webp", alt: "rand" },
+            { src: "/viisakas.webp", alt: "rand" },
+        ],
+        name: "Korolevstvo Gornih Psov Okatava",
+        nickname: "Katja",
+        father: "Peak River Fly Glossy Swiftlet",
+        mother: "Seventy Seven Silver Bullet",
+        dob: new Date(2014, 5, 22),
+        breed: Breed.ENTLEBUCH,
+        gender: Gender.FEMALE,
+        alive: true,
+        awards: ["World Winner show 2018 Class Winner", "CACIB", "Jäätise Meister"],
+        health: ["HD-AA", "ED-00", "MDR1 +/+", "CEA carrier", "Built different", "PRA clear by parentage", "Eyes soggy"],
     };
 
     const family: Family = {
@@ -52,6 +73,8 @@ export const load: PageLoad = () => {
             }
         },
     };
+
+    const dog = params.dog === "Salsa" ? dog1 : dog2;
 
     return { dog, family };
 };

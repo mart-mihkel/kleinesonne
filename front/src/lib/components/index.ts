@@ -8,4 +8,14 @@ import Loading from "./Loading.svelte";
 import Error from "./Error.svelte";
 import Empty from "./Empty.svelte";
 
-export { Header, Footer, Dropdown, Thumbnail, Litter, Gallery, Loading, Error, Empty };
+export {
+    Header,
+    Footer,
+    Dropdown,
+    Thumbnail,
+    Litter,
+    Gallery,
+    Loading,
+    Error,
+    Empty,
+};

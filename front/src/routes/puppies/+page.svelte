@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { PageData } from "./$types";
-    import { Litter, Loading, Error } from "$lib/components";
+    import { Litter, Loading, Error, Empty } from "$lib/components";
 
     export let data: PageData;
 </script>
@@ -13,6 +13,7 @@
             <h2 class="p-4 text-center text-4xl">
                 There are no puppies available right now
             </h2>
+            <Empty />
         {:else}
             <h2 class="p-4 text-center text-4xl">Available puppies</h2>
             {#each litters as litter}

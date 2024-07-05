@@ -3,7 +3,7 @@
     import type { PageData } from "./$types";
     import { page } from "$app/stores";
     import { longBreed } from "$lib/util";
-    import { Litter, Loading, Error } from "$lib/components";
+    import { Litter, Loading, Error, Empty } from "$lib/components";
 
     export let data: PageData;
 
@@ -19,6 +19,7 @@
             <h2 class="p-4 text-center text-4xl">
                 There are no {longBreed(breed)} puppies available right now
             </h2>
+            <Empty />
         {:else}
             <h2 class="p-4 text-center text-4xl">
                 Available {longBreed(breed)} puppies

@@ -1,9 +1,33 @@
 <script lang="ts">
     import { Gallery } from "$lib/components";
-    import { Breed } from "$lib/types";
-    import type { PageData } from "./$types";
+    import { Breed, type Image } from "$lib/types";
 
-    export let data: PageData;
+    import ausAdult from "$lib/assets/aus-adult.jpg";
+    import ausPuppy from "$lib/assets/aus-puppy.jpg";
+    import ausDraw from "$lib/assets/aus-draw.jpg";
+    const aus: Image[] = [
+        { src: ausAdult, alt: "Adult merle Australian Shepherd" },
+        { src: ausPuppy, alt: "2 month old Australian Shepherd litter" },
+        { src: ausDraw, alt: "Standard Australian Shepherd pencil drawing" },
+    ];
+
+    import entAdult from "$lib/assets/ent-adult.jpg";
+    import entPuppy from "$lib/assets/ent-puppy.jpg";
+    import entDraw from "$lib/assets/ent-draw.jpg";
+    const ent: Image[] = [
+        { src: entAdult, alt: "Adult Entlebuch Cattle Dog" },
+        { src: entPuppy, alt: "Month old Entlebuch Cattle Dog puppy" },
+        { src: entDraw, alt: "Standard Entlebuch Cattle Dog pencil drawing" },
+    ];
+
+    import berAdult from "$lib/assets/ber-adult.jpg";
+    import berPuppy from "$lib/assets/ber-puppy.jpg";
+    import berDraw from "$lib/assets/ber-draw.jpg";
+    const ber: Image[] = [
+        { src: berAdult, alt: "Adult Bernese Mountain Dog" },
+        { src: berPuppy, alt: "Month old Bernese Mountain Dog puppies" },
+        { src: berDraw, alt: "Standard Bernsese Mountain Dog pencil drawing" },
+    ];
 </script>
 
 <div class="flex flex-col gap-8 pb-4 md:px-[5%] lg:px-[25%]">
@@ -24,7 +48,7 @@
                 FCI Breed Standard
             </a>
         </div>
-        <Gallery images={data.aus} />
+        <Gallery images={aus} />
         <p class="text-justify">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
             egestas ultrices tincidunt. Ut vehicula tellus rhoncus interdum
@@ -81,7 +105,7 @@
                 FCI Breed Standard
             </a>
         </div>
-        <Gallery images={data.entle} />
+        <Gallery images={ent} />
         <p class="text-justify">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
             egestas ultrices tincidunt. Ut vehicula tellus rhoncus interdum
@@ -138,7 +162,7 @@
                 FCI Breed Standard
             </a>
         </div>
-        <Gallery images={data.bern} />
+        <Gallery images={ber} />
         <p class="text-justify">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
             egestas ultrices tincidunt. Ut vehicula tellus rhoncus interdum

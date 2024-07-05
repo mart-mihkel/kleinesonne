@@ -36,7 +36,7 @@
             <div class="flex flex-col p-4">
                 <img src={active.src} alt={active.alt} loading="lazy" />
                 <div class="flex flex-row justify-center gap-3 p-4">
-                    {#each images as _img, i}
+                    {#each [...Array(images.length).keys()] as i}
                         <button
                             on:click={() => open(i)}
                             class="size-3 rounded-full transition-all duration-300"

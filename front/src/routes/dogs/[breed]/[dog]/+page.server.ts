@@ -93,7 +93,7 @@ export const load: PageServerLoad = async ({ params }) => {
     const name = params.dog;
     return {
         dog: fetchDog(name),
-        tree: fetchFamily(name, 4),
+        tree: fetchFamily(),
     };
 };
 
@@ -105,7 +105,7 @@ async function fetchDog(name: string): Promise<Dog> {
     });
 }
 
-async function fetchFamily(_name: string, _depth: number): Promise<Family> {
+async function fetchFamily(): Promise<Family> {
     return new Promise((resolve) => {
         setTimeout(() => resolve(FAMILY), 5000);
     });

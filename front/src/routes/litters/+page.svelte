@@ -104,7 +104,9 @@
 
     data.names.then((ns) => (active = ns[0]));
 
-    $: active, fetchLitter(active);
+    $: if (active) {
+        fetchLitter(active);
+    }
 </script>
 
 <h2 class="p-4 text-center text-4xl">Litters</h2>
@@ -153,11 +155,7 @@
         {#await litter}
             <Loading text={"Loading litter..."} />
         {:then litter}
-            {#if litter === undefined}
-                <h2 class="py-4 text-center text-2xl">
-                    There is no such litter
-                </h2>
-            {:else}
+            {#if litter !== undefined}
                 <LitterDisplay {litter} />
             {/if}
         {:catch}

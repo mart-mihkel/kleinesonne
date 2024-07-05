@@ -7,7 +7,6 @@
 
     export let data: PageData;
 
-    // eslint-disable-next-line svelte/valid-compile
     $: breed = $page.params.breed as Breed;
 </script>
 

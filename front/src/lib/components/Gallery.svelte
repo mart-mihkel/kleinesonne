@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { Image } from "$lib/types";
     import { Next, Prev, Close } from "$lib/components/svg";
+    import Img from "@zerodevx/svelte-img";
 
     export let images: Image[];
 

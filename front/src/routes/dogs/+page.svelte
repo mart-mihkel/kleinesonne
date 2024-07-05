@@ -3,27 +3,27 @@
     import { Breed, type Image } from "$lib/types";
     import { format } from "svelte-i18n";
 
-    import ausAdult from "$lib/assets/aus-adult.jpg";
-    import ausPuppy from "$lib/assets/aus-puppy.jpg";
-    import ausDraw from "$lib/assets/aus-draw.jpg";
+    import ausAdult from "$lib/assets/aus-adult.jpg?as=run";
+    import ausPuppy from "$lib/assets/aus-puppy.jpg?as=run";
+    import ausDraw from "$lib/assets/aus-draw.jpg?as=run";
     const aus: Image[] = [
         { src: ausAdult, alt: "Adult merle Australian Shepherd" },
         { src: ausPuppy, alt: "7 week old Australian Shepherd puppies" },
         { src: ausDraw, alt: "Standard Australian Shepherd pencil drawing" },
     ];
 
-    import entAdult from "$lib/assets/ent-adult.jpg";
-    import entPuppy from "$lib/assets/ent-puppy.jpg";
-    import entDraw from "$lib/assets/ent-draw.jpg";
+    import entAdult from "$lib/assets/ent-adult.jpg?as=run";
+    import entPuppy from "$lib/assets/ent-puppy.jpg?as=run";
+    import entDraw from "$lib/assets/ent-draw.jpg?as=run";
     const ent: Image[] = [
         { src: entAdult, alt: "Adult Entlebuch Cattle Dog" },
         { src: entPuppy, alt: "Entlebuch Cattle Dog puppy" },
         { src: entDraw, alt: "Standard Entlebuch Cattle Dog pencil drawing" },
     ];
 
-    import berAdult from "$lib/assets/ber-adult.jpg";
-    import berPuppy from "$lib/assets/ber-puppy.jpg";
-    import berDraw from "$lib/assets/ber-draw.jpg";
+    import berAdult from "$lib/assets/ber-adult.jpg?as=run";
+    import berPuppy from "$lib/assets/ber-puppy.jpg?as=run";
+    import berDraw from "$lib/assets/ber-draw.jpg?as=run";
     const ber: Image[] = [
         { src: berAdult, alt: "Adult Bernese Mountain Dog" },
         { src: berPuppy, alt: "Month old Bernese Mountain Dog puppies" },

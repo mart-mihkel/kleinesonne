@@ -15,12 +15,12 @@
         <Loading text={$format("puppies.loading_breed", options)} />
     {:then litters}
         {#if litters.length === 0}
-            <h2 class="p-4 text-center text-4xl">
+            <h2 class="p-4 text-center text-4xl font-bold">
                 {$format("puppies.unavailable_breed", options)}
             </h2>
             <Empty />
         {:else}
-            <h2 class="p-4 text-center text-4xl">
+            <h2 class="p-4 text-center text-4xl font-bold">
                 {$format("puppies.available_breed", options)}
             </h2>
             {#each litters as litter}

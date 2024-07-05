@@ -39,10 +39,20 @@
         <div
             in:fly={{ y: -24, duration: 200 }}
             out:fly={{ y: -24, duration: 200 }}
-            class="absolute right-0 top-6 gap-1 rounded border border-black bg-white px-1 shadow-md dark:border-white dark:bg-black dark:shadow-white"
+            class="absolute right-0 top-8 gap-1 rounded border border-black bg-white px-1 shadow-md dark:border-white dark:bg-black dark:shadow-white"
         >
-            <button on:click={en}>en</button>
-            <button on:click={ee}>ee</button>
+            <button
+                class="text-lg font-semibold transition-colors duration-300 hover:text-gray-500"
+                on:click={en}
+            >
+                en
+            </button>
+            <button
+                class="text-lg font-semibold transition-colors duration-300 hover:text-gray-500"
+                on:click={ee}
+            >
+                ee
+            </button>
         </div>
     {/if}
 </div>

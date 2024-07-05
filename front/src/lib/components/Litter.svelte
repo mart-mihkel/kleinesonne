@@ -9,7 +9,7 @@
 </script>
 
 <div class="flex flex-col items-center gap-2 py-4">
-    <a href="/litters/{name}" class="text-2xl">
+    <a href="/litters/{name}" class="text-2xl font-semibold">
         {$format("litter.litter", { values: { name } })}
     </a>
     <div class="flex w-full flex-row flex-wrap">
@@ -20,11 +20,15 @@
         {/each}
     </div>
     {#if images.length > 0}
-        <h3 class="text-center text-2xl">{$format("litter.gallery")}</h3>
+        <h3 class="text-center text-2xl font-semibold">
+            {$format("litter.gallery")}
+        </h3>
         <div class="border-y border-black dark:border-white">
             <Gallery {images} />
         </div>
     {/if}
-    <h3 class="text-center text-2xl">{$format("litter.parents")}</h3>
+    <h3 class="text-center text-2xl font-semibold">
+        {$format("litter.parents")}
+    </h3>
     <img src={parents.src} alt={parents.alt} loading="lazy" />
 </div>

@@ -8,5 +8,6 @@ import Facebook from "./Facebook.svelte";
 import Next from "./Next.svelte";
 import Prev from "./Prev.svelte";
 import Close from "./Close.svelte";
+import Arrow from "./Arrow.svelte";
 
-export { Sun, Moon, Call, Mail, MapPin, Person, Facebook, Next, Prev, Close };
+export { Sun, Moon, Call, Mail, MapPin, Person, Facebook, Next, Prev, Close, Arrow };

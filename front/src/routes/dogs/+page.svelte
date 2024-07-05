@@ -30,15 +30,17 @@
         { src: berDraw, alt: "Standard Bernsese Mountain Dog pencil drawing" },
     ];
 
-    const fci = $format("breed.fci");
+    const fci = $format("intro.fci");
 </script>
 
 <div class="flex flex-col gap-8 pb-4 md:px-[5%] lg:px-[25%]">
     <div class="flex flex-col">
-        <h2 class="p-4 text-center text-4xl">{$format("breed.aus.one")}</h2>
+        <h2 class="p-4 text-center text-4xl font-bold">
+            {$format("breed.aus.one")}
+        </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
-                class="rounded-md border-2 border-black px-4 py-2 text-center transition-colors duration-300 ease-out hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black"
+                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.AUSTRALIAN}"
             >
                 {$format("dog.our_breed", {
@@ -46,7 +48,7 @@
                 })}
             </a>
             <a
-                class="rounded-md border-2 border-black px-4 py-2 text-center transition-colors duration-300 ease-out hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black"
+                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="https://www.fci.be/Nomenclature/Standards/342g01-en.pdf"
                 target="_blank"
             >
@@ -57,10 +59,12 @@
         <p class="text-justify">{$format("intro.aus")}</p>
     </div>
     <div class="flex flex-col border-t border-black dark:border-white">
-        <h2 class="p-4 text-center text-4xl">{$format("breed.ent.one")}</h2>
+        <h2 class="p-4 text-center text-4xl font-bold">
+            {$format("breed.ent.one")}
+        </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
-                class="rounded-md border-2 border-black px-4 py-2 text-center transition-colors duration-300 ease-out hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black"
+                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.ENTLEBUCH}"
             >
                 {$format("dog.our_breed", {
@@ -68,7 +72,7 @@
                 })}
             </a>
             <a
-                class="rounded-md border-2 border-black px-4 py-2 text-center transition-colors duration-300 ease-out hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black"
+                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="https://www.fci.be/Nomenclature/Standards/047g02-en.pdf"
                 target="_blank"
             >
@@ -79,10 +83,12 @@
         <p class="text-justify">{$format("intro.ent")}</p>
     </div>
     <div class="flex flex-col border-t border-black dark:border-white">
-        <h2 class="p-4 text-center text-4xl">{$format("breed.ber.one")}</h2>
+        <h2 class="p-4 text-center text-4xl font-bold">
+            {$format("breed.ber.one")}
+        </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
-                class="rounded-md border-2 border-black px-4 py-2 text-center transition-colors duration-300 ease-out hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black"
+                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.BERNESE}"
             >
                 {$format("dog.our_breed", {
@@ -90,7 +96,7 @@
                 })}
             </a>
             <a
-                class="rounded-md border-2 border-black px-4 py-2 text-center transition-colors duration-300 ease-out hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black"
+                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="https://www.fci.be/Nomenclature/Standards/045g02-en.pdf"
                 target="_blank"
             >

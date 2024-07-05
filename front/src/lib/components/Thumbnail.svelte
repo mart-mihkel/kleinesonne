@@ -14,27 +14,30 @@
 </script>
 
 <a
-    class="group relative flex flex-col items-center shadow-md dark:shadow-white"
+    class="relative flex w-full flex-col items-center shadow dark:shadow-gray-700"
     class:cursor-default={href === undefined}
     {href}
 >
-    <div class="overflow-hidden">
-        <img
-            class="aspect-square size-full object-cover transition-transform duration-300 group-hover:scale-110"
-            loading="lazy"
-            {src}
-            {alt}
-        />
-    </div>
+    <img
+        class="aspect-square size-full object-cover"
+        loading="lazy"
+        {src}
+        {alt}
+    />
     <div
-        class="flex w-full flex-col gap-2 bg-gray-50 p-2 dark:bg-white dark:text-black"
+        class="flex w-full flex-col gap-2 bg-gray-200 px-2 pb-2 dark:bg-gray-700"
     >
         {#if nickname}
-            <h3 class="p-2 text-center text-2xl">{nickname}</h3>
+            <h3 class="pt-2 text-center text-2xl font-bold">{nickname}</h3>
         {/if}
-        <h4 class="text-center text-lg">{name}</h4>
+        <h4
+            class="text-center text-lg font-semibold"
+            class:pt-2={nickname === undefined}
+        >
+            {name}
+        </h4>
         {#if gender !== undefined}
-            <p class="flex h-12 items-center justify-center text-center">
+            <p class="flex items-center justify-center text-center font-medium">
                 {#if availability === undefined || availability === Availability.UNAVAILABLE}
                     {$format(`dog.${gender}`)}
                 {:else if availability === Availability.AVAILABLE}

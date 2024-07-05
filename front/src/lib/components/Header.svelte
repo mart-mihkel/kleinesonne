@@ -39,7 +39,7 @@
     class="flex w-full flex-row items-center gap-2 p-2 md:px-[5%] lg:px-[25%] dark:bg-black dark:text-white"
 >
     <a
-        class="hover:text-g6ray-500 text-2xl transition-colors duration-300"
+        class="text-2xl font-bold transition-colors duration-300 hover:text-gray-500"
         href="/"
     >
         Kleine Sonne
@@ -57,20 +57,26 @@
 <nav
     class="flex flex-row gap-8 border-b border-black md:px-[5%] lg:px-[25%] dark:border-white dark:bg-black dark:text-white"
 >
-    <Dropdown href="/puppies" items={puppies}>{$format("nav.puppies")}</Dropdown
-    >
-    <Dropdown href="/dogs" items={dogs}>{$format("nav.dogs")}</Dropdown>
+    <Dropdown href="/puppies" items={puppies}>
+        {$format("nav.puppies")}
+    </Dropdown>
+    <Dropdown href="/dogs" items={dogs}>
+        {$format("nav.dogs")}
+    </Dropdown>
     <a
-        class="transition-colors duration-300 hover:text-gray-500"
+        class="text-lg font-semibold transition-colors duration-300 hover:text-gray-500"
         href="/litters"
     >
         {$format("nav.litters")}
     </a>
-    <a class="transition-colors duration-300 hover:text-gray-500" href="/news">
+    <a
+        class="text-lg font-semibold transition-colors duration-300 hover:text-gray-500"
+        href="/news"
+    >
         {$format("nav.news")}
     </a>
     <a
-        class="transition-colors duration-300 hover:text-gray-500"
+        class="text-lg font-semibold transition-colors duration-300 hover:text-gray-500"
         href="/contact"
     >
         {$format("nav.contact")}

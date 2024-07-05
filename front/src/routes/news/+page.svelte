@@ -64,14 +64,14 @@
 </script>
 
 <div class="flex flex-col md:px-[5%] lg:px-[25%]">
-    <h2 class="p-4 text-center text-4xl">{$format("nav.news")}</h2>
+    <h2 class="p-4 text-center text-4xl font-bold">{$format("nav.news")}</h2>
     {#if news.length > 0}
         {#each news as { title, date, text, images }}
             <div
                 class="flex flex-col items-center border-t border-black pb-2 dark:border-white"
             >
-                <h3 class="pt-2 text-center text-2xl">{title}</h3>
-                <p class="pb-2">{date.toDateString()}</p>
+                <h3 class="pt-2 text-center text-2xl font-semibold">{title}</h3>
+                <p class="pb-2 text-lg font-medium">{date.toDateString()}</p>
                 <p class="text-justify">{text}</p>
                 {#if images.length > 0}
                     <Gallery {images} />

@@ -17,17 +17,20 @@
     on:mouseenter={() => (show = true)}
     on:mouseleave={() => (show = false)}
 >
-    <a {href} class="transition-colors duration-300 hover:text-gray-500">
+    <a
+        class="text-lg font-semibold transition-colors duration-300 hover:text-gray-500"
+        {href}
+    >
         <slot />
     </a>
     {#if show}
         <div
-            class="absolute top-full flex flex-col bg-white p-1 dark:bg-black dark:text-white"
+            class="absolute top-full z-10 flex flex-col bg-white p-2 dark:bg-black dark:text-white"
             transition:slide
         >
             {#each items as { href, text }}
                 <a
-                    class="text-nowrap transition-colors duration-300 hover:text-gray-500"
+                    class="text-nowrap text-lg font-semibold transition-colors duration-300 hover:text-gray-500"
                     {href}
                 >
                     {text}

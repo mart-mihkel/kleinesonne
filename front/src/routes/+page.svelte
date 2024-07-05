@@ -1,4 +1,5 @@
 <script>
+    import { Arrow } from "$lib/components/svg";
     import { Breed } from "$lib/types";
     import { format } from "svelte-i18n";
     import aus from "$lib/assets/aus-puppy.jpg";
@@ -6,16 +7,16 @@
     import ber from "$lib/assets/ber-puppy.jpg";
 </script>
 
-<a href="/puppies" class="flex justify-center p-4 text-4xl">
-    {$format("puppies.available")}
+<a href="/puppies" class="flex justify-center p-4 text-4xl font-bold">
+    {$format("nav.available")}
 </a>
 <div class="flex flex-col md:h-[600px] md:flex-row">
     <a
         href="/puppies/{Breed.AUSTRALIAN}"
-        class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+        class="group relative transition-all duration-700 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
-            class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
+            class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
             <img
                 class="size-full object-cover"
@@ -26,17 +27,18 @@
             />
         </div>
         <p
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-in-out group-hover:opacity-0"
+            class="absolute left-1/2 top-1/2 flex -translate-x-1/2 flex-row items-center text-center text-xl font-semibold text-gray-300 transition-all duration-700 ease-in-out group-hover:opacity-0"
         >
-            {$format("puppies.aus")}
+            {$format("nav.aus")}
+            <Arrow />
         </p>
     </a>
     <a
         href="/puppies/{Breed.ENTLEBUCH}"
-        class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+        class="group relative transition-all duration-700 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
-            class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
+            class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
             <img
                 class="size-full object-cover"
@@ -47,17 +49,18 @@
             />
         </div>
         <p
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-in-out group-hover:opacity-0"
+            class="absolute left-1/2 top-1/2 flex -translate-x-1/2 flex-row items-center text-center text-xl font-semibold text-gray-300 transition-all duration-700 ease-in-out group-hover:opacity-0"
         >
-            {$format("puppies.ent")}
+            {$format("nav.ent")}
+            <Arrow />
         </p>
     </a>
     <a
         href="/puppies/{Breed.BERNESE}"
-        class="group relative transition-all duration-500 ease-out md:w-1/3 hover:md:w-1/2"
+        class="group relative transition-all duration-700 ease-out md:w-1/3 hover:md:w-1/2"
     >
         <div
-            class="size-full brightness-50 transition-all duration-500 group-hover:brightness-100"
+            class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
             <img
                 class="size-full object-cover"
@@ -68,14 +71,15 @@
             />
         </div>
         <p
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-in-out group-hover:opacity-0"
+            class="absolute left-1/2 top-1/2 flex -translate-x-1/2 flex-row items-center text-center text-xl font-semibold text-gray-300 transition-all duration-700 ease-in-out group-hover:opacity-0"
         >
-            {$format("puppies.ber")}
+            {$format("nav.ber")}
+            <Arrow />
         </p>
     </a>
 </div>
 <div class="flex flex-col gap-4 py-4 md:px-[5%] lg:px-[25%]">
-    <h2 class="p-4 text-center text-4xl">{$format("about.title")}</h2>
+    <h2 class="p-4 text-center text-4xl font-bold">{$format("about.title")}</h2>
     <p class="text-justify">
         {$format("about.text")}
     </p>

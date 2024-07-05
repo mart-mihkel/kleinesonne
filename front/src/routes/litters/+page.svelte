@@ -110,7 +110,7 @@
     data.names.then((ns) => fetchLitter(ns[0]));
 </script>
 
-<h2 class="p-4 text-center text-4xl">{$format("nav.litters")}</h2>
+<h2 class="p-4 text-center text-4xl font-bold">{$format("nav.litters")}</h2>
 <div class="flex flex-col md:flex-row md:px-[5%] lg:px-[25%]">
     <div
         class="relative flex flex-col border-t border-black md:w-1/4 dark:border-white"
@@ -128,13 +128,9 @@
                     </button>
                     {#each names as name}
                         <button
-                            class="text-nowrap p-2"
-                            class:bg-black={active === name}
-                            class:text-white={active === name}
-                            class:dark:bg-white={active === name}
-                            class:dark:text-black={active === name}
-                            class:hover:bg-gray-300={active !== name}
-                            class:hover:dark:bg-gray-600={active !== name}
+                            class="text-nowrap p-2 font-semibold transition-colors duration-300 hover:bg-gray-200 dark:border-white dark:hover:bg-gray-500"
+                            class:bg-gray-300={active === name}
+                            class:dark:bg-gray-700={active === name}
                             on:click={() => fetchLitter(name)}
                         >
                             {name}

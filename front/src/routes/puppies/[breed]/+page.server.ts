@@ -4,30 +4,30 @@ import type { PageServerLoad } from "./$types";
 const LITTERS: Litter[] = [
     {
         name: "Entlebuch Marakratid",
-        parents: { src: "/parents.webp", alt: "parents" },
+        parents: { src: "/test.jpg", alt: "parents" },
         breed: Breed.ENTLEBUCH,
         images: [],
         puppies: [
             {
-                image: { src: "/usin.webp", alt: "usin" },
+                image: { src: "/test.jpg", alt: "usin" },
                 name: "Kleine Sonne Golf in Leuk",
                 gender: Gender.MALE,
                 availability: Availability.AVAILABLE,
             },
             {
-                image: { src: "/usin.webp", alt: "usin" },
+                image: { src: "/test.jpg", alt: "usin" },
                 name: "Kleine Sonne Golf in Davos",
                 gender: Gender.MALE,
                 availability: Availability.AVAILABLE,
             },
             {
-                image: { src: "/usin.webp", alt: "usin" },
+                image: { src: "/test.jpg", alt: "usin" },
                 name: "Kleine Sonne Golf in Erlen",
                 gender: Gender.FEMALE,
                 availability: Availability.CO_OWNERSHIP,
             },
             {
-                image: { src: "/usin.webp", alt: "usin" },
+                image: { src: "/test.jpg", alt: "usin" },
                 name: "Kleine Sonne Golf in Freakazoid",
                 gender: Gender.FEMALE,
                 availability: Availability.UNAVAILABLE,
@@ -36,32 +36,30 @@ const LITTERS: Litter[] = [
     },
     {
         name: "Australian Mürakarud",
-        parents: { src: "/parents_aasa.webp", alt: "parents aasa" },
+        parents: { src: "/test.jpg", alt: "parents aasa" },
         breed: Breed.AUSTRALIAN,
         images: [
-            { src: "/rand.webp", alt: "rand" },
-            { src: "/rand.webp", alt: "rand" },
-            { src: "/rand.webp", alt: "rand" },
-            { src: "/rand.webp", alt: "rand" },
-            { src: "/rand.webp", alt: "rand" },
-            { src: "/rand.webp", alt: "rand" },
-            { src: "/rand.webp", alt: "rand" },
+            { src: "/test.jpg", alt: "usin" },
+            { src: "/test.jpg", alt: "usin" },
+            { src: "/test.jpg", alt: "usin" },
+            { src: "/test.jpg", alt: "usin" },
+            { src: "/test.jpg", alt: "usin" },
         ],
         puppies: [
             {
-                image: { src: "/rand.webp", alt: "rand" },
+                image: { src: "/test.jpg", alt: "usin" },
                 name: "Kleine Sonne Ice Golem",
                 gender: Gender.MALE,
                 availability: Availability.AVAILABLE,
             },
             {
-                image: { src: "/rand.webp", alt: "rand" },
+                image: { src: "/test.jpg", alt: "usin" },
                 name: "Kleine Sonne Green Goblin",
                 gender: Gender.FEMALE,
                 availability: Availability.CO_OWNERSHIP,
             },
             {
-                image: { src: "/rand.webp", alt: "rand" },
+                image: { src: "/test.jpg", alt: "usin" },
                 name: "Kleine Sonne All Might",
                 gender: Gender.FEMALE,
                 availability: Availability.UNAVAILABLE,
@@ -75,7 +73,7 @@ const LITTERS: Litter[] = [
         images: [],
         puppies: [
             {
-                image: { src: "", alt: "mitte midagi" },
+                image: { src: "/test.jpg", alt: "usin" },
                 name: "Kleine Sonne Not Real",
                 gender: Gender.MALE,
                 availability: Availability.CO_OWNERSHIP,

@@ -49,7 +49,7 @@
             {
                 title: "Uudis",
                 date: new Date(2017, 3, 1),
-                images: [{ src: "/poisid.webp", alt: "poisid" }],
+                images: [{ src: "/test.jpg", alt: "poisid" }],
                 text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi porttitor sapien non bibendum tincidunt.",
             },
         ]

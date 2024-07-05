@@ -3,7 +3,7 @@ import type { PageServerLoad } from "./$types";
 
 const DOGS: DogPreview[] = [
     {
-        thumbnail: { src: "/rand.webp", alt: "rand" },
+        thumbnail: { src: "/test.jpg", alt: "rand" },
         nickname: "Salsa",
         name: "Seventy Seven Spicy Salsa",
         breed: Breed.AUSTRALIAN,
@@ -11,7 +11,7 @@ const DOGS: DogPreview[] = [
         alive: true,
     },
     {
-        thumbnail: { src: "/kohver.webp", alt: "kohver" },
+        thumbnail: { src: "/test.jpg", alt: "kohver" },
         nickname: "Katja",
         name: "Korolevstvo Gornih Psov Okatava",
         breed: Breed.ENTLEBUCH,

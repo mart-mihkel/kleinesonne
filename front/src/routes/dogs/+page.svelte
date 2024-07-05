@@ -7,7 +7,7 @@
     import ausDraw from "$lib/assets/aus-draw.jpg";
     const aus: Image[] = [
         { src: ausAdult, alt: "Adult merle Australian Shepherd" },
-        { src: ausPuppy, alt: "2 month old Australian Shepherd litter" },
+        { src: ausPuppy, alt: "7 week old Australian Shepherd puppies" },
         { src: ausDraw, alt: "Standard Australian Shepherd pencil drawing" },
     ];
 
@@ -16,7 +16,7 @@
     import entDraw from "$lib/assets/ent-draw.jpg";
     const ent: Image[] = [
         { src: entAdult, alt: "Adult Entlebuch Cattle Dog" },
-        { src: entPuppy, alt: "Month old Entlebuch Cattle Dog puppy" },
+        { src: entPuppy, alt: "Entlebuch Cattle Dog puppy" },
         { src: entDraw, alt: "Standard Entlebuch Cattle Dog pencil drawing" },
     ];
 

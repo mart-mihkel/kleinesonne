@@ -1,5 +1,8 @@
 <script>
     import { Breed } from "$lib/types";
+    import aus from "$lib/assets/aus-puppy.jpg";
+    import ent from "$lib/assets/ent-puppy.jpg";
+    import ber from "$lib/assets/ber-puppy.jpg";
 </script>
 
 <a href="/puppies" class="flex justify-center p-4 text-4xl">
@@ -15,14 +18,14 @@
         >
             <img
                 class="size-full object-cover"
-                src="/rand.webp"
-                alt="australian shepherd"
+                src={aus}
+                alt="7 week old Australian Shepherd puppies"
                 fetchpriority="high"
                 loading="eager"
             />
         </div>
         <p
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-in-out group-hover:opacity-0"
         >
             Australian Shepeherd puppies
         </p>
@@ -36,14 +39,14 @@
         >
             <img
                 class="size-full object-cover"
-                src="/viisakas.webp"
-                alt="entlebuch"
+                src={ent}
+                alt="Entlebuch Cattle Dog puppy"
                 fetchpriority="high"
                 loading="eager"
             />
         </div>
         <p
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-in-out group-hover:opacity-0"
         >
             Entlebuch Cattle Dog puppies
         </p>
@@ -57,14 +60,14 @@
         >
             <img
                 class="size-full object-cover"
-                src="/usin.webp"
-                alt="bernese"
+                src={ber}
+                alt="Month old Bernese Mountain Dog puppies"
                 fetchpriority="high"
                 loading="eager"
             />
         </div>
         <p
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-out group-hover:text-2xl"
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 text-center font-sans text-xl text-white transition-all duration-500 ease-in-out group-hover:opacity-0"
         >
             Bernese Mountain Dog puppies
         </p>

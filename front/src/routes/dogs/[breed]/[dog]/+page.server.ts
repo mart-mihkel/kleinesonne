@@ -2,13 +2,13 @@ import { Breed, Gender, type Dog, type Family } from "$lib/types";
 import type { PageServerLoad } from "./$types";
 
 const SALSA: Dog = {
-    thumbnail: { src: "/rand.webp", alt: "rand" },
+    thumbnail: { src: "/test.jpg", alt: "rand" },
     images: [
-        { src: "/rand.webp", alt: "rand" },
-        { src: "/rand.webp", alt: "rand" },
-        { src: "/rand.webp", alt: "rand" },
-        { src: "/rand.webp", alt: "rand" },
-        { src: "/rand.webp", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
     ],
     name: "Seventy Seven Spicy Salsa",
     nickname: "Salsa",
@@ -31,13 +31,13 @@ const SALSA: Dog = {
 };
 
 const KATJA: Dog = {
-    thumbnail: { src: "/viisakas.webp", alt: "rand" },
+    thumbnail: { src: "/test.jpg", alt: "rand" },
     images: [
-        { src: "/viisakas.webp", alt: "rand" },
-        { src: "/viisakas.webp", alt: "rand" },
-        { src: "/viisakas.webp", alt: "rand" },
-        { src: "/viisakas.webp", alt: "rand" },
-        { src: "/viisakas.webp", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
+        { src: "/test.jpg", alt: "rand" },
     ],
     name: "Korolevstvo Gornih Psov Okatava",
     nickname: "Katja",

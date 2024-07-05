@@ -1,36 +1,41 @@
 <script lang="ts">
     import type { PageData } from "./$types";
-    import { Litter as LitterDisplay, Loading, Error } from "$lib/components";
+    import {
+        Litter as LitterDisplay,
+        Loading,
+        Error,
+        Empty,
+    } from "$lib/components";
     import { Availability, Breed, Gender, type Litter } from "$lib/types";
     import { slide } from "svelte/transition";
 
     const LITTERS: Litter[] = [
         {
             name: "Entlebuch Marakratid",
-            parents: { src: "/parents.webp", alt: "parents" },
+            parents: { src: "/test.jpg", alt: "parents" },
             breed: Breed.ENTLEBUCH,
             images: [],
             puppies: [
                 {
-                    image: { src: "/usin.webp", alt: "usin" },
+                    image: { src: "/test.jpg", alt: "usin" },
                     name: "Kleine Sonne Golf in Leuk",
                     gender: Gender.MALE,
                     availability: Availability.AVAILABLE,
                 },
                 {
-                    image: { src: "/usin.webp", alt: "usin" },
+                    image: { src: "/test.jpg", alt: "usin" },
                     name: "Kleine Sonne Golf in Davos",
                     gender: Gender.MALE,
                     availability: Availability.AVAILABLE,
                 },
                 {
-                    image: { src: "/usin.webp", alt: "usin" },
+                    image: { src: "/test.jpg", alt: "usin" },
                     name: "Kleine Sonne Golf in Erlen",
                     gender: Gender.FEMALE,
                     availability: Availability.CO_OWNERSHIP,
                 },
                 {
-                    image: { src: "/usin.webp", alt: "usin" },
+                    image: { src: "/test.jpg", alt: "usin" },
                     name: "Kleine Sonne Golf in Freakazoid",
                     gender: Gender.FEMALE,
                     availability: Availability.UNAVAILABLE,
@@ -39,32 +44,32 @@
         },
         {
             name: "Australian Mürakarud",
-            parents: { src: "/parents_aasa.webp", alt: "parents aasa" },
+            parents: { src: "/test.jpg", alt: "parents aasa" },
             breed: Breed.AUSTRALIAN,
             images: [
-                { src: "/rand.webp", alt: "rand" },
-                { src: "/rand.webp", alt: "rand" },
-                { src: "/rand.webp", alt: "rand" },
-                { src: "/rand.webp", alt: "rand" },
-                { src: "/rand.webp", alt: "rand" },
-                { src: "/rand.webp", alt: "rand" },
-                { src: "/rand.webp", alt: "rand" },
+                { src: "/test.jpg", alt: "rand" },
+                { src: "/test.jpg", alt: "rand" },
+                { src: "/test.jpg", alt: "rand" },
+                { src: "/test.jpg", alt: "rand" },
+                { src: "/test.jpg", alt: "rand" },
+                { src: "/test.jpg", alt: "rand" },
+                { src: "/test.jpg", alt: "rand" },
             ],
             puppies: [
                 {
-                    image: { src: "/rand.webp", alt: "rand" },
+                    image: { src: "/test.jpg", alt: "rand" },
                     name: "Kleine Sonne Ice Golem",
                     gender: Gender.MALE,
                     availability: Availability.AVAILABLE,
                 },
                 {
-                    image: { src: "/rand.webp", alt: "rand" },
+                    image: { src: "/test.jpg", alt: "rand" },
                     name: "Kleine Sonne Green Goblin",
                     gender: Gender.FEMALE,
                     availability: Availability.CO_OWNERSHIP,
                 },
                 {
-                    image: { src: "/rand.webp", alt: "rand" },
+                    image: { src: "/test.jpg", alt: "rand" },
                     name: "Kleine Sonne All Might",
                     gender: Gender.FEMALE,
                     availability: Availability.UNAVAILABLE,
@@ -89,24 +94,19 @@
 
     export let data: PageData;
 
-    let litter: Promise<Litter | undefined>;
+    let promise: Promise<Litter | undefined>;
     let active = "";
     let extended = true;
 
     async function fetchLitter(name: string) {
         const match = LITTERS.find((l) => l.name === name);
         active = name;
-
-        litter = new Promise((resolve) => {
+        promise = new Promise((resolve) => {
             setTimeout(() => resolve(match), 1000);
         });
     }
 
-    data.names.then((ns) => (active = ns[0]));
-
-    $: if (active) {
-        fetchLitter(active);
-    }
+    data.names.then((ns) => fetchLitter(ns[0]));
 </script>
 
 <h2 class="p-4 text-center text-4xl">Litters</h2>
@@ -134,7 +134,7 @@
                             class:dark:text-black={active === name}
                             class:hover:bg-gray-300={active !== name}
                             class:hover:dark:bg-gray-600={active !== name}
-                            on:click={() => (active = name)}
+                            on:click={() => fetchLitter(name)}
                         >
                             {name}
                         </button>
@@ -152,11 +152,13 @@
         {/if}
     </div>
     <div class="border-t border-black md:w-3/4 dark:border-white">
-        {#await litter}
+        {#await promise}
             <Loading text={"Loading litter..."} />
         {:then litter}
-            {#if litter !== undefined}
+            {#if litter}
                 <LitterDisplay {litter} />
+            {:else}
+                <Empty />
             {/if}
         {:catch}
             <Error message="Failed to load litter, something went wrong" />

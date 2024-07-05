@@ -2,9 +2,6 @@
     import { Arrow } from "$lib/components/svg";
     import { Breed } from "$lib/types";
     import { format } from "svelte-i18n";
-    import aus from "$lib/assets/aus-puppy.jpg";
-    import ent from "$lib/assets/ent-puppy.jpg";
-    import ber from "$lib/assets/ber-puppy.jpg";
 </script>
 
 <a href="/puppies" class="flex justify-center p-4 text-4xl font-bold">
@@ -13,14 +10,15 @@
 <div class="flex flex-col md:h-[600px] md:flex-row">
     <a
         href="/puppies/{Breed.AUSTRALIAN}"
-        class="group relative transition-all duration-700 ease-out md:w-1/3 hover:md:w-1/2"
+        class="group relative transition-all duration-700 ease-in-out md:w-1/3 hover:md:w-1/2"
     >
         <div
             class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
-            <img
+            <enhanced:img
                 class="size-full object-cover"
-                src={aus}
+                src="/static/aus-puppy.jpg"
+                sizes="min(960, 50vw)"
                 alt="7 week old Australian Shepherd puppies"
                 fetchpriority="high"
                 loading="eager"
@@ -35,14 +33,15 @@
     </a>
     <a
         href="/puppies/{Breed.ENTLEBUCH}"
-        class="group relative transition-all duration-700 ease-out md:w-1/3 hover:md:w-1/2"
+        class="group relative transition-all duration-700 ease-in-out md:w-1/3 hover:md:w-1/2"
     >
         <div
             class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
-            <img
+            <enhanced:img
                 class="size-full object-cover"
-                src={ent}
+                src="/static/ent-puppy.jpg"
+                sizes="min(960, 50vw)"
                 alt="Entlebuch Cattle Dog puppy"
                 fetchpriority="high"
                 loading="eager"
@@ -57,14 +56,15 @@
     </a>
     <a
         href="/puppies/{Breed.BERNESE}"
-        class="group relative transition-all duration-700 ease-out md:w-1/3 hover:md:w-1/2"
+        class="group relative transition-all duration-700 ease-in-out md:w-1/3 hover:md:w-1/2"
     >
         <div
             class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
-            <img
+            <enhanced:img
                 class="size-full object-cover"
-                src={ber}
+                src="/static/ber-puppy.jpg"
+                sizes="min-width(960px, 50vw)"
                 alt="Month old Bernese Mountain Dog puppies"
                 fetchpriority="high"
                 loading="eager"

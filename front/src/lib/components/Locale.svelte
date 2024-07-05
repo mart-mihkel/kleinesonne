@@ -24,7 +24,7 @@
 />
 
 <div class="relative flex flex-col">
-    <button class="outline-none" on:click={() => (open = !open)}>
+    <button name="locale" class="outline-none" on:click={() => (open = !open)}>
         <svg
             class="size-6 fill-black transition-colors duration-300 hover:fill-gray-500 group-hover:fill-gray-500 dark:fill-white"
             xmlns="http://www.w3.org/2000/svg"

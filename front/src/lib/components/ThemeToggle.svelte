@@ -26,7 +26,7 @@
     });
 </script>
 
-<button on:click={toggle}>
+<button name="toggle" on:click={toggle}>
     {#if dark}
         <Moon />
     {:else}

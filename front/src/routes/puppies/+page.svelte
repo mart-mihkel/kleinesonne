@@ -1,34 +1,34 @@
 <script lang="ts">
     import type { PageData } from "./$types";
     import { Litter, Loading, Error, Empty } from "$lib/components";
+    import { format } from "svelte-i18n";
 
     export let data: PageData;
 </script>
 
 <div class="md:px-[5%] lg:px-[25%]">
     {#await data.litters}
-        <Loading text={"Loading available puppies..."} />
+        <Loading text={$format("puppies.loading")} />
     {:then litters}
         {#if litters.length === 0}
             <h2 class="p-4 text-center text-4xl">
-                There are no puppies available right now
+                {$format("puppies.unavailable")}
             </h2>
             <Empty />
         {:else}
-            <h2 class="p-4 text-center text-4xl">Available puppies</h2>
+            <h2 class="p-4 text-center text-4xl">
+                {$format("puppies.available")}
+            </h2>
             {#each litters as litter}
                 <div class="border-t border-black pb-10 dark:border-white">
                     <Litter {litter} />
                 </div>
             {/each}
             <p>
-                The puppies will leave for their new homes healthy, having been
-                checked by a veterinarian, vaccinated and protected against
-                parasites. The puppies are chipped, FCI registered and have an
-                euro passport.
+                {$format("puppies.info")}
             </p>
         {/if}
     {:catch}
-        <Error message="Failed to load puppies, something went wrong" />
+        <Error message={$format("puppies.error")} />
     {/await}
 </div>

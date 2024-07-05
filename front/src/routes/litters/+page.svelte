@@ -8,6 +8,7 @@
     } from "$lib/components";
     import { Availability, Breed, Gender, type Litter } from "$lib/types";
     import { slide } from "svelte/transition";
+    import { format } from "svelte-i18n";
 
     const LITTERS: Litter[] = [
         {
@@ -109,7 +110,7 @@
     data.names.then((ns) => fetchLitter(ns[0]));
 </script>
 
-<h2 class="p-4 text-center text-4xl">Litters</h2>
+<h2 class="p-4 text-center text-4xl">{$format("nav.litters")}</h2>
 <div class="flex flex-col md:flex-row md:px-[5%] lg:px-[25%]">
     <div
         class="relative flex flex-col border-t border-black md:w-1/4 dark:border-white"
@@ -117,13 +118,13 @@
         {#if extended}
             <div class="flex flex-col" transition:slide>
                 {#await data.names}
-                    <Loading text={"Loading litter names..."} />
+                    <Loading text={$format("litter.loading.many")} />
                 {:then names}
                     <button
                         class="p-2 md:hidden"
                         on:click={() => (extended = false)}
                     >
-                        <p>Close litters menu</p>
+                        <p>{$format("litter.close")}</p>
                     </button>
                     {#each names as name}
                         <button
@@ -140,20 +141,18 @@
                         </button>
                     {/each}
                 {:catch}
-                    <Error
-                        message="Failed to load litter names, something went wrong"
-                    />
+                    <Error message={$format("litter.error.many")} />
                 {/await}
             </div>
         {:else}
             <button class="p-2" on:click={() => (extended = true)}>
-                Open litters menu
+                {$format("litter.open")}
             </button>
         {/if}
     </div>
     <div class="border-t border-black md:w-3/4 dark:border-white">
         {#await promise}
-            <Loading text={"Loading litter..."} />
+            <Loading text={$format("litter.loading.one")} />
         {:then litter}
             {#if litter}
                 <LitterDisplay {litter} />
@@ -161,7 +160,7 @@
                 <Empty />
             {/if}
         {:catch}
-            <Error message="Failed to load litter, something went wrong" />
+            <Error message={$format("litter.error.one")} />
         {/await}
     </div>
 </div>

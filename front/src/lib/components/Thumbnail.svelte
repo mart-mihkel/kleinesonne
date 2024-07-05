@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Availability, Gender, type Image } from "$lib/types";
+    import { format } from "svelte-i18n";
 
     export let href: string | undefined = undefined;
     export let availability: Availability | undefined = undefined;
@@ -9,7 +10,7 @@
     export let image: Image;
 
     const { src, alt } = image;
-    const gstr = gender === Gender.MALE ? "Male" : "Female";
+    $: options = { values: { gender: $format(`dog.${gender}`) } };
 </script>
 
 <a
@@ -35,11 +36,11 @@
         {#if gender !== undefined}
             <p class="flex h-12 items-center justify-center text-center">
                 {#if availability === undefined || availability === Availability.UNAVAILABLE}
-                    {gstr}
+                    {$format(`dog.${gender}`)}
                 {:else if availability === Availability.AVAILABLE}
-                    Available {gstr.toLowerCase()}
+                    {$format("puppies.available_gender", options)}
                 {:else if availability === Availability.CO_OWNERSHIP}
-                    {gstr} available for co-ownership
+                    {$format("puppies.available_gender_co", options)}
                 {/if}
             </p>
         {/if}

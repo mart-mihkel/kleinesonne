@@ -1,8 +1,9 @@
 <script lang="ts">
     import { Gallery, Loading, Empty, Error } from "$lib/components";
     import type { NewsPiece } from "$lib/types";
-    import { onMount } from "svelte";
     import type { PageData } from "./$types";
+    import { format } from "svelte-i18n";
+    import { onMount } from "svelte";
 
     export let data: PageData;
 
@@ -63,7 +64,7 @@
 </script>
 
 <div class="flex flex-col md:px-[5%] lg:px-[25%]">
-    <h2 class="p-4 text-center text-4xl">News</h2>
+    <h2 class="p-4 text-center text-4xl">{$format("nav.news")}</h2>
     {#if news.length > 0}
         {#each news as { title, date, text, images }}
             <div
@@ -82,8 +83,8 @@
         <Empty />
     {/if}
     {#await more}
-        <Loading text="Loading news..." />
+        <Loading text={$format("news.loading")} />
     {:catch}
-        <Error message="Failed to load news, something went wrong" />
+        <Error message={$format("news.error")} />
     {/await}
 </div>

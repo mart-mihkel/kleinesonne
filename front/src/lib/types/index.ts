@@ -62,14 +62,14 @@ export type Image = {
 };
 
 export enum Gender {
-    MALE,
-    FEMALE,
+    MALE = "male",
+    FEMALE = "female",
 }
 
 export enum Breed {
-    AUSTRALIAN = "australian",
-    BERNESE = "bernese",
-    ENTLEBUCH = "entlebuch",
+    AUSTRALIAN = "aus",
+    BERNESE = "ber",
+    ENTLEBUCH = "ent",
 }
 
 export enum Availability {

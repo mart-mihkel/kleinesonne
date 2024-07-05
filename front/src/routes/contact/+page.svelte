@@ -1,10 +1,11 @@
 <script>
     import { Person, Mail, Call, MapPin } from "$lib/components/svg";
+    import { format } from "svelte-i18n";
 </script>
 
 <div class="flex justify-center md:px-[5%] lg:px-[25%]">
     <div class="flex flex-col gap-2 pb-4">
-        <h2 class="p-4 text-center text-4xl">Contact</h2>
+        <h2 class="p-4 text-center text-4xl">{$format("nav.contact")}</h2>
         <div class="flex flex-row gap-2 transition-colors duration-300">
             <Person />
             <p>Inge Aun</p>
@@ -29,7 +30,7 @@
             target="_blank"
         >
             <MapPin />
-            <p>Kuusalu Parish, Harju County, Estonia</p>
+            <p>{$format("contact.location")}</p>
         </a>
     </div>
 </div>

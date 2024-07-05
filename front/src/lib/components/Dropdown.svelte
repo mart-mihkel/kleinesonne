@@ -4,7 +4,6 @@
     type Item = {
         href: string;
         text: string;
-        title: string;
     };
 
     export let href = "";

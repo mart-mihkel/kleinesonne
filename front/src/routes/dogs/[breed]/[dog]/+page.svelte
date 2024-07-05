@@ -1,15 +1,15 @@
 <script lang="ts">
     import type { PageData } from "./$types";
     import { Gallery, Loading, Error } from "$lib/components";
-    import { longBreed } from "$lib/util";
     import { Gender } from "$lib/types";
+    import { format } from "svelte-i18n";
 
     export let data: PageData;
 </script>
 
 <div class="flex flex-col md:px-[5%] lg:px-[25%]">
     {#await data.dog}
-        <Loading text={"Loading dog info..."} />
+        <Loading text={$format("dog.loading.info")} />
     {:then { name, nickname, father, mother, dob, breed, gender, health, awards, thumbnail, images }}
         <div class="flex flex-col md:flex-row">
             <div class="md:w-1/2 md:p-2">
@@ -25,29 +25,28 @@
                 <table class="size-full">
                     <tbody>
                         <tr>
-                            <td>Nickname:</td>
+                            <td>{$format("dog.nickname")}:</td>
                             <td>{nickname}</td>
                         </tr>
                         <tr class="border-t border-black dark:border-white">
-                            <td>Father:</td>
+                            <td>{$format("dog.father")}:</td>
                             <td>{father}</td>
                         </tr>
                         <tr class="border-t border-black dark:border-white">
-                            <td>Mother:</td>
+                            <td>{$format("dog.mother")}:</td>
                             <td>{mother}</td>
                         </tr>
                         <tr class="border-t border-black dark:border-white">
-                            <td>Date of birth:</td>
+                            <td>{$format("dog.dob")}:</td>
                             <td>{dob.toDateString()}</td>
                         </tr>
                         <tr class="border-t border-black dark:border-white">
-                            <td>Breed:</td>
-                            <td>{longBreed(breed)}</td>
+                            <td>{$format("dog.breed")}:</td>
+                            <td>{$format(`breed.${breed}.one`)}</td>
                         </tr>
                         <tr class="border-t border-black dark:border-white">
-                            <td>Gender:</td>
-                            <td>{gender === Gender.MALE ? "Male" : "Female"}</td
-                            >
+                            <td>{$format("dog.gender")}:</td>
+                            <td>{$format(`dog.${gender}`)}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -55,7 +54,9 @@
         </div>
         <div class="flex flex-row border-y border-black pb-4 dark:border-white">
             <div class="flex w-full flex-col">
-                <h2 class="p-4 text-center text-4xl">Health</h2>
+                <h2 class="p-4 text-center text-4xl">
+                    {$format("dog.health")}
+                </h2>
                 <ul class="list-disc pl-[25%]">
                     {#each health as h}
                         <li>{h}</li>
@@ -63,7 +64,9 @@
                 </ul>
             </div>
             <div class="flex w-full flex-col">
-                <h2 class="p-4 text-center text-4xl">Awards</h2>
+                <h2 class="p-4 text-center text-4xl">
+                    {$format("dog.awards")}
+                </h2>
                 <ul class="list-disc pl-[25%]">
                     {#each awards as a}
                         <li>{a}</li>
@@ -73,12 +76,12 @@
         </div>
         <Gallery {images} />
     {:catch}
-        <Error message="Failed to dog info, something went wrong" />
+        <Error message={$format("dog.loading.info")} />
     {/await}
     <div class="flex flex-col border-t border-black pb-4 dark:border-white">
-        <h2 class="p-4 text-center text-4xl">Familiy Tree</h2>
+        <h2 class="p-4 text-center text-4xl">{$format("dog.tree")}</h2>
         {#await data.tree}
-            <Loading text={"Loading family tree..."} />
+            <Loading text={$format("dog.loading.tree")} />
         {:then { father, mother }}
             <table>
                 <tbody>
@@ -177,7 +180,7 @@
                 </tbody>
             </table>
         {:catch}
-            <Error message="Failed to load family tree, something went wrong" />
+            <Error message={$format("dog.error.tree")} />
         {/await}
     </div>
 </div>

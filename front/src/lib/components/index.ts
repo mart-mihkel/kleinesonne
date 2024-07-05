@@ -8,6 +8,7 @@ import Loading from "./Loading.svelte";
 import Error from "./Error.svelte";
 import Empty from "./Empty.svelte";
 import ThemeToggle from "./ThemeToggle.svelte";
+import Locale from "./Locale.svelte";
 
 export {
     Header,
@@ -20,4 +21,5 @@ export {
     Error,
     Empty,
     ThemeToggle,
+    Locale,
 };

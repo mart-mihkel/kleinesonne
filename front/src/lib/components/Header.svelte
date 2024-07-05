@@ -1,9 +1,7 @@
 <script lang="ts">
-    import { Dropdown } from "$lib/components";
-    import { Sun, Moon, Facebook } from "$lib/components/svg";
+    import { Dropdown, ThemeToggle } from "$lib/components";
+    import { Facebook } from "$lib/components/svg";
     import { Breed } from "$lib/types";
-    import { toggle, isDark } from "$lib/dark-mode";
-    import { onMount } from "svelte";
 
     const puppies = [
         {
@@ -40,9 +38,6 @@
             title: "Bernese Mountain Dogs",
         },
     ];
-
-    let dark = false;
-    onMount(() => (dark = isDark()));
 </script>
 
 <header
@@ -55,13 +50,7 @@
         Kleine Sonne
     </a>
     <span class="flex-grow"></span>
-    <button on:click={() => (dark = toggle())}>
-        {#if dark}
-            <Moon />
-        {:else}
-            <Sun />
-        {/if}
-    </button>
+    <ThemeToggle />
     <a
         href="https://www.facebook.com/p/Kleine-Sonne-100064871220699/"
         target="_blank"

@@ -7,6 +7,7 @@ import Gallery from "./Gallery.svelte";
 import Loading from "./Loading.svelte";
 import Error from "./Error.svelte";
 import Empty from "./Empty.svelte";
+import ThemeToggle from "./ThemeToggle.svelte";
 
 export {
     Header,
@@ -18,4 +19,5 @@ export {
     Loading,
     Error,
     Empty,
+    ThemeToggle,
 };

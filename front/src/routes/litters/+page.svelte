@@ -6,92 +6,10 @@
         Error,
         Empty,
     } from "$lib/components";
-    import { Availability, Breed, Gender, type Litter } from "$lib/types";
+    import { type Litter } from "$lib/types";
     import { slide } from "svelte/transition";
     import { format } from "svelte-i18n";
-
-    const LITTERS: Litter[] = [
-        {
-            name: "Entlebuch Marakratid",
-            parents: { src: "/test.jpg", alt: "parents" },
-            breed: Breed.ENTLEBUCH,
-            images: [],
-            puppies: [
-                {
-                    image: { src: "/test.jpg", alt: "usin" },
-                    name: "Kleine Sonne Golf in Leuk",
-                    gender: Gender.MALE,
-                    availability: Availability.AVAILABLE,
-                },
-                {
-                    image: { src: "/test.jpg", alt: "usin" },
-                    name: "Kleine Sonne Golf in Davos",
-                    gender: Gender.MALE,
-                    availability: Availability.AVAILABLE,
-                },
-                {
-                    image: { src: "/test.jpg", alt: "usin" },
-                    name: "Kleine Sonne Golf in Erlen",
-                    gender: Gender.FEMALE,
-                    availability: Availability.CO_OWNERSHIP,
-                },
-                {
-                    image: { src: "/test.jpg", alt: "usin" },
-                    name: "Kleine Sonne Golf in Freakazoid",
-                    gender: Gender.FEMALE,
-                    availability: Availability.UNAVAILABLE,
-                },
-            ],
-        },
-        {
-            name: "Australian Mürakarud",
-            parents: { src: "/test.jpg", alt: "parents aasa" },
-            breed: Breed.AUSTRALIAN,
-            images: [
-                { src: "/test.jpg", alt: "rand" },
-                { src: "/test.jpg", alt: "rand" },
-                { src: "/test.jpg", alt: "rand" },
-                { src: "/test.jpg", alt: "rand" },
-                { src: "/test.jpg", alt: "rand" },
-                { src: "/test.jpg", alt: "rand" },
-                { src: "/test.jpg", alt: "rand" },
-            ],
-            puppies: [
-                {
-                    image: { src: "/test.jpg", alt: "rand" },
-                    name: "Kleine Sonne Ice Golem",
-                    gender: Gender.MALE,
-                    availability: Availability.AVAILABLE,
-                },
-                {
-                    image: { src: "/test.jpg", alt: "rand" },
-                    name: "Kleine Sonne Green Goblin",
-                    gender: Gender.FEMALE,
-                    availability: Availability.CO_OWNERSHIP,
-                },
-                {
-                    image: { src: "/test.jpg", alt: "rand" },
-                    name: "Kleine Sonne All Might",
-                    gender: Gender.FEMALE,
-                    availability: Availability.UNAVAILABLE,
-                },
-            ],
-        },
-        {
-            name: "Olematud Olendid",
-            parents: { src: "", alt: "pole olemas" },
-            breed: Breed.AUSTRALIAN,
-            images: [],
-            puppies: [
-                {
-                    image: { src: "", alt: "mitte midagi" },
-                    name: "Kleine Sonne Not Real",
-                    gender: Gender.MALE,
-                    availability: Availability.CO_OWNERSHIP,
-                },
-            ],
-        },
-    ];
+    import { fetchLitter } from "$lib/mock-server";
 
     export let data: PageData;
 
@@ -99,15 +17,12 @@
     let active = "";
     let extended = true;
 
-    async function fetchLitter(name: string) {
-        const match = LITTERS.find((l) => l.name === name);
-        active = name;
-        promise = new Promise((resolve) => {
-            setTimeout(() => resolve(match), 1000);
-        });
-    }
+    data.names.then((ns) => loadLitter(ns[0]));
 
-    data.names.then((ns) => fetchLitter(ns[0]));
+    function loadLitter(name: string) {
+        active = name;
+        promise = fetchLitter(name);
+    }
 </script>
 
 <h2 class="p-4 text-center text-4xl font-bold">{$format("nav.litters")}</h2>
@@ -131,7 +46,7 @@
                             class="text-nowrap p-2 font-semibold transition-colors duration-300 hover:bg-gray-200 dark:border-white dark:hover:bg-gray-500"
                             class:bg-gray-300={active === name}
                             class:dark:bg-gray-700={active === name}
-                            on:click={() => fetchLitter(name)}
+                            on:click={() => loadLitter(name)}
                         >
                             {name}
                         </button>

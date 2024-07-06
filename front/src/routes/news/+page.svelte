@@ -4,6 +4,7 @@
     import type { PageData } from "./$types";
     import { format } from "svelte-i18n";
     import { onMount } from "svelte";
+    import { fetchNews } from "$lib/mock-server";
 
     export let data: PageData;
 
@@ -29,7 +30,7 @@
     function observerCallback(entries: IntersectionObserverEntry[]) {
         const intersecting = entries.find((e) => e.isIntersecting);
         if (intersecting) {
-            more = fetchMore(oldest);
+            more = fetchNews(oldest);
             more.then(updateNews);
         }
     }
@@ -43,23 +44,6 @@
         news.push(...newNews);
         news = news;
         oldest = newNews[newNews.length - 1].date;
-    }
-
-    function fetchMore(from: Date, count = 5): Promise<NewsPiece[]> {
-        const fetched = [
-            {
-                title: "Uudis",
-                date: new Date(2017, 3, 1),
-                images: [{ src: "/test.jpg", alt: "poisid" }],
-                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi porttitor sapien non bibendum tincidunt.",
-            },
-        ]
-            .filter((n) => from > n.date)
-            .slice(0, count);
-
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(fetched), 1500);
-        });
     }
 </script>
 

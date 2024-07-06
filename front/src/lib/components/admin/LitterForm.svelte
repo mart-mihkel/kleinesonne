@@ -6,7 +6,7 @@
     import { Breed, type Litter } from "$lib/types";
 
     let name = "";
-    let breed = "";
+    let breed = Breed.AUSTRALIAN;
     let parents = "";
     let puppies = "";
     let images: string[] = [];
@@ -17,7 +17,7 @@
 
     function reset() {
         name = "";
-        breed = "";
+        breed = Breed.AUSTRALIAN;
         parents = "";
         puppies = "";
         images = [];

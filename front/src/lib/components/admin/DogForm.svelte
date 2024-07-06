@@ -10,8 +10,8 @@
     let nickname = "";
     let father = "";
     let mother = "";
-    let breed = "";
-    let gender = "";
+    let breed = Breed.AUSTRALIAN;
+    let gender = Gender.MALE;
     let titles = "";
     let health = "";
     let alive = true;
@@ -28,8 +28,8 @@
         nickname = "";
         father = "";
         mother = "";
-        breed = "";
-        gender = "";
+        breed = Breed.AUSTRALIAN;
+        gender = Gender.MALE;
         titles = "";
         health = "";
         alive = true;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Availability, Gender, type Image } from "$lib/types";
+    import { Availability, Gender } from "$lib/types";
     import { format } from "svelte-i18n";
 
     export let href: string | undefined = undefined;
@@ -7,9 +7,8 @@
     export let gender: Gender | undefined = undefined;
     export let nickname: string | undefined = undefined;
     export let name: string;
-    export let image: Image;
+    export let src: string;
 
-    const { src, alt } = image;
     $: options = { values: { gender: $format(`dog.${gender}`) } };
 </script>
 
@@ -22,7 +21,7 @@
         class="aspect-square size-full object-cover"
         loading="lazy"
         {src}
-        {alt}
+        alt=""
     />
     <div
         class="flex w-full flex-col gap-2 bg-gray-200 px-2 pb-2 dark:bg-gray-700"

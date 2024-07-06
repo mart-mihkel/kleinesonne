@@ -1,33 +1,36 @@
 <script lang="ts">
     import { Gallery } from "$lib/components";
-    import { Breed, type Image } from "$lib/types";
+    import { Breed } from "$lib/types";
     import { format } from "svelte-i18n";
 
     import ausAdult from "$lib/assets/aus-adult.jpg?as=run";
     import ausPuppy from "$lib/assets/aus-puppy.jpg?as=run";
     import ausDraw from "$lib/assets/aus-draw.jpg?as=run";
-    const aus: Image[] = [
-        { src: ausAdult, alt: "Adult merle Australian Shepherd" },
-        { src: ausPuppy, alt: "7 week old Australian Shepherd puppies" },
-        { src: ausDraw, alt: "Standard Australian Shepherd pencil drawing" },
+    const aus = [ausAdult, ausPuppy, ausDraw];
+    const ausAlt = [
+        "Adult merle Australian Shepherd",
+        "7 week old Australian Shepherd puppies",
+        "Standard Australian Shepherd pencil drawing",
     ];
 
     import entAdult from "$lib/assets/ent-adult.jpg?as=run";
     import entPuppy from "$lib/assets/ent-puppy.jpg?as=run";
     import entDraw from "$lib/assets/ent-draw.jpg?as=run";
-    const ent: Image[] = [
-        { src: entAdult, alt: "Adult Entlebuch Cattle Dog" },
-        { src: entPuppy, alt: "Entlebuch Cattle Dog puppy" },
-        { src: entDraw, alt: "Standard Entlebuch Cattle Dog pencil drawing" },
+    const ent = [entAdult, entPuppy, entDraw];
+    const entAlt = [
+        "Adult Entlebuch Cattle Dog",
+        "Entlebuch Cattle Dog puppy",
+        "Standard Entlebuch Cattle Dog pencil drawing",
     ];
 
     import berAdult from "$lib/assets/ber-adult.jpg?as=run";
     import berPuppy from "$lib/assets/ber-puppy.jpg?as=run";
     import berDraw from "$lib/assets/ber-draw.jpg?as=run";
-    const ber: Image[] = [
-        { src: berAdult, alt: "Adult Bernese Mountain Dog" },
-        { src: berPuppy, alt: "Month old Bernese Mountain Dog puppies" },
-        { src: berDraw, alt: "Standard Bernsese Mountain Dog pencil drawing" },
+    const ber = [berAdult, berPuppy, berDraw];
+    const berAlt = [
+        "Adult Bernese Mountain Dog",
+        "Month old Bernese Mountain Dog puppies",
+        "Standard Bernsese Mountain Dog pencil drawing",
     ];
 
     const fci = $format("intro.fci");
@@ -55,7 +58,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={aus} />
+        <Gallery images={aus} alts={ausAlt} />
         <p class="text-justify">{$format("intro.aus")}</p>
     </div>
     <div class="flex flex-col border-t border-black dark:border-white">
@@ -79,7 +82,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={ent} />
+        <Gallery images={ent} alts={entAlt} />
         <p class="text-justify">{$format("intro.ent")}</p>
     </div>
     <div class="flex flex-col border-t border-black dark:border-white">
@@ -103,7 +106,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={ber} />
+        <Gallery images={ber} alts={berAlt} />
         <p class="text-justify">{$format("intro.ber")}</p>
     </div>
 </div>

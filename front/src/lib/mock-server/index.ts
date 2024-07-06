@@ -1,8 +1,8 @@
 import { Availability, Breed, Gender, type Dog, type DogPreview, type Family, type Litter, type NewsPiece } from "$lib/types";
 
-const PREVIEWS: DogPreview[] = [
+export const PREVIEWS: DogPreview[] = [
 	{
-		thumbnail: { src: "/test.jpg", alt: "rand" },
+		thumbnail: "/test.jpg",
 		nickname: "Salsa",
 		name: "Seventy Seven Spicy Salsa",
 		breed: Breed.AUSTRALIAN,
@@ -10,7 +10,7 @@ const PREVIEWS: DogPreview[] = [
 		alive: true,
 	},
 	{
-		thumbnail: { src: "/test.jpg", alt: "kohver" },
+		thumbnail: "/test.jpg",
 		nickname: "Katja",
 		name: "Korolevstvo Gornih Psov Okatava",
 		breed: Breed.ENTLEBUCH,
@@ -19,14 +19,14 @@ const PREVIEWS: DogPreview[] = [
 	},
 ];
 
-const SALSA: Dog = {
-	thumbnail: { src: "/test.jpg", alt: "rand" },
+export const SALSA: Dog = {
+	thumbnail: "/test.jpg",
 	images: [
-		{ src: "/test.jpg", alt: "rand" },
-		{ src: "/test.jpg", alt: "rand" },
-		{ src: "/test.jpg", alt: "rand" },
-		{ src: "/test.jpg", alt: "rand" },
-		{ src: "/test.jpg", alt: "rand" },
+		"/test.jpg",
+		"/test.jpg",
+		"/test.jpg",
+		"/test.jpg",
+		"/test.jpg",
 	],
 	name: "Seventy Seven Spicy Salsa",
 	nickname: "Salsa",
@@ -48,14 +48,14 @@ const SALSA: Dog = {
 	],
 };
 
-const KATJA: Dog = {
-	thumbnail: { src: "/test.jpg", alt: "rand" },
+export const KATJA: Dog = {
+	thumbnail: "/test.jpg",
 	images: [
-		{ src: "/test.jpg", alt: "rand" },
-		{ src: "/test.jpg", alt: "rand" },
-		{ src: "/test.jpg", alt: "rand" },
-		{ src: "/test.jpg", alt: "rand" },
-		{ src: "/test.jpg", alt: "rand" },
+		"/test.jpg",
+		"/test.jpg",
+		"/test.jpg",
+		"/test.jpg",
+		"/test.jpg",
 	],
 	name: "Korolevstvo Gornih Psov Okatava",
 	nickname: "Katja",
@@ -77,7 +77,7 @@ const KATJA: Dog = {
 	],
 };
 
-const FAMILY: Family = {
+export const FAMILY: Family = {
 	name: "Kleine Sonne Awesome Huntress",
 	father: {
 		name: "Snowbelts Winning Ticket",
@@ -107,33 +107,33 @@ const FAMILY: Family = {
 	},
 };
 
-const LITTERS: Litter[] = [
+export const LITTERS: Litter[] = [
 	{
 		name: "Entlebuch Marakratid",
-		parents: { src: "/test.jpg", alt: "parents" },
+		parents: "/test.jpg",
 		breed: Breed.ENTLEBUCH,
 		images: [],
 		puppies: [
 			{
-				image: { src: "/test.jpg", alt: "usin" },
+				image: "/test.jpg",
 				name: "Kleine Sonne Golf in Leuk",
 				gender: Gender.MALE,
 				availability: Availability.AVAILABLE,
 			},
 			{
-				image: { src: "/test.jpg", alt: "usin" },
+				image: "/test.jpg",
 				name: "Kleine Sonne Golf in Davos",
 				gender: Gender.MALE,
 				availability: Availability.AVAILABLE,
 			},
 			{
-				image: { src: "/test.jpg", alt: "usin" },
+				image: "/test.jpg",
 				name: "Kleine Sonne Golf in Erlen",
 				gender: Gender.FEMALE,
 				availability: Availability.CO_OWNERSHIP,
 			},
 			{
-				image: { src: "/test.jpg", alt: "usin" },
+				image: "/test.jpg",
 				name: "Kleine Sonne Golf in Freakazoid",
 				gender: Gender.FEMALE,
 				availability: Availability.UNAVAILABLE,
@@ -142,30 +142,30 @@ const LITTERS: Litter[] = [
 	},
 	{
 		name: "Australian Mürakarud",
-		parents: { src: "/test.jpg", alt: "parents aasa" },
+		parents: "/test.jpg",
 		breed: Breed.AUSTRALIAN,
 		images: [
-			{ src: "/test.jpg", alt: "usin" },
-			{ src: "/test.jpg", alt: "usin" },
-			{ src: "/test.jpg", alt: "usin" },
-			{ src: "/test.jpg", alt: "usin" },
-			{ src: "/test.jpg", alt: "usin" },
+			"/test.jpg",
+			"/test.jpg",
+			"/test.jpg",
+			"/test.jpg",
+			"/test.jpg",
 		],
 		puppies: [
 			{
-				image: { src: "/test.jpg", alt: "usin" },
+				image: "/test.jpg",
 				name: "Kleine Sonne Ice Golem",
 				gender: Gender.MALE,
 				availability: Availability.AVAILABLE,
 			},
 			{
-				image: { src: "/test.jpg", alt: "usin" },
+				image: "/test.jpg",
 				name: "Kleine Sonne Green Goblin",
 				gender: Gender.FEMALE,
 				availability: Availability.CO_OWNERSHIP,
 			},
 			{
-				image: { src: "/test.jpg", alt: "usin" },
+				image: "/test.jpg",
 				name: "Kleine Sonne All Might",
 				gender: Gender.FEMALE,
 				availability: Availability.UNAVAILABLE,
@@ -174,12 +174,12 @@ const LITTERS: Litter[] = [
 	},
 	{
 		name: "Olematud Olendid",
-		parents: { src: "", alt: "pole olemas" },
+		parents: "",
 		breed: Breed.AUSTRALIAN,
 		images: [],
 		puppies: [
 			{
-				image: { src: "/test.jpg", alt: "usin" },
+				image: "/test.jpg",
 				name: "Kleine Sonne Not Real",
 				gender: Gender.MALE,
 				availability: Availability.CO_OWNERSHIP,
@@ -188,7 +188,7 @@ const LITTERS: Litter[] = [
 	},
 ];
 
-const NEWS: NewsPiece[] = [
+export const NEWS: NewsPiece[] = [
 	{
 		title: "Karm koer",
 		date: new Date(2018, 5, 12),
@@ -198,23 +198,23 @@ const NEWS: NewsPiece[] = [
 	{
 		title: "Rabaretk",
 		date: new Date(2018, 4, 12),
-		images: [{ src: "/test.jpg", alt: "rand" }],
+		images: ["/test.jpg"],
 		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi porttitor sapien non bibendum tincidunt. Vivamus tincidunt lorem dui, ac fringilla dolor porta quis. Vivamus nec tortor ac lorem molestie congue. Mauris ullamcorper id sapien id mattis. In at iaculis dolor.",
 	},
 	{
 		title: "Kohalik karujüri",
 		date: new Date(2018, 4, 3),
 		images: [
-			{ src: "/test.jpg", alt: "rand" },
-			{ src: "/test.jpg", alt: "rand" },
-			{ src: "/test.jpg", alt: "rand" },
+			"/test.jpg",
+			"/test.jpg",
+			"/test.jpg",
 		],
 		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi porttitor sapien non bibendum tincidunt. Vivamus tincidunt lorem dui, ac fringilla dolor porta quis. Vivamus nec tortor ac lorem molestie congue. Mauris ullamcorper id sapien id mattis. In at iaculis dolor.",
 	},
 	{
 		title: "Uudis",
 		date: new Date(2017, 3, 1),
-		images: [{ src: "/test.jpg", alt: "poisid" }],
+		images: ["/test.jpg"],
 		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi porttitor sapien non bibendum tincidunt.",
 	}
 ];
@@ -297,6 +297,27 @@ export async function fetchLitter(name: string): Promise<Litter | undefined> {
 
 export async function fetchNews(from: Date, count = 5): Promise<NewsPiece[]> {
 	const news = NEWS.filter(n => n.date < from).slice(0, count)
+
+	return new Promise((resolve) => {
+		setTimeout(() => resolve(news), 3000);
+	});
+}
+
+export async function fetchNewsPiece(name: string): Promise<NewsPiece | undefined> {
+	const piece = NEWS.find(n => n.title === name) ?? {
+		title: "",
+		date: new Date(),
+		text: "",
+		images: [],
+	};
+
+	return new Promise((resolve) => {
+		setTimeout(() => resolve(piece), 3000);
+	});
+}
+
+export async function fetchTitles(): Promise<string[]> {
+	const news = NEWS.map(n => n.title);
 
 	return new Promise((resolve) => {
 		setTimeout(() => resolve(news), 3000);

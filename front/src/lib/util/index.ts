@@ -10,3 +10,15 @@ export function longBreed(breed: Breed): LongBreed {
             return "Entlebuch Cattle Dog";
     }
 }
+
+export function dateInput(date: Date): string {
+    const m = date.getMonth();
+    const d = date.getDay();
+
+    return date.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (d < 10 ? "0" : "") + d;
+}
+
+export function parseDate(date: string): Date {
+    const [yyyy, mm, dd] = date.split("-").map(Number);
+    return new Date(yyyy, mm, dd);
+}

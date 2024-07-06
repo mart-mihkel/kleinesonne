@@ -4,7 +4,7 @@ export type LongBreed =
     | "Entlebuch Cattle Dog";
 
 export type DogPreview = {
-    thumbnail: Image;
+    thumbnail: string;
     name: string;
     nickname: string;
     breed: Breed;
@@ -13,8 +13,8 @@ export type DogPreview = {
 };
 
 export type Dog = {
-    thumbnail: Image;
-    images: Image[];
+    thumbnail: string;
+    images: string[];
     father: string;
     mother: string;
     name: string;
@@ -35,31 +35,31 @@ export type Family = {
 };
 
 export type Puppy = {
-    image: Image;
+    image: string;
     name: string;
     gender: Gender;
     availability: Availability;
 };
 
 export type Litter = {
-    parents: Image;
+    parents: string;
     name: string;
     breed: Breed;
-    images: Image[];
+    images: string[];
     puppies: Puppy[];
 };
 
 export type NewsPiece = {
     title: string;
     date: Date;
-    images: Image[];
+    images: string[];
     text: string;
 };
 
-export type Image = {
-    src: string;
-    alt: string;
-};
+export type ModalDispatch = {
+    select: string;
+    delete: string;
+}
 
 export enum Gender {
     MALE = "male",

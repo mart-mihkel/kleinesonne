@@ -1,14 +1,14 @@
 <script lang="ts">
-    import type { Image } from "$lib/types";
     import { Next, Prev, Close } from "$lib/components/svg";
-    import Img from "@zerodevx/svelte-img";
 
-    export let images: Image[];
+    export let images: string[];
+    export let alts: string[] = [];
 
     let count = images.length;
     let show = false;
     let idx = 0;
     $: active = images[idx];
+    $: alt = alts[idx];
 
     function open(i: number) {
         show = true;
@@ -35,7 +35,7 @@
                 <Prev />
             </button>
             <div class="flex flex-col p-4">
-                <img src={active.src} alt={active.alt} loading="lazy" />
+                <img src={active} {alt} loading="lazy" />
                 <div class="flex flex-row justify-center gap-3 p-4">
                     {#each [...Array(images.length).keys()] as i}
                         <button
@@ -58,12 +58,17 @@
     </div>
 {/if}
 <div class="flex w-full flex-row flex-wrap">
-    {#each images as { src, alt }, i}
+    {#each images as src, i}
         <button
             class="aspect-square w-1/2 p-1 outline-none lg:w-1/3"
             on:click={() => open(i)}
         >
-            <img class="size-full object-cover" {src} {alt} loading="lazy" />
+            <img
+                class="size-full object-cover"
+                {src}
+                alt={alts[i]}
+                loading="lazy"
+            />
         </button>
     {/each}
 </div>

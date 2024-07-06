@@ -1,6 +1,25 @@
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
+import { fail } from "@sveltejs/kit";
+
+export const load: PageServerLoad = ({ cookies }) => {
+    const id = cookies.get("sessionid");
+    const authenticated = id === "temp" ? true : false;
+
+    return { authenticated };
+}
 
 export const actions: Actions = {
+    login: async ({ request, cookies }) => {
+        const data = await request.formData();
+        const user = data.get("user");
+        const password = data.get("password");
+
+        if (user === null || password === null) {
+            fail(401, { error: "Missing username or password" });
+        }
+
+        cookies.set("sessionid", "temp", { path: "/admin" });
+    },
     newsCreate: async ({ request }) => {
         const data = await request.formData();
         console.log(data);

@@ -1,6 +1,8 @@
 {
     "nothing": "Nothing here",
     "nav": {
+        "open": "Open navigation",
+        "close": "Close navigation",
         "available": "Available puppies",
         "puppies": "Puppies",
         "dogs": "Dogs",

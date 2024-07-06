@@ -7,11 +7,13 @@
     function ee() {
         locale.set("ee");
         localStorage.setItem("locale", "ee");
+        open = false;
     }
 
     function en() {
         locale.set("en");
         localStorage.setItem("locale", "en");
+        open = false;
     }
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import "../app.css";
-    import { Header, Footer } from "$lib/components";
+    import { Header, Nav, Footer } from "$lib/components";
 </script>
 
 <svelte:head>
@@ -13,6 +13,7 @@
 
 <div class="flex h-screen flex-col dark:bg-black dark:text-white">
     <Header />
+    <Nav />
     <main class="mb-auto dark:bg-black">
         <slot />
     </main>

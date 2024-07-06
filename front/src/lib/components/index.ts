@@ -1,4 +1,5 @@
 import Header from "./Header.svelte";
+import Nav from "./Nav.svelte";
 import Footer from "./Footer.svelte";
 import Dropdown from "./Dropdown.svelte";
 import Thumbnail from "./Thumbnail.svelte";
@@ -12,6 +13,7 @@ import Locale from "./Locale.svelte";
 
 export {
     Header,
+    Nav,
     Footer,
     Dropdown,
     Thumbnail,

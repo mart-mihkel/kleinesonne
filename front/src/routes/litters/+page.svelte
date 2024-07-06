@@ -121,7 +121,7 @@
                     <Loading text={$format("litter.loading.many")} />
                 {:then names}
                     <button
-                        class="p-2 md:hidden"
+                        class="p-2 font-medium md:hidden"
                         on:click={() => (extended = false)}
                     >
                         <p>{$format("litter.close")}</p>
@@ -141,7 +141,7 @@
                 {/await}
             </div>
         {:else}
-            <button class="p-2" on:click={() => (extended = true)}>
+            <button class="p-2 font-medium" on:click={() => (extended = true)}>
                 {$format("litter.open")}
             </button>
         {/if}

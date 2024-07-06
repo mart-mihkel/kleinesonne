@@ -1,6 +1,8 @@
 {
     "nothing": "Tühi",
     "nav": {
+        "open": "Ava menüü",
+        "close": "Sulge menüü",
         "available": "Kutsikad",
         "puppies": "Kutsikad",
         "dogs": "Koerad",

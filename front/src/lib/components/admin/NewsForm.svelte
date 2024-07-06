@@ -66,7 +66,6 @@
     {:then titles}
         <Modal
             bind:open={modal}
-            bind:active={title}
             items={titles}
             on:select={select}
             on:delete={del}

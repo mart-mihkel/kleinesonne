@@ -90,7 +90,6 @@
     {:then names}
         <Modal
             bind:open={modal}
-            bind:active={name}
             items={names}
             on:select={select}
             on:delete={del}
@@ -214,7 +213,7 @@
             <p class="w-1/3 font-semibold">Thumbnail</p>
             <input class="w-2/3 p-2" type="file" name="thumbnail" />
         </label>
-        {#if images.length > 0}
+        {#if thumbnail !== ""}
             <div class="flex w-full flex-row flex-wrap gap-4">
                 <div class="flex w-full flex-row items-center gap-4">
                     <img

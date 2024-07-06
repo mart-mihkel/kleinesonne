@@ -3,8 +3,8 @@
     import { createEventDispatcher } from "svelte";
 
     export let open: boolean;
-    export let active: string;
     export let items: string[];
+    export let active: string = "";
 
     let dispatch = createEventDispatcher<ModalDispatch>();
     let filter: string;

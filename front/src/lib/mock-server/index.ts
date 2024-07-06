@@ -7,6 +7,7 @@ import {
     type Family,
     type Litter,
     type NewsPiece,
+    type Puppy,
 } from "$lib/types";
 
 export const PREVIEWS: DogPreview[] = [
@@ -320,6 +321,24 @@ export async function fetchLitter(name: string): Promise<Litter | undefined> {
     const match = LITTERS.find((l) => l.name === name);
     return new Promise((resolve) => {
         setTimeout(() => resolve(match), 1000);
+    });
+}
+
+export async function fetchPuppy(name: string): Promise<Puppy | undefined> {
+    const match = LITTERS.flatMap((l) => l.puppies).find(
+        (p) => p.name === name,
+    );
+
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(match), 1000);
+    });
+}
+
+export async function fetchPuppyNames(): Promise<string[]> {
+    const names = LITTERS.flatMap((l) => l.puppies.map((p) => p.name));
+
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(names), 1000);
     });
 }
 

@@ -72,7 +72,7 @@ export enum Breed {
 }
 
 export enum Availability {
-    AVAILABLE,
-    UNAVAILABLE,
-    CO_OWNERSHIP,
+    AVAILABLE = "available",
+    UNAVAILABLE = "unavailable",
+    CO_OWNERSHIP = "co",
 }

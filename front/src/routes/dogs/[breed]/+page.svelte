@@ -26,9 +26,9 @@
                     {#each dogs as { name, nickname, thumbnail }}
                         <Thumbnail
                             href={`${breed}/${nickname}`}
+                            src={thumbnail}
                             {name}
                             {nickname}
-                            image={thumbnail}
                         />
                     {/each}
                 {:else}
@@ -49,9 +49,9 @@
                     {#each dogs as { name, nickname, thumbnail }}
                         <Thumbnail
                             href={`${breed}/${nickname}`}
+                            src={thumbnail}
                             {name}
                             {nickname}
-                            image={thumbnail}
                         />
                     {/each}
                 {:else}
@@ -72,9 +72,9 @@
                     {#each dogs as { name, nickname, thumbnail }}
                         <Thumbnail
                             href={`${breed}/${nickname}`}
+                            src={thumbnail}
                             {name}
                             {nickname}
-                            image={thumbnail}
                         />
                     {/each}
                 {:else}

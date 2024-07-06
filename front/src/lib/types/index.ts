@@ -22,10 +22,9 @@ export type Dog = {
     breed: Breed;
     gender: Gender;
     alive: boolean;
-    awards: string[];
+    titles: string[];
     health: string[];
     dob: Date;
-    dod?: Date;
 };
 
 export type Family = {
@@ -59,7 +58,7 @@ export type NewsPiece = {
 export type ModalDispatch = {
     select: string;
     delete: string;
-}
+};
 
 export enum Gender {
     MALE = "male",

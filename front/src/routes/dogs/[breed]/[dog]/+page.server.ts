@@ -8,4 +8,3 @@ export const load: PageServerLoad = async ({ params }) => {
         tree: fetchFamily(),
     };
 };
-

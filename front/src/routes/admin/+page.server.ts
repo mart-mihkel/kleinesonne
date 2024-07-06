@@ -9,4 +9,12 @@ export const actions: Actions = {
         const data = await request.formData();
         console.log(data);
     },
-}
+    dogCreate: async ({ request }) => {
+        const data = await request.formData();
+        console.log(data);
+    },
+    dogUpdate: async ({ request }) => {
+        const data = await request.formData();
+        console.log(data);
+    },
+};

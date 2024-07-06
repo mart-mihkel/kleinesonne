@@ -15,7 +15,7 @@
     <div class="flex w-full flex-row flex-wrap">
         {#each puppies as { name, gender, availability, image }}
             <div class="flex w-1/2 flex-col items-center p-1 lg:w-1/3">
-                <Thumbnail {name} {gender} {availability} {image} />
+                <Thumbnail {name} {gender} {availability} src={image} />
             </div>
         {/each}
     </div>
@@ -30,5 +30,5 @@
     <h3 class="text-center text-2xl font-semibold">
         {$format("litter.parents")}
     </h3>
-    <img src={parents.src} alt={parents.alt} loading="lazy" />
+    <img src={parents} alt="" loading="lazy" />
 </div>

@@ -10,7 +10,6 @@
     let date = dateInput(new Date());
     let text = "";
     let images: string[] = [];
-    let formImages: FileList;
 
     let modal = false;
     let titles: Promise<string[]> = fetchTitles();
@@ -78,8 +77,8 @@
     <form
         method="POST"
         class="flex flex-col"
-        use:enhance
         enctype="multipart/form-data"
+        use:enhance
     >
         <label class="flex flex-row items-center p-2">
             <p class="w-1/3 font-semibold">Title:</p>
@@ -118,7 +117,6 @@
                 type="file"
                 name="images"
                 multiple={true}
-                bind:files={formImages}
             />
         </label>
         {#if images.length > 0}

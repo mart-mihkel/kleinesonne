@@ -9,13 +9,13 @@
 <div class="flex flex-col md:px-[5%] lg:px-[25%]">
     {#await data.dog}
         <Loading text={$format("dog.loading.info")} />
-    {:then { name, nickname, father, mother, dob, breed, gender, health, awards, thumbnail, images }}
+    {:then { name, nickname, father, mother, dob, breed, gender, health, titles, thumbnail, images }}
         <div class="flex flex-col md:flex-row">
             <div class="md:w-1/2 md:p-2">
                 <img
                     class="size-full object-cover"
-                    src={thumbnail.src}
-                    alt={thumbnail.alt}
+                    src={thumbnail}
+                    alt=""
                     loading="lazy"
                 />
             </div>
@@ -79,8 +79,8 @@
                     {$format("dog.titles")}
                 </h2>
                 <ul class="list-disc pl-[25%]">
-                    {#each awards as a}
-                        <li class="font-medium">{a}</li>
+                    {#each titles as t}
+                        <li class="font-medium">{t}</li>
                     {/each}
                 </ul>
             </div>

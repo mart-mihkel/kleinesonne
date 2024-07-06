@@ -12,10 +12,18 @@ export function longBreed(breed: Breed): LongBreed {
 }
 
 export function dateInput(date: Date): string {
-    const m = date.getMonth();
-    const d = date.getDay();
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
 
-    return date.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (d < 10 ? "0" : "") + d;
+    return (
+        date.getFullYear() +
+        "-" +
+        (m < 10 ? "0" : "") +
+        m +
+        "-" +
+        (d < 10 ? "0" : "") +
+        d
+    );
 }
 
 export function parseDate(date: string): Date {

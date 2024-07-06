@@ -2,7 +2,6 @@ import { fetchBreedDogs, fetchBreedDogsRetired } from "$lib/mock-server";
 import { Breed, Gender } from "$lib/types";
 import type { PageServerLoad } from "./$types";
 
-
 export const load: PageServerLoad = async ({ params }) => {
     const breed = params.breed as Breed;
     return {
@@ -11,4 +10,3 @@ export const load: PageServerLoad = async ({ params }) => {
         retired: fetchBreedDogsRetired(breed),
     };
 };
-

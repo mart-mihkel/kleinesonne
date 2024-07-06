@@ -8,14 +8,4 @@ import Prev from "./Prev.svelte";
 import Close from "./Close.svelte";
 import Arrow from "./Arrow.svelte";
 
-export {
-    Call,
-    Mail,
-    MapPin,
-    Person,
-    Facebook,
-    Next,
-    Prev,
-    Close,
-    Arrow,
-};
+export { Call, Mail, MapPin, Person, Facebook, Next, Prev, Close, Arrow };

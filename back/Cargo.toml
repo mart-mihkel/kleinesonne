@@ -7,5 +7,7 @@ edition = "2021"
 
 [dependencies]
 axum = "0.7.5"
-tokio = { version = "1.38.0", features = ["full"] }
 tower = "0.4.13"
+jsonwebtoken = "9.3.0"
+tokio = { version = "1.38.0", features = ["full"] }
+serde = { version = "1.0.204", features = ["derive"] }

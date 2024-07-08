@@ -9,15 +9,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use std::{fmt::Display, str::FromStr};
 use tokio_rusqlite::Connection;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize)]
 pub struct Article {
+    id: usize,
+    title: String,
+    text: String,
+    date: u64,
+    images: Vec<String>,
+}
+
+#[derive(Deserialize)]
+pub struct CreatePayload {
     #[serde(deserialize_with = "de_primitive")]
     id: usize,
     title: String,
     text: String,
     #[serde(deserialize_with = "de_primitive")]
     date: u64,
-    images: Vec<String>,
 }
 
 #[derive(Deserialize)]
@@ -41,20 +49,10 @@ pub enum NewsError {
 
 impl IntoResponse for NewsError {
     fn into_response(self) -> Response {
-        #[derive(Serialize)]
-        struct ErrorMessage {
-            error: String,
-        }
-
-        let (status, message) = match self {
+        match self {
             NewsError::DbError => (StatusCode::INTERNAL_SERVER_ERROR, "Database error"),
-        };
-
-        let body = Json(ErrorMessage {
-            error: message.into(),
-        });
-
-        (status, body).into_response()
+        }
+        .into_response()
     }
 }
 
@@ -70,34 +68,20 @@ where
 
 pub async fn create(
     State(conn): State<Connection>,
-    Json(payload): Json<Article>,
+    Json(payload): Json<CreatePayload>,
 ) -> Result<StatusCode, NewsError> {
     conn.call(move |conn| {
-        let Article {
-            id,
+        let CreatePayload {
+            id: _,
             title,
             text,
             date,
-            images,
         } = payload;
 
-        let tx = conn.transaction()?;
-
-        tx.execute(
-            "insert into news (id, title, text, date) values (?1, ?2, ?3, ?4)",
-            params![id, title, text, date],
-        )?;
-
-        for img in images {
-            tx.execute(
-                "insert into news_images (article, path) values (?1, ?2)",
-                params![id, img],
-            )?;
-        }
-
-        tx.commit()?;
-
-        Ok(())
+        Ok(conn.execute(
+            "insert into news (title, text, date) values (?2, ?3, ?4)",
+            params![title, text, date],
+        )?)
     })
     .await
     .map_err(|_| NewsError::DbError)?;
@@ -158,23 +142,20 @@ pub async fn read(
 
 pub async fn update(
     State(conn): State<Connection>,
-    Json(payload): Json<Article>,
+    Json(payload): Json<CreatePayload>,
 ) -> Result<StatusCode, NewsError> {
     conn.call(move |conn| {
-        let Article {
+        let CreatePayload {
             id,
             title,
             text,
             date,
-            images: _,
         } = payload;
 
-        conn.execute(
+        Ok(conn.execute(
             "update news set (title, text, date) = (?2, ?3, ?4) where news.id = ?1",
             params![id, title, text, date],
-        )?;
-
-        Ok(())
+        )?)
     })
     .await
     .map_err(|_| NewsError::DbError)?;
@@ -186,12 +167,9 @@ pub async fn delete(
     State(conn): State<Connection>,
     Json(payload): Json<DeletePayload>,
 ) -> Result<StatusCode, NewsError> {
-    conn.call(move |conn| {
-        conn.execute("delete from news where news.id = ?1", [payload.id])?;
-        Ok(())
-    })
-    .await
-    .map_err(|_| NewsError::DbError)?;
+    conn.call(move |conn| Ok(conn.execute("delete from news where news.id = ?1", [payload.id])?))
+        .await
+        .map_err(|_| NewsError::DbError)?;
 
     Ok(StatusCode::OK)
 }

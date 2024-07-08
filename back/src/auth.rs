@@ -16,7 +16,7 @@ use std::time::Duration;
 #[derive(Serialize, Deserialize)]
 struct Claims {
     sub: String,
-    exp: usize,
+    exp: u64,
 }
 
 #[async_trait]
@@ -67,23 +67,13 @@ pub enum AuthError {
 
 impl IntoResponse for AuthError {
     fn into_response(self) -> Response {
-        #[derive(Serialize)]
-        struct ErrorMessage {
-            error: String,
-        }
-
-        let (status, message) = match self {
+        match self {
             AuthError::WrongCredentials => (StatusCode::UNAUTHORIZED, "Wrong credentials"),
             AuthError::MissingCredentials => (StatusCode::BAD_REQUEST, "Missing credentials"),
             AuthError::TokenCreation => (StatusCode::INTERNAL_SERVER_ERROR, "Token creation error"),
             AuthError::InvalidToken => (StatusCode::BAD_REQUEST, "Invalid token"),
-        };
-
-        let body = Json(ErrorMessage {
-            error: message.into(),
-        });
-
-        (status, body).into_response()
+        }
+        .into_response()
     }
 }
 
@@ -116,10 +106,10 @@ pub async fn login(Json(payload): Json<AuthPayload>) -> Result<Json<AuthResponse
     Ok(Json(AuthResponse { token }))
 }
 
-fn get_exp(seconds: u64) -> usize {
+fn get_exp(seconds: u64) -> u64 {
     let now = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
         .expect("Time went backwards");
 
-    (now + Duration::from_secs(seconds)).as_secs() as usize
+    (now + Duration::from_secs(seconds)).as_secs()
 }

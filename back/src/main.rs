@@ -5,6 +5,7 @@ use axum::{
 use tokio_rusqlite::Connection;
 
 mod auth;
+mod dogs;
 mod news;
 
 #[tokio::main]
@@ -19,10 +20,10 @@ async fn main() {
         .route("/news/read", get(news::read))
         .route("/news/update", post(news::update))
         .route("/news/delete", post(news::delete))
-        .route("/dogs/create", post(|| async { "hi" }))
-        .route("/dogs/read", get(|| async { "hi" }))
-        .route("/dogs/update", post(|| async { "hi" }))
-        .route("/dogs/delete", post(|| async { "hi" }))
+        .route("/dogs/create", post(dogs::create))
+        .route("/dogs/read", get(dogs::read))
+        .route("/dogs/update", post(dogs::update))
+        .route("/dogs/delete", post(dogs::delete))
         .route("/litters/create", post(|| async { "hi" }))
         .route("/litters/read", get(|| async { "hi" }))
         .route("/litters/update", post(|| async { "hi" }))

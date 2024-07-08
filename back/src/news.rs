@@ -97,40 +97,30 @@ pub async fn read(
         .call(move |conn| {
             let ReadPayload { count, from } = payload;
             let query = r#"
-                select news.id, title, text, date, path 
+                select id, title, text, date, path 
                 from (select * from news where date < ?1 order by date desc limit ?2) as news 
                 left join news_images as img on news.id = img.article
             "#;
-            let mut stmt = conn.prepare(query)?;
 
-            struct Row(usize, String, String, u64, Option<String>);
+            let mut stmt = conn.prepare(query)?;
             let mut map = std::collections::BTreeMap::<usize, Article>::new();
-            stmt.query_map([from, count], |row| {
-                Ok(Row(
-                    row.get(0)?,
-                    row.get(1)?,
-                    row.get(2)?,
-                    row.get(3)?,
-                    row.get(4)?,
-                ))
-            })?
-            .for_each(|row| {
-                let row = row.unwrap();
-                let map = &mut map;
-                let id = row.0;
+            let mut rows = stmt.query([from, count])?;
+            while let Some(row) = rows.next()? {
+                let id = row.get(0)?;
+                let img: Option<String> = row.get(4)?;
 
                 let article = map.entry(id).or_insert(Article {
                     id,
-                    title: row.1,
-                    text: row.2,
-                    date: row.3,
+                    title: row.get(1)?,
+                    text: row.get(2)?,
+                    date: row.get(3)?,
                     images: vec![],
                 });
 
-                if let Some(path) = row.4 {
+                if let Some(path) = img {
                     article.images.push(path);
-                }
-            });
+                };
+            }
 
             Ok(map.into_values().collect::<Vec<Article>>())
         })

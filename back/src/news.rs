@@ -4,9 +4,21 @@ use axum::{
     response::{IntoResponse, Response},
     Json,
 };
+use rusqlite::params;
 use serde::{Deserialize, Deserializer, Serialize};
 use std::{fmt::Display, str::FromStr};
 use tokio_rusqlite::Connection;
+
+#[derive(Serialize, Deserialize)]
+pub struct Article {
+    #[serde(deserialize_with = "de_primitive")]
+    id: usize,
+    title: String,
+    text: String,
+    #[serde(deserialize_with = "de_primitive")]
+    date: u64,
+    images: Vec<String>,
+}
 
 #[derive(Deserialize)]
 pub struct ReadPayload {
@@ -16,7 +28,35 @@ pub struct ReadPayload {
     from: usize,
 }
 
-pub struct CreatePayload {}
+#[derive(Deserialize)]
+pub struct DeletePayload {
+    #[serde(deserialize_with = "de_primitive")]
+    id: usize,
+}
+
+#[derive(Serialize)]
+pub enum NewsError {
+    DbError,
+}
+
+impl IntoResponse for NewsError {
+    fn into_response(self) -> Response {
+        #[derive(Serialize)]
+        struct ErrorMessage {
+            error: String,
+        }
+
+        let (status, message) = match self {
+            NewsError::DbError => (StatusCode::INTERNAL_SERVER_ERROR, "Database error"),
+        };
+
+        let body = Json(ErrorMessage {
+            error: message.into(),
+        });
+
+        (status, body).into_response()
+    }
+}
 
 fn de_primitive<'de, T, D>(deserializer: D) -> Result<T, D::Error>
 where
@@ -28,40 +68,44 @@ where
     T::from_str(&s).map_err(serde::de::Error::custom)
 }
 
-#[derive(Serialize)]
-pub struct Article {
-    id: usize,
-    title: String,
-    text: String,
-    date: u64,
-    images: Vec<String>,
-}
+pub async fn create(
+    State(conn): State<Connection>,
+    Json(payload): Json<Article>,
+) -> Result<StatusCode, NewsError> {
+    conn.call(move |conn| {
+        let Article {
+            id,
+            title,
+            text,
+            date,
+            images,
+        } = payload;
 
-#[derive(Serialize)]
-pub enum NewsError {
-    Error,
-}
+        let tx = conn.transaction()?;
 
-impl IntoResponse for NewsError {
-    fn into_response(self) -> Response {
-        #[derive(Serialize)]
-        struct ErrorMessage {
-            error: String,
+        tx.execute(
+            "insert into news (id, title, text, date) values (?1, ?2, ?3, ?4)",
+            params![id, title, text, date],
+        )?;
+
+        for img in images {
+            tx.execute(
+                "insert into news_images (article, path) values (?1, ?2)",
+                params![id, img],
+            )?;
         }
 
-        let (status, message) = match self {
-            NewsError::Error => (StatusCode::INTERNAL_SERVER_ERROR, "error"),
-        };
+        tx.commit()?;
 
-        let body = Json(ErrorMessage {
-            error: message.into(),
-        });
+        Ok(())
+    })
+    .await
+    .map_err(|_| NewsError::DbError)?;
 
-        (status, body).into_response()
-    }
+    Ok(StatusCode::OK)
 }
 
-pub async fn read_news(
+pub async fn read(
     State(conn): State<Connection>,
     Json(payload): Json<ReadPayload>,
 ) -> Result<Json<Vec<Article>>, NewsError> {
@@ -107,7 +151,47 @@ pub async fn read_news(
             Ok(map.into_values().collect::<Vec<Article>>())
         })
         .await
-        .map_err(|_| NewsError::Error)?;
+        .map_err(|_| NewsError::DbError)?;
 
     Ok(Json(news))
+}
+
+pub async fn update(
+    State(conn): State<Connection>,
+    Json(payload): Json<Article>,
+) -> Result<StatusCode, NewsError> {
+    conn.call(move |conn| {
+        let Article {
+            id,
+            title,
+            text,
+            date,
+            images: _,
+        } = payload;
+
+        conn.execute(
+            "update news set (title, text, date) = (?2, ?3, ?4) where news.id = ?1",
+            params![id, title, text, date],
+        )?;
+
+        Ok(())
+    })
+    .await
+    .map_err(|_| NewsError::DbError)?;
+
+    Ok(StatusCode::OK)
+}
+
+pub async fn delete(
+    State(conn): State<Connection>,
+    Json(payload): Json<DeletePayload>,
+) -> Result<StatusCode, NewsError> {
+    conn.call(move |conn| {
+        conn.execute("delete from news where news.id = ?1", [payload.id])?;
+        Ok(())
+    })
+    .await
+    .map_err(|_| NewsError::DbError)?;
+
+    Ok(StatusCode::OK)
 }

@@ -9,6 +9,8 @@ edition = "2021"
 axum = "0.7.5"
 tower = "0.4.13"
 jsonwebtoken = "9.3.0"
+tokio-rusqlite = "0.5.1"
+rusqlite = { version = "0.31.0", features = ["bundled"] }
 tokio = { version = "1.38.0", features = ["full"] }
 serde = { version = "1.0.204", features = ["derive"] }
 axum-extra = { version = "0.9.3", features = ["typed-header"] }

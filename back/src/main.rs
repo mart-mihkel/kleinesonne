@@ -2,15 +2,21 @@ use axum::{
     routing::{get, post},
     serve, Router,
 };
+use tokio_rusqlite::Connection;
 
 mod auth;
+mod news;
 
 #[tokio::main]
 async fn main() {
+    let conn = Connection::open("/tmp/test.db")
+        .await
+        .expect("Failed to connect to database");
+
     let api = Router::new()
-        .route("/authenticate", post(auth::login))
+        .route("/login", post(auth::login))
         .route("/news/create", post(|| async { "hi" }))
-        .route("/news/read", get(|| async { "hi" }))
+        .route("/news/read", get(news::read_news))
         .route("/news/update", post(|| async { "hi" }))
         .route("/news/delete", post(|| async { "hi" }))
         .route("/dogs/create", post(|| async { "hi" }))
@@ -24,7 +30,8 @@ async fn main() {
         .route("/puppies/create", post(|| async { "hi" }))
         .route("/puppies/read", get(|| async { "hi" }))
         .route("/puppies/update", post(|| async { "hi" }))
-        .route("/puppies/delete", post(|| async { "hi" }));
+        .route("/puppies/delete", post(|| async { "hi" }))
+        .with_state(conn);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
         .await

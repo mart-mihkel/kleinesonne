@@ -31,7 +31,7 @@
                 <input
                     class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                     type="text"
-                    name="user"
+                    name="username"
                     required
                 />
             </label>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Gallery, Loading, Empty, Error } from "$lib/components";
-    import type { NewsPiece } from "$lib/types";
+    import type { Article } from "$lib/types";
     import type { PageData } from "./$types";
     import { format } from "svelte-i18n";
     import { onMount } from "svelte";
@@ -8,7 +8,7 @@
 
     export let data: PageData;
 
-    let news: NewsPiece[] = [];
+    let news: Article[] = [];
     let oldest = new Date();
     $: more = data.news;
     $: loaded = false;
@@ -35,7 +35,7 @@
         }
     }
 
-    function updateNews(newNews: NewsPiece[]) {
+    function updateNews(newNews: Article[]) {
         if (newNews.length === 0) {
             observer.disconnect();
             return;

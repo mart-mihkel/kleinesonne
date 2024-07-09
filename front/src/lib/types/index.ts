@@ -4,27 +4,29 @@ export type LongBreed =
     | "Entlebuch Cattle Dog";
 
 export type DogPreview = {
-    thumbnail: string;
+    id: string;
     name: string;
     nickname: string;
+    thumbnail: string;
     breed: Breed;
     gender: Gender;
     alive: boolean;
 };
 
 export type Dog = {
-    thumbnail: string;
-    images: string[];
-    father: string;
-    mother: string;
+    id: string;
     name: string;
     nickname: string;
+    father: string;
+    mother: string;
+    thumbnail: string;
+    dob: Date;
     breed: Breed;
     gender: Gender;
     alive: boolean;
-    titles: string[];
+    images: string[];
     health: string[];
-    dob: Date;
+    titles: string[];
 };
 
 export type Family = {
@@ -34,25 +36,26 @@ export type Family = {
 };
 
 export type Puppy = {
-    image: string;
+    id: string;
     name: string;
+    image: string;
     gender: Gender;
     availability: Availability;
 };
 
 export type Litter = {
-    parents: string;
     name: string;
+    parents: string;
     breed: Breed;
     images: string[];
     puppies: Puppy[];
 };
 
-export type NewsPiece = {
+export type Article = {
     title: string;
+    text: string;
     date: Date;
     images: string[];
-    text: string;
 };
 
 export type ModalDispatch = {

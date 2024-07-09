@@ -6,7 +6,7 @@ import {
     type DogPreview,
     type Family,
     type Litter,
-    type NewsPiece,
+    type Article,
     type Puppy,
 } from "$lib/types";
 
@@ -207,7 +207,7 @@ export const LITTERS: Litter[] = [
     },
 ];
 
-export const NEWS: NewsPiece[] = [
+export const NEWS: Article[] = [
     {
         title: "Karm koer",
         date: new Date(2018, 5, 12),
@@ -342,7 +342,7 @@ export async function fetchPuppyNames(): Promise<string[]> {
     });
 }
 
-export async function fetchNews(from: Date, count = 5): Promise<NewsPiece[]> {
+export async function fetchNews(from: Date, count = 5): Promise<Article[]> {
     const news = NEWS.filter((n) => n.date < from).slice(0, count);
 
     return new Promise((resolve) => {
@@ -352,7 +352,7 @@ export async function fetchNews(from: Date, count = 5): Promise<NewsPiece[]> {
 
 export async function fetchNewsPiece(
     name: string,
-): Promise<NewsPiece | undefined> {
+): Promise<Article | undefined> {
     const piece = NEWS.find((n) => n.title === name) ?? {
         title: "",
         date: new Date(),

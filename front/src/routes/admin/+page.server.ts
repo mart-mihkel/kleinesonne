@@ -1,3 +1,4 @@
+import { API_ADMIN_LOGIN } from "$lib/api";
 import type { Actions, PageServerLoad } from "./$types";
 import { fail } from "@sveltejs/kit";
 
@@ -11,14 +12,16 @@ export const load: PageServerLoad = ({ cookies }) => {
 export const actions: Actions = {
     login: async ({ request, cookies }) => {
         const data = await request.formData();
-        const user = data.get("user");
+        const username = data.get("username");
         const password = data.get("password");
 
-        if (user === null || password === null) {
+        if (username === null || password === null) {
             fail(401, { error: "Missing username or password" });
         }
 
         cookies.set("sessionid", "temp", { path: "/admin" });
+        const r = await fetch(API_ADMIN_LOGIN);
+        console.log(r);
     },
     newsCreate: async ({ request }) => {
         const data = await request.formData();

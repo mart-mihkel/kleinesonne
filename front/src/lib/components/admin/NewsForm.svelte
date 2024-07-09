@@ -2,7 +2,7 @@
     import { enhance } from "$app/forms";
     import { fetchTitles, fetchNewsPiece } from "$lib/mock-server";
     import { dateInput } from "$lib/util";
-    import type { NewsPiece } from "$lib/types";
+    import type { Article } from "$lib/types";
     import { Modal } from "$lib/components/admin";
     import { Loading, Error } from "$lib/components";
 
@@ -13,7 +13,7 @@
 
     let modal = false;
     let titles: Promise<string[]> = fetchTitles();
-    let loading: Promise<NewsPiece | undefined>;
+    let loading: Promise<Article | undefined>;
 
     function reset() {
         title = "";

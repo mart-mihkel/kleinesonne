@@ -1,14 +1,8 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+mod cornucopia;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+pub use cornucopia::queries::admin;
+pub use cornucopia::queries::dog;
+pub use cornucopia::queries::litter;
+pub use cornucopia::queries::news;
+pub use cornucopia::queries::puppy;
+pub use cornucopia::types::public::{Availability, Breed, Gender};

@@ -1,6 +1,6 @@
-CREATE TYPE breed AS ENUM ('aus', 'ent', 'ber');
-CREATE TYPE gender AS ENUM ('male', 'female');
-CREATE TYPE availability AS ENUM ('available', 'unavailable', 'co');
+CREATE TYPE breed AS enum ('Australian', 'Entlebuch', 'Bernese');
+CREATE TYPE gender AS enum ('Male', 'Female');
+CREATE TYPE availability AS enum ('Available', 'Unavailable', 'Co');
 
 CREATE TABLE admins(
 	id	serial	PRIMARY KEY,
@@ -15,10 +15,10 @@ CREATE TABLE dogs(
 	nickname	text 	not null,
 	father		text 	not null,
 	mother		text	not null,
-	dob		date 	not null,
+	dob		bigint	not null,
 	breed		breed 	not null,
 	gender		gender 	not null,
-	alive		boolean	not null default 1,
+	alive		boolean	not null default true,
 	health		text[] 	not null default '{}',
 	titles 		text[] 	not null default '{}',
 	images		text[] 	not null default '{}'
@@ -38,13 +38,13 @@ CREATE TABLE puppies(
 	name		text 		not null,
 	gender		gender 		not null,
 	availability	availability	not null,
-	FOREIGN KEY	litter_id REFERENCES litters(id) ON DELETE CASCADE,
+	litter_id	integer		references litters (id)
 );
 
 CREATE TABLE news(
 	id		serial 	PRIMARY KEY,
 	title		text 	not null,
 	text		text 	not null,
-	date		date	not null,
+	date		bigint	not null,
 	images		text[] 	not null default '{}'
 );

@@ -13,7 +13,7 @@ fn main() -> Result<(), Error> {
     println!("cargo:rerun-if-changed={schema_file}");
     cornucopia::generate_managed(
         queries_path,
-        &[schema_file],
+        vec![schema_file.to_string()],
         Some(destination),
         false,
         settings,

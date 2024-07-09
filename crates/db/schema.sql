@@ -38,7 +38,7 @@ CREATE TABLE puppies(
 	name		text 		not null,
 	gender		gender 		not null,
 	availability	availability	not null,
-	litter_id	integer 	not null FOREIGN KEY REFERENCES litters(id) ON DELETE CASCADE,
+	FOREIGN KEY	litter_id REFERENCES litters(id) ON DELETE CASCADE,
 );
 
 CREATE TABLE news(

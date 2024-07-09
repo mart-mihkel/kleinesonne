@@ -1,15 +1,15 @@
---! dog_by_id
+--! dog_by_id : Dog()
 SELECT
 	id,
 	name,
 	nickname,
 	father,
-	moter,
+	mother,
 	breed,
 	gender,
 	dob,
 	alive,
-	thumnail,
+	thumbnail,
 	images,
 	health,
 	titles
@@ -18,18 +18,18 @@ FROM
 WHERE
 	id = :id;
 
---! dogs_by_breed_and_status
+--! dogs_by_breed_and_status : Dog()
 SELECT
 	id,
 	name,
 	nickname,
 	father,
-	moter,
+	mother,
 	breed,
 	gender,
 	dob,
 	alive,
-	thumnail,
+	thumbnail,
 	images,
 	health,
 	titles
@@ -46,12 +46,12 @@ INSERT INTO
 		name,
 		nickname,
 		father,
-		moter,
+		mother,
 		breed,
 		gender,
 		dob,
 		alive,
-		thumnail,
+		thumbnail,
 		images,
 		health,
 		titles
@@ -60,12 +60,12 @@ VALUES(
 	:name,
 	:nickname,
 	:father,
-	:moter,
+	:mother,
 	:breed,
 	:gender,
 	:dob,
 	:alive,
-	:thumnail,
+	:thumbnail,
 	:images,
 	:health,
 	:titles
@@ -78,15 +78,15 @@ SET
 	name = :name,
 	nickname = :nickname,
 	father = :father,
-	mother = :moter,
+	mother = :mother,
 	breed = :breed,
 	gender = :gender,
 	dob = :dob,
 	alive = :alive,
-	thumbnail = :thumnail,
+	thumbnail = :thumbnail,
 	images = :images,
 	health = :health,
-	titles = :titles,
+	titles = :titles
 WHERE
 	id = :id;
 

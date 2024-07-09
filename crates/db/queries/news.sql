@@ -1,4 +1,4 @@
---! get_n_news_older_than
+--! get_n_news_older_than : Article()
 SELECT
 	id,
 	title,
@@ -14,15 +14,15 @@ LIMIT
 
 --! insert_news
 INSERT INTO
-	litters(
+	news(
 		title,
 		text,
 		date,
-		images,
+		images
 	)
 VALUES(
 	:title,
-	:text
+	:text,
 	:date,
 	:images
 );
@@ -33,7 +33,7 @@ UPDATE
 SET
 	title = :title,
 	text = :text,
-	date = :date
+	date = :date,
 	images = :images
 WHERE
 	id = :id;

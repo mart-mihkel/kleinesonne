@@ -1,6 +1,6 @@
 --! admin_exists
 SELECT EXISTS(
-	SELECT 
+	SELECT
 		id
 	FROM
 		admins

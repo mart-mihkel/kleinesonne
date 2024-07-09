@@ -1,11 +1,11 @@
---! get_by_litter
+--! get_by_litter : Litter()
 SELECT
 	id,
 	litter_id,
 	name,
 	gender,
 	availability,
-	thumbnail
+	image
 FROM
 	puppies
 WHERE
@@ -18,14 +18,14 @@ INSERT INTO
 		name,
 		gender,
 		availability,
-		thumbnail
+		image
 	)
 VALUES(
 	:litter_id,
 	:name,
 	:gender,
 	:availability,
-	:thumbnail
+	:image
 );
 
 --! update_puppy
@@ -36,7 +36,7 @@ SET
 	name = :name,
 	gender = :gender,
 	availability = :availability,
-	thumbnail = :thumbnail
+	image = :thumbnail
 WHERE
 	id = :id;
 
@@ -45,4 +45,4 @@ DELETE FROM
 	puppies
 WHERE
 	id = :id;
-	
+

@@ -5,7 +5,7 @@ SELECT
 FROM
 	litters;
 
---! get_litter
+--! get_litter : Litter()
 SELECT
 	id,
 	name,

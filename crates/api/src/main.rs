@@ -7,6 +7,9 @@ use axum::{serve, Extension, Router};
 use db::Client;
 use tokio::net::TcpListener;
 
+mod admin;
+mod errors;
+
 #[tokio::main]
 async fn main() {
     let client = Arc::new(Cell::new(db::connect().await.unwrap()));

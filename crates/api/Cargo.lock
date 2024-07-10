@@ -83,6 +83,8 @@ dependencies = [
  "db",
  "jsonwebtoken",
  "serde",
+ "serde_json",
+ "sha2",
  "tokio",
 ]
 
@@ -403,6 +405,7 @@ dependencies = [
  "cornucopia_async",
  "futures",
  "postgres-types",
+ "sha2",
  "tokio",
  "tokio-postgres",
 ]

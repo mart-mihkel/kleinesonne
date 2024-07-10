@@ -4,7 +4,8 @@ CREATE TYPE availability AS enum ('Available', 'Unavailable', 'Co');
 
 CREATE TABLE admins(
 	id	serial	PRIMARY KEY,
-	name	text	not null,
+	name	text	not null UNIQUE,
+	salt	text	not null,
 	hash	text	not null
 );
 

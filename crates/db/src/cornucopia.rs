@@ -151,19 +151,25 @@
 } }}#[allow(clippy::all, clippy::pedantic)] #[allow(unused_variables)]
 #[allow(unused_imports)] #[allow(dead_code)] pub mod queries
 { pub mod admin
-{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive( Debug)] pub struct AdminExistsParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,> { pub name: T1,pub hash: T2,}pub struct BoolQuery<'a, C: GenericClient, T, const N: usize>
+{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive( Debug, Clone, PartialEq,)] pub struct Admin
+{ pub id : i32,pub name : String,pub salt : String,pub hash : String,}pub struct AdminBorrowed<'a> { pub id : i32,pub name : &'a str,pub salt : &'a str,pub hash : &'a str,}
+impl<'a> From<AdminBorrowed<'a>> for Admin
+{
+    fn from(AdminBorrowed { id,name,salt,hash,}: AdminBorrowed<'a>) ->
+    Self { Self { id,name: name.into(),salt: salt.into(),hash: hash.into(),} }
+}pub struct AdminQuery<'a, C: GenericClient, T, const N: usize>
 {
     client: &'a  C, params:
     [&'a (dyn postgres_types::ToSql + Sync); N], stmt: &'a mut
-    cornucopia_async::private::Stmt, extractor: fn(&tokio_postgres::Row) -> bool,
-    mapper: fn(bool) -> T,
-} impl<'a, C, T:'a, const N: usize> BoolQuery<'a, C, T, N> where C:
+    cornucopia_async::private::Stmt, extractor: fn(&tokio_postgres::Row) -> AdminBorrowed,
+    mapper: fn(AdminBorrowed) -> T,
+} impl<'a, C, T:'a, const N: usize> AdminQuery<'a, C, T, N> where C:
 GenericClient
 {
-    pub fn map<R>(self, mapper: fn(bool) -> R) ->
-    BoolQuery<'a,C,R,N>
+    pub fn map<R>(self, mapper: fn(AdminBorrowed) -> R) ->
+    AdminQuery<'a,C,R,N>
     {
-        BoolQuery
+        AdminQuery
         {
             client: self.client, params: self.params, stmt: self.stmt,
             extractor: self.extractor, mapper,
@@ -190,40 +196,29 @@ GenericClient
         res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
         Ok(it)
     }
-}pub fn admin_exists() -> AdminExistsStmt
-{ AdminExistsStmt(cornucopia_async::private::Stmt::new("SELECT EXISTS(
-	SELECT
-		id
-	FROM
-		admins
-	WHERE
-		name = $1
-	AND
-		hash = $2
-)")) } pub struct
-AdminExistsStmt(cornucopia_async::private::Stmt); impl AdminExistsStmt
+}pub fn get_by_name() -> GetByNameStmt
+{ GetByNameStmt(cornucopia_async::private::Stmt::new("SELECT
+	id,
+	name,
+	salt,
+	hash
+FROM
+	admins
+WHERE
+	name = $1")) } pub struct
+GetByNameStmt(cornucopia_async::private::Stmt); impl GetByNameStmt
 { pub fn bind<'a, C:
 GenericClient,T1:
-cornucopia_async::StringSql,T2:
 cornucopia_async::StringSql,>(&'a mut self, client: &'a  C,
-name: &'a T1,hash: &'a T2,) -> BoolQuery<'a,C,
-bool, 2>
+name: &'a T1,) -> AdminQuery<'a,C,
+Admin, 1>
 {
-    BoolQuery
+    AdminQuery
     {
-        client, params: [name,hash,], stmt: &mut self.0, extractor:
-        |row| { row.get(0) }, mapper: |it| { it },
+        client, params: [name,], stmt: &mut self.0, extractor:
+        |row| { AdminBorrowed { id: row.get(0),name: row.get(1),salt: row.get(2),hash: row.get(3),} }, mapper: |it| { <Admin>::from(it) },
     }
-} }impl <'a, C: GenericClient,T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,> cornucopia_async::Params<'a,
-AdminExistsParams<T1,T2,>, BoolQuery<'a, C,
-bool, 2>, C> for AdminExistsStmt
-{
-    fn
-    params(&'a mut self, client: &'a  C, params: &'a
-    AdminExistsParams<T1,T2,>) -> BoolQuery<'a, C,
-    bool, 2>
-    { self.bind(client, &params.name,&params.hash,) }
-}}pub mod dog
+} }}pub mod dog
 { use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive(Clone,Copy, Debug)] pub struct DogsByBreedAndStatusParams<> { pub breed: super::super::types::public::Breed,pub alive: bool,}#[derive( Debug)] pub struct InsertDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,}#[derive( Debug)] pub struct UpdateDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,pub id: i32,}#[derive( Debug, Clone, PartialEq,)] pub struct Dog
 { pub id : i32,pub name : String,pub nickname : String,pub father : String,pub mother : String,pub breed : super::super::types::public::Breed,pub gender : super::super::types::public::Gender,pub dob : i64,pub alive : bool,pub thumbnail : String,pub images : Vec<String>,pub health : Vec<String>,pub titles : Vec<String>,}pub struct DogBorrowed<'a> { pub id : i32,pub name : &'a str,pub nickname : &'a str,pub father : &'a str,pub mother : &'a str,pub breed : super::super::types::public::Breed,pub gender : super::super::types::public::Gender,pub dob : i64,pub alive : bool,pub thumbnail : &'a str,pub images : cornucopia_async::ArrayIterator<'a, &'a str>,pub health : cornucopia_async::ArrayIterator<'a, &'a str>,pub titles : cornucopia_async::ArrayIterator<'a, &'a str>,}
 impl<'a> From<DogBorrowed<'a>> for Dog

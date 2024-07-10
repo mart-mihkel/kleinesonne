@@ -1,11 +1,10 @@
---! admin_exists
-SELECT EXISTS(
-	SELECT
-		id
-	FROM
-		admins
-	WHERE
-		name = :name
-	AND
-		hash = :hash
-);
+--! get_by_name : Admin()
+SELECT
+	id,
+	name,
+	salt,
+	hash
+FROM
+	admins
+WHERE
+	name = :name;

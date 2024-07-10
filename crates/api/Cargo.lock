@@ -429,6 +429,7 @@ dependencies = [
  "cornucopia_async",
  "futures",
  "postgres-types",
+ "serde",
  "sha2",
  "tokio",
  "tokio-postgres",

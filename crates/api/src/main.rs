@@ -1,8 +1,7 @@
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 
 use axum::{serve, Extension, Router};
-use db::{admin, Client};
-use tokio::net::TcpListener;
+use tokio::{net::TcpListener, sync::Mutex};
 
 mod admin;
 mod dog;
@@ -15,6 +14,7 @@ async fn main() {
 
     let routes = Router::new()
         .merge(admin::routes())
+        .merge(dog::routes())
         .layer(Extension(client));
 
     let listener = TcpListener::bind("127.0.0.1:3000").await.unwrap();

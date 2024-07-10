@@ -1,12 +1,10 @@
-use std::{
-    default,
-    sync::{Arc, Mutex},
-};
+use std::sync::Arc;
 
 use axum::{response::IntoResponse, routing::post, Extension, Json, Router};
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use serde_json::json;
 use sha2::{Digest, Sha512};
+use tokio::sync::Mutex;
 
 use crate::errors::ApiError;
 
@@ -26,29 +24,32 @@ async fn auth(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(admin): Json<AdminForm>,
 ) -> Result<impl IntoResponse, ApiError> {
-    let mut client = client.lock().map_err(|_| ApiError::Internal)?;
+    let AdminForm { user, secret } = admin;
 
-    let hash = admin.secret;
+    if user.len() == 0 || secret.len() == 0 {
+        return Err(ApiError::MissingCredentials);
+    }
 
+    let mut client = client.lock().await;
     let tx = client
         .transaction()
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
     let dbadmin = db::admin::get_by_name()
-        .bind(&tx, &admin.user)
+        .bind(&tx, &user)
         .one()
         .await
         .map_err(|_| ApiError::WrongCredentials)?;
 
-    let salted = format!("{}:{}", dbadmin.salt, admin.secret).as_bytes();
+    let salted = format!("{}:{}", dbadmin.salt, secret);
     let mut hasher = Sha512::new();
-    hasher.update(salted);
+    hasher.update(salted.as_bytes());
     let hash = format!("{:X}", hasher.finalize());
 
     if hash != dbadmin.hash {
         Err(ApiError::WrongCredentials)
     } else {
-        Ok(json!({"token": jwt::create_token(admin.user)?}))
+        Ok(Json(json!({"jwt": jwt::create_token(user)?})))
     }
 }

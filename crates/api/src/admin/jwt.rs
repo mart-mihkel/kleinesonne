@@ -5,18 +5,18 @@ use axum_extra::{
     headers::{authorization::Bearer, Authorization},
     TypedHeader,
 };
-use jsonwebtoken::{decode, encode, DecodingKey, Header, Validation};
-use serde::Deserialize;
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
+use serde::{Deserialize, Serialize};
 
 use crate::errors::ApiError;
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Claims {
     sub: String,
     exp: u64,
 }
 
-#[async_trait]
+#[axum::async_trait]
 impl<S> FromRequestParts<S> for Claims
 where
     S: Send + Sync,
@@ -24,14 +24,14 @@ where
     type Rejection = ApiError;
 
     async fn from_request_parts(parts: &mut Parts, _state: &S) -> Result<Self, Self::Rejection> {
-        let secret = std::env::var("JWT_SECRET").map_err(|_| ApiError::Internal)?;
-
         let TypedHeader(Authorization(bearer)) = parts
             .extract::<TypedHeader<Authorization<Bearer>>>()
             .await
             .map_err(|_| ApiError::InvalidToken)?;
 
-        let token_data = decode::<Claims>(bearer.token(), &secret, &Validation::default())
+        let secret = std::env::var("JWT_SECRET").map_err(|_| ApiError::Internal)?;
+        let key = DecodingKey::from_secret(secret.as_bytes());
+        let token_data = decode::<Claims>(bearer.token(), &key, &Validation::default())
             .map_err(|_| ApiError::InvalidToken)?;
 
         Ok(token_data.claims)
@@ -39,12 +39,12 @@ where
 }
 
 pub fn create_token(sub: String) -> Result<String, ApiError> {
-    let secret = std::env::var("JWT_SECRET").map_err(|_| ApiError::Internal)?;
-
     let exp = secs_from_now(3600);
     let claims = Claims { sub, exp };
 
-    let token = encode(&Header::default(), &claims, &secret).map_err(|_| ApiError::Internal)?;
+    let secret = std::env::var("JWT_SECRET").map_err(|_| ApiError::Internal)?;
+    let key = EncodingKey::from_secret(secret.as_bytes());
+    let token = encode(&Header::default(), &claims, &key).map_err(|_| ApiError::TokenCreation)?;
 
     Ok(token)
 }

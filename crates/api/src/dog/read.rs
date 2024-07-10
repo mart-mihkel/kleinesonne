@@ -1,25 +1,23 @@
-use std::{
-    fmt::Display,
-    str::FromStr,
-    sync::{Arc, Mutex},
-};
+use std::sync::Arc;
 
 use axum::{response::IntoResponse, Extension, Json};
-use serde::{Deserialize, Deserializer};
+use serde::Deserialize;
+use serde_json::json;
+use tokio::sync::Mutex;
 
 use crate::{errors::ApiError, util::de_primitive};
 
 #[derive(Deserialize)]
-struct DogById {
+pub struct DogById {
     #[serde(deserialize_with = "de_primitive")]
-    id: u64,
+    id: i32,
 }
 
 pub async fn dog_by_id(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(DogById { id }): Json<DogById>,
 ) -> Result<impl IntoResponse, ApiError> {
-    let client = client.lock().map_err(|_| ApiError::Internal)?;
+    let mut client = client.lock().await;
     let tx = client
         .transaction()
         .await
@@ -31,21 +29,22 @@ pub async fn dog_by_id(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(dog)
+    Ok(Json(json!({"data": dog})))
 }
 
 #[derive(Deserialize)]
-struct DogByBreedStatus {
-    breed: String,
+pub struct DogByBreedStatus {
+    #[serde(with = "db::BreedDef")]
+    breed: db::Breed,
     #[serde(deserialize_with = "de_primitive")]
     alive: bool,
 }
 
 pub async fn dogs_by_breed_and_status(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
-    Json(DogByBreedStatus { breed, alive }): Json(DogByBreedStatus),
+    Json(DogByBreedStatus { breed, alive }): Json<DogByBreedStatus>,
 ) -> Result<impl IntoResponse, ApiError> {
-    let client = client.lock().map_err(|_| ApiError::Internal)?;
+    let mut client = client.lock().await;
     let tx = client
         .transaction()
         .await
@@ -57,5 +56,5 @@ pub async fn dogs_by_breed_and_status(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(dogs)
+    Ok(Json(json!({"data": dogs})))
 }

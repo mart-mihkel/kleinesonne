@@ -39,7 +39,7 @@ CREATE TABLE puppies(
 	name		text 		not null,
 	gender		gender 		not null,
 	availability	availability	not null,
-	litter_id	integer		references litters (id)
+	litter_id	integer		REFERENCES litters (id)
 );
 
 CREATE TABLE news(

@@ -3,7 +3,7 @@ use std::{
     sync::{Arc, Mutex},
 };
 
-use axum::{routing::post, Extension, Json, Router};
+use axum::{response::IntoResponse, routing::post, Extension, Json, Router};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use sha2::{Digest, Sha512};
@@ -25,7 +25,7 @@ struct AdminForm {
 async fn auth(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(admin): Json<AdminForm>,
-) -> Result<String, ApiError> {
+) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().map_err(|_| ApiError::Internal)?;
 
     let hash = admin.secret;

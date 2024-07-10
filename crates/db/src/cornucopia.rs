@@ -1,7 +1,7 @@
 // This file was generated with `cornucopia`. Do not modify.
 
 #[allow(clippy::all, clippy::pedantic)] #[allow(unused_variables)]
-#[allow(unused_imports)] #[allow(dead_code)] pub mod types { pub mod public { #[derive( Debug, Clone, Copy, PartialEq, Eq)]
+#[allow(unused_imports)] #[allow(dead_code)] pub mod types { pub mod public { #[derive(serde::Serialize, Debug, Clone, Copy, PartialEq, Eq)]
 #[allow(non_camel_case_types)] pub enum Breed { Australian,Entlebuch,Bernese,}impl<'a> postgres_types::ToSql for Breed
 {
     fn
@@ -50,7 +50,7 @@
             } _ => false,
         }
     }
-}#[derive( Debug, Clone, Copy, PartialEq, Eq)]
+}#[derive(serde::Serialize, Debug, Clone, Copy, PartialEq, Eq)]
 #[allow(non_camel_case_types)] pub enum Gender { Male,Female,}impl<'a> postgres_types::ToSql for Gender
 {
     fn
@@ -99,7 +99,7 @@
             } _ => false,
         }
     }
-}#[derive( Debug, Clone, Copy, PartialEq, Eq)]
+}#[derive(serde::Serialize, Debug, Clone, Copy, PartialEq, Eq)]
 #[allow(non_camel_case_types)] pub enum Availability { Available,Unavailable,Co,}impl<'a> postgres_types::ToSql for Availability
 {
     fn
@@ -151,7 +151,7 @@
 } }}#[allow(clippy::all, clippy::pedantic)] #[allow(unused_variables)]
 #[allow(unused_imports)] #[allow(dead_code)] pub mod queries
 { pub mod admin
-{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive( Debug, Clone, PartialEq,)] pub struct Admin
+{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct Admin
 { pub id : i32,pub name : String,pub salt : String,pub hash : String,}pub struct AdminBorrowed<'a> { pub id : i32,pub name : &'a str,pub salt : &'a str,pub hash : &'a str,}
 impl<'a> From<AdminBorrowed<'a>> for Admin
 {
@@ -219,7 +219,7 @@ Admin, 1>
         |row| { AdminBorrowed { id: row.get(0),name: row.get(1),salt: row.get(2),hash: row.get(3),} }, mapper: |it| { <Admin>::from(it) },
     }
 } }}pub mod dog
-{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive(Clone,Copy, Debug)] pub struct DogsByBreedAndStatusParams<> { pub breed: super::super::types::public::Breed,pub alive: bool,}#[derive( Debug)] pub struct InsertDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,}#[derive( Debug)] pub struct UpdateDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,pub id: i32,}#[derive( Debug, Clone, PartialEq,)] pub struct Dog
+{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive(Clone,Copy, Debug)] pub struct DogsByBreedAndStatusParams<> { pub breed: super::super::types::public::Breed,pub alive: bool,}#[derive( Debug)] pub struct InsertDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,}#[derive( Debug)] pub struct UpdateDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,pub id: i32,}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct Dog
 { pub id : i32,pub name : String,pub nickname : String,pub father : String,pub mother : String,pub breed : super::super::types::public::Breed,pub gender : super::super::types::public::Gender,pub dob : i64,pub alive : bool,pub thumbnail : String,pub images : Vec<String>,pub health : Vec<String>,pub titles : Vec<String>,}pub struct DogBorrowed<'a> { pub id : i32,pub name : &'a str,pub nickname : &'a str,pub father : &'a str,pub mother : &'a str,pub breed : super::super::types::public::Breed,pub gender : super::super::types::public::Gender,pub dob : i64,pub alive : bool,pub thumbnail : &'a str,pub images : cornucopia_async::ArrayIterator<'a, &'a str>,pub health : cornucopia_async::ArrayIterator<'a, &'a str>,pub titles : cornucopia_async::ArrayIterator<'a, &'a str>,}
 impl<'a> From<DogBorrowed<'a>> for Dog
 {
@@ -450,7 +450,7 @@ id: &'a i32,) -> Result<u64, tokio_postgres::Error>
     let stmt = self.0.prepare(client).await?;
     client.execute(stmt, &[id,]).await
 } }}pub mod litter
-{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive( Debug)] pub struct InsertLitterParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> { pub name: T1,pub breed: super::super::types::public::Breed,pub parents_image: T2,pub images: T4,}#[derive( Debug)] pub struct UpdateLitterParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> { pub name: T1,pub breed: super::super::types::public::Breed,pub parents_image: T2,pub images: T4,pub id: i32,}#[derive( Debug, Clone, PartialEq,)] pub struct GetLitterNames
+{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive( Debug)] pub struct InsertLitterParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> { pub name: T1,pub breed: super::super::types::public::Breed,pub parents_image: T2,pub images: T4,}#[derive( Debug)] pub struct UpdateLitterParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> { pub name: T1,pub breed: super::super::types::public::Breed,pub parents_image: T2,pub images: T4,pub id: i32,}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct GetLitterNames
 { pub id : i32,pub name : String,}pub struct GetLitterNamesBorrowed<'a> { pub id : i32,pub name : &'a str,}
 impl<'a> From<GetLitterNamesBorrowed<'a>> for GetLitterNames
 {
@@ -495,7 +495,7 @@ GenericClient
         res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
         Ok(it)
     }
-}#[derive( Debug, Clone, PartialEq,)] pub struct Litter
+}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct Litter
 { pub id : i32,pub name : String,pub breed : super::super::types::public::Breed,pub parents_image : String,pub images : Vec<String>,}pub struct LitterBorrowed<'a> { pub id : i32,pub name : &'a str,pub breed : super::super::types::public::Breed,pub parents_image : &'a str,pub images : cornucopia_async::ArrayIterator<'a, &'a str>,}
 impl<'a> From<LitterBorrowed<'a>> for Litter
 {
@@ -656,7 +656,7 @@ id: &'a i32,) -> Result<u64, tokio_postgres::Error>
     let stmt = self.0.prepare(client).await?;
     client.execute(stmt, &[id,]).await
 } }}pub mod news
-{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive(Clone,Copy, Debug)] pub struct GetNNewsOlderThanParams<> { pub date: i64,pub n: i64,}#[derive( Debug)] pub struct InsertNewsParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> { pub title: T1,pub text: T2,pub date: i64,pub images: T4,}#[derive( Debug)] pub struct UpdateNewsParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> { pub title: T1,pub text: T2,pub date: i64,pub images: T4,pub id: i32,}#[derive( Debug, Clone, PartialEq,)] pub struct Article
+{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive(Clone,Copy, Debug)] pub struct GetNNewsOlderThanParams<> { pub date: i64,pub n: i64,}#[derive( Debug)] pub struct InsertNewsParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> { pub title: T1,pub text: T2,pub date: i64,pub images: T4,}#[derive( Debug)] pub struct UpdateNewsParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> { pub title: T1,pub text: T2,pub date: i64,pub images: T4,pub id: i32,}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct Article
 { pub id : i32,pub title : String,pub text : String,pub date : i64,pub images : Vec<String>,}pub struct ArticleBorrowed<'a> { pub id : i32,pub title : &'a str,pub text : &'a str,pub date : i64,pub images : cornucopia_async::ArrayIterator<'a, &'a str>,}
 impl<'a> From<ArticleBorrowed<'a>> for Article
 {
@@ -811,7 +811,7 @@ id: &'a i32,) -> Result<u64, tokio_postgres::Error>
     let stmt = self.0.prepare(client).await?;
     client.execute(stmt, &[id,]).await
 } }}pub mod puppy
-{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive( Debug)] pub struct InsertPuppyParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,> { pub litter_id: i32,pub name: T1,pub gender: super::super::types::public::Gender,pub availability: super::super::types::public::Availability,pub image: T2,}#[derive( Debug)] pub struct UpdatePuppyParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,> { pub litter_id: i32,pub name: T1,pub gender: super::super::types::public::Gender,pub availability: super::super::types::public::Availability,pub thumbnail: T2,pub id: i32,}#[derive( Debug, Clone, PartialEq,)] pub struct Litter
+{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive( Debug)] pub struct InsertPuppyParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,> { pub litter_id: i32,pub name: T1,pub gender: super::super::types::public::Gender,pub availability: super::super::types::public::Availability,pub image: T2,}#[derive( Debug)] pub struct UpdatePuppyParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,> { pub litter_id: i32,pub name: T1,pub gender: super::super::types::public::Gender,pub availability: super::super::types::public::Availability,pub thumbnail: T2,pub id: i32,}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct Litter
 { pub id : i32,pub litter_id : i32,pub name : String,pub gender : super::super::types::public::Gender,pub availability : super::super::types::public::Availability,pub image : String,}pub struct LitterBorrowed<'a> { pub id : i32,pub litter_id : i32,pub name : &'a str,pub gender : super::super::types::public::Gender,pub availability : super::super::types::public::Availability,pub image : &'a str,}
 impl<'a> From<LitterBorrowed<'a>> for Litter
 {

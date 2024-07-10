@@ -29,7 +29,7 @@ pub async fn dog_by_id(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"data": dog})))
+    Ok(Json(json!({"dog": dog})))
 }
 
 #[derive(Deserialize)]
@@ -56,5 +56,5 @@ pub async fn dogs_by_breed_and_status(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"data": dogs})))
+    Ok(Json(json!({"dogs": dogs})))
 }

@@ -8,7 +8,8 @@ use tokio::sync::Mutex;
 use crate::{errors::ApiError, util::de_primitive};
 
 #[derive(Deserialize)]
-pub struct NewDog {
+pub struct UpdateDog {
+    id: i32,
     name: String,
     nickname: String,
     father: String,
@@ -27,9 +28,9 @@ pub struct NewDog {
     images: Vec<String>,
 }
 
-pub async fn new_dog(
+pub async fn update_dog(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
-    Json(dog): Json<NewDog>,
+    Json(dog): Json<UpdateDog>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
     let tx = client
@@ -37,7 +38,7 @@ pub async fn new_dog(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    let id = db::dog::insert_dog()
+    let id = db::dog::update_dog()
         .bind(
             &tx,
             &dog.name,
@@ -52,6 +53,7 @@ pub async fn new_dog(
             &dog.images,
             &dog.health,
             &dog.titles,
+            &dog.id,
         )
         .await
         .map_err(|_| ApiError::DatabaseError)?;

@@ -6,6 +6,7 @@ use tokio::{net::TcpListener, sync::Mutex};
 mod admin;
 mod dog;
 mod errors;
+mod news;
 mod util;
 
 #[tokio::main]
@@ -15,6 +16,7 @@ async fn main() {
     let routes = Router::new()
         .merge(admin::routes())
         .merge(dog::routes())
+        .merge(news::routes())
         .layer(Extension(client));
 
     let listener = TcpListener::bind("127.0.0.1:3000").await.unwrap();

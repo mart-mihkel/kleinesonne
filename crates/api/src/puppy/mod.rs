@@ -1,5 +1,5 @@
 use axum::{
-    routing::{delete, get, post, put},
+    routing::{delete, post, put},
     Router,
 };
 
@@ -10,9 +10,9 @@ mod update;
 
 pub fn routes() -> Router {
     Router::new()
-        .route("/puppy/litter", get(read::names_by_litter))
-        .route("/puppy", get(read::puppies_by_litter))
-        .route("/puppy", post(new::new_puppy))
-        .route("/puppy", put(update::update_puppy))
-        .route("/puppy", delete(delete::delete_puppy))
+        .route("/puppy/names", post(read::names_by_litter))
+        .route("/puppy/litter", post(read::puppies_by_litter))
+        .route("/puppy/new", put(new::new_puppy))
+        .route("/puppy/modify", put(update::update_puppy))
+        .route("/puppy/delete", delete(delete::delete_puppy))
 }

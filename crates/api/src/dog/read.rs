@@ -5,7 +5,19 @@ use serde::Deserialize;
 use serde_json::json;
 use tokio::sync::Mutex;
 
-use crate::{errors::ApiError, util::de_primitive};
+use crate::errors::ApiError;
+
+#[derive(Deserialize)]
+pub struct DogById {
+    id: i32,
+}
+
+#[derive(Deserialize)]
+pub struct DogByBreedStatus {
+    #[serde(with = "db::BreedDef")]
+    breed: db::Breed,
+    alive: bool,
+}
 
 pub async fn all_names(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
@@ -25,12 +37,6 @@ pub async fn all_names(
     Ok(Json(json!({"names": names})))
 }
 
-#[derive(Deserialize)]
-pub struct DogById {
-    #[serde(deserialize_with = "de_primitive")]
-    id: i32,
-}
-
 pub async fn dog_by_id(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(DogById { id }): Json<DogById>,
@@ -48,14 +54,6 @@ pub async fn dog_by_id(
         .map_err(|_| ApiError::DatabaseError)?;
 
     Ok(Json(json!({"dog": dog})))
-}
-
-#[derive(Deserialize)]
-pub struct DogByBreedStatus {
-    #[serde(with = "db::BreedDef")]
-    breed: db::Breed,
-    #[serde(deserialize_with = "de_primitive")]
-    alive: bool,
 }
 
 pub async fn dogs_by_breed_and_status(

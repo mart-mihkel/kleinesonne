@@ -5,7 +5,12 @@ use serde::Deserialize;
 use serde_json::json;
 use tokio::sync::Mutex;
 
-use crate::{errors::ApiError, util::de_primitive};
+use crate::errors::ApiError;
+
+#[derive(Deserialize)]
+pub struct LitterRead {
+    id: i32,
+}
 
 pub async fn all_names(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
@@ -23,12 +28,6 @@ pub async fn all_names(
         .map_err(|_| ApiError::DatabaseError)?;
 
     Ok(Json(json!({"names": names})))
-}
-
-#[derive(Deserialize)]
-pub struct LitterRead {
-    #[serde(deserialize_with = "de_primitive")]
-    id: i32,
 }
 
 pub async fn litter_by_id(

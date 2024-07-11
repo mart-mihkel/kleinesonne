@@ -4,13 +4,11 @@ use axum::{http::StatusCode, response::IntoResponse, Extension, Json};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::{auth::jwt::Claims, errors::ApiError, util::de_primitive};
+use crate::{auth::jwt::Claims, errors::ApiError};
 
 #[derive(Deserialize)]
 pub struct UpdatePuppy {
-    #[serde(deserialize_with = "de_primitive")]
     id: i32,
-    #[serde(deserialize_with = "de_primitive")]
     litter_id: i32,
     name: String,
     #[serde(with = "db::GenderDef")]

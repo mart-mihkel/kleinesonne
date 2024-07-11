@@ -4,7 +4,7 @@ use axum::{http::StatusCode, response::IntoResponse, Extension, Json};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::{auth::jwt::Claims, errors::ApiError, util::de_primitive};
+use crate::{auth::jwt::Claims, errors::ApiError};
 
 #[derive(Deserialize)]
 pub struct UpdateDog {
@@ -13,13 +13,11 @@ pub struct UpdateDog {
     nickname: String,
     father: String,
     mother: String,
-    #[serde(deserialize_with = "de_primitive")]
     dob: i64,
     #[serde(with = "db::BreedDef")]
     breed: db::Breed,
     #[serde(with = "db::GenderDef")]
     gender: db::Gender,
-    #[serde(deserialize_with = "de_primitive")]
     alive: bool,
     thumbnail: String,
     health: Vec<String>,

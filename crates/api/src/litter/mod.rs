@@ -11,8 +11,8 @@ mod update;
 pub fn routes() -> Router {
     Router::new()
         .route("/litter/names", get(read::all_names))
-        .route("/litter", get(read::litter_by_id))
-        .route("/litter", post(new::new_litter))
-        .route("/litter", put(update::update_litter))
-        .route("/litter", delete(delete::delete_litter))
+        .route("/litter/one", post(read::litter_by_id))
+        .route("/litter/new", put(new::new_litter))
+        .route("/litter/update", put(update::update_litter))
+        .route("/litter/delete", delete(delete::delete_litter))
 }

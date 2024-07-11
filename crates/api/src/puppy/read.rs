@@ -5,11 +5,10 @@ use serde::Deserialize;
 use serde_json::json;
 use tokio::sync::Mutex;
 
-use crate::{errors::ApiError, util::de_primitive};
+use crate::errors::ApiError;
 
 #[derive(Deserialize)]
 pub struct ById {
-    #[serde(deserialize_with = "de_primitive")]
     litter_id: i32,
 }
 

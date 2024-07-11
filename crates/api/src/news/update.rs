@@ -5,15 +5,13 @@ use serde::Deserialize;
 use serde_json::json;
 use tokio::sync::Mutex;
 
-use crate::{auth::jwt::Claims, errors::ApiError, util::de_primitive};
+use crate::{auth::jwt::Claims, errors::ApiError};
 
 #[derive(Deserialize)]
 pub struct UpdateArticle {
-    #[serde(deserialize_with = "de_primitive")]
     id: i32,
     title: String,
     text: String,
-    #[serde(deserialize_with = "de_primitive")]
     date: i64,
     images: Vec<String>,
 }

@@ -1,4 +1,13 @@
---! get_by_litter : Litter()
+--! names_by_litter
+SELECT
+	id,
+	name
+FROM
+	puppies
+WHERE
+	litter_id = :litter_id;
+
+--! puppies_by_litter : Litter()
 SELECT
 	id,
 	litter_id,

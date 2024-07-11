@@ -1,4 +1,11 @@
---! get_n_news_older_than : Article()
+--! all_titles
+SELECT
+	id,
+	title
+FROM
+	news;
+
+--! n_news_older_than : Article()
 SELECT
 	id,
 	title,

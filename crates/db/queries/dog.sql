@@ -1,3 +1,9 @@
+--! all_names
+SELECT
+	name
+FROM
+	dogs;
+
 --! dog_by_id : Dog()
 SELECT
 	id,

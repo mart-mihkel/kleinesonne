@@ -1,11 +1,11 @@
---! get_litter_names
+--! all_names
 SELECT
 	id,
 	name
 FROM
 	litters;
 
---! get_litter : Litter()
+--! litter_by_id : Litter()
 SELECT
 	id,
 	name,

@@ -1,4 +1,4 @@
---! get_by_name : Admin()
+--! admin_by_name : Admin()
 SELECT
 	id,
 	name,

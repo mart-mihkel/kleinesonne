@@ -6,6 +6,7 @@ use tokio::{net::TcpListener, sync::Mutex};
 mod admin;
 mod dog;
 mod errors;
+mod litter;
 mod news;
 mod util;
 
@@ -16,6 +17,7 @@ async fn main() {
     let routes = Router::new()
         .merge(admin::routes())
         .merge(dog::routes())
+        .merge(litter::routes())
         .merge(news::routes())
         .layer(Extension(client));
 

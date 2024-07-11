@@ -1,23 +1,21 @@
-use cornucopia::{CodegenSettings, Error};
-
-fn main() -> Result<(), Error> {
+fn main() {
     let queries_path = "queries";
     let schema_file = "schema.sql";
-    let destination = "src/cornucopia.rs";
-    let settings = CodegenSettings {
-        is_async: true,
-        derive_ser: true,
-    };
 
     println!("cargo:rerun-if-changed={queries_path}");
     println!("cargo:rerun-if-changed={schema_file}");
-    cornucopia::generate_managed(
-        queries_path,
-        vec![schema_file.to_string()],
-        Some(destination),
-        false,
-        settings,
-    )?;
 
-    Ok(())
+    let db_conn_str = std::env::var("DB_STRING").expect("DB_STRING is undefined");
+    let output = std::process::Command::new("cornucopia")
+        .arg("-q")
+        .arg(queries_path)
+        .arg("--serialize")
+        .arg("live")
+        .arg(db_conn_str)
+        .output()
+        .unwrap();
+
+    if !output.status.success() {
+        panic!("{}", &std::str::from_utf8(&output.stderr).unwrap());
+    }
 }

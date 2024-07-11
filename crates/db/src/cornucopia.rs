@@ -264,6 +264,45 @@ GenericClient
         res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
         Ok(it)
     }
+}pub struct I32Query<'a, C: GenericClient, T, const N: usize>
+{
+    client: &'a  C, params:
+    [&'a (dyn postgres_types::ToSql + Sync); N], stmt: &'a mut
+    cornucopia_async::private::Stmt, extractor: fn(&tokio_postgres::Row) -> i32,
+    mapper: fn(i32) -> T,
+} impl<'a, C, T:'a, const N: usize> I32Query<'a, C, T, N> where C:
+GenericClient
+{
+    pub fn map<R>(self, mapper: fn(i32) -> R) ->
+    I32Query<'a,C,R,N>
+    {
+        I32Query
+        {
+            client: self.client, params: self.params, stmt: self.stmt,
+            extractor: self.extractor, mapper,
+        }
+    } pub async fn one(self) -> Result<T, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?; let row =
+        self.client.query_one(stmt, &self.params).await?;
+        Ok((self.mapper)((self.extractor)(&row)))
+    } pub async fn all(self) -> Result<Vec<T>, tokio_postgres::Error>
+    { self.iter().await?.try_collect().await } pub async fn opt(self) ->
+    Result<Option<T>, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?;
+        Ok(self.client.query_opt(stmt, &self.params) .await?
+        .map(|row| (self.mapper)((self.extractor)(&row))))
+    } pub async fn iter(self,) -> Result<impl futures::Stream<Item = Result<T,
+    tokio_postgres::Error>> + 'a, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?; let it =
+        self.client.query_raw(stmt,
+        cornucopia_async::private::slice_iter(&self.params)) .await?
+        .map(move |res|
+        res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
+        Ok(it)
+    }
 }pub fn dog_by_id() -> DogByIdStmt
 { DogByIdStmt(cornucopia_async::private::Stmt::new("SELECT
 	id,
@@ -312,9 +351,7 @@ Dog, 1>
 FROM
 	dogs
 WHERE
-	breed = $1
-AND
-	alive = $2")) } pub struct
+	breed = $1 and alive = $2")) } pub struct
 DogsByBreedAndStatusStmt(cornucopia_async::private::Stmt); impl DogsByBreedAndStatusStmt
 { pub fn bind<'a, C:
 GenericClient,>(&'a mut self, client: &'a  C,
@@ -363,10 +400,11 @@ VALUES(
 	$9,
 	$10,
 	$11,
-	$12
-)")) } pub struct
+	$12)
+RETURNING
+	id")) } pub struct
 InsertDogStmt(cornucopia_async::private::Stmt); impl InsertDogStmt
-{ pub async fn bind<'a, C:
+{ pub fn bind<'a, C:
 GenericClient,T1:
 cornucopia_async::StringSql,T2:
 cornucopia_async::StringSql,T3:
@@ -379,19 +417,23 @@ cornucopia_async::StringSql,T9:
 cornucopia_async::ArraySql<Item = T8>,T10:
 cornucopia_async::StringSql,T11:
 cornucopia_async::ArraySql<Item = T10>,>(&'a mut self, client: &'a  C,
-name: &'a T1,nickname: &'a T2,father: &'a T3,mother: &'a T4,breed: &'a super::super::types::public::Breed,gender: &'a super::super::types::public::Gender,dob: &'a i64,alive: &'a bool,thumbnail: &'a T5,images: &'a T7,health: &'a T9,titles: &'a T11,) -> Result<u64, tokio_postgres::Error>
+name: &'a T1,nickname: &'a T2,father: &'a T3,mother: &'a T4,breed: &'a super::super::types::public::Breed,gender: &'a super::super::types::public::Gender,dob: &'a i64,alive: &'a bool,thumbnail: &'a T5,images: &'a T7,health: &'a T9,titles: &'a T11,) -> I32Query<'a,C,
+i32, 12>
 {
-    let stmt = self.0.prepare(client).await?;
-    client.execute(stmt, &[name,nickname,father,mother,breed,gender,dob,alive,thumbnail,images,health,titles,]).await
-} }impl <'a, C: GenericClient + Send + Sync, T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,>
-cornucopia_async::Params<'a, InsertDogParams<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,>, std::pin::Pin<Box<dyn futures::Future<Output = Result<u64,
-tokio_postgres::Error>> + Send + 'a>>, C> for InsertDogStmt
+    I32Query
+    {
+        client, params: [name,nickname,father,mother,breed,gender,dob,alive,thumbnail,images,health,titles,], stmt: &mut self.0, extractor:
+        |row| { row.get(0) }, mapper: |it| { it },
+    }
+} }impl <'a, C: GenericClient,T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> cornucopia_async::Params<'a,
+InsertDogParams<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,>, I32Query<'a, C,
+i32, 12>, C> for InsertDogStmt
 {
     fn
     params(&'a mut self, client: &'a  C, params: &'a
-    InsertDogParams<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,>) -> std::pin::Pin<Box<dyn futures::Future<Output = Result<u64,
-    tokio_postgres::Error>> + Send + 'a>>
-    { Box::pin(self.bind(client, &params.name,&params.nickname,&params.father,&params.mother,&params.breed,&params.gender,&params.dob,&params.alive,&params.thumbnail,&params.images,&params.health,&params.titles,)) }
+    InsertDogParams<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,>) -> I32Query<'a, C,
+    i32, 12>
+    { self.bind(client, &params.name,&params.nickname,&params.father,&params.mother,&params.breed,&params.gender,&params.dob,&params.alive,&params.thumbnail,&params.images,&params.health,&params.titles,) }
 }pub fn update_dog() -> UpdateDogStmt
 { UpdateDogStmt(cornucopia_async::private::Stmt::new("UPDATE
 	dogs
@@ -540,6 +582,45 @@ GenericClient
         res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
         Ok(it)
     }
+}pub struct I32Query<'a, C: GenericClient, T, const N: usize>
+{
+    client: &'a  C, params:
+    [&'a (dyn postgres_types::ToSql + Sync); N], stmt: &'a mut
+    cornucopia_async::private::Stmt, extractor: fn(&tokio_postgres::Row) -> i32,
+    mapper: fn(i32) -> T,
+} impl<'a, C, T:'a, const N: usize> I32Query<'a, C, T, N> where C:
+GenericClient
+{
+    pub fn map<R>(self, mapper: fn(i32) -> R) ->
+    I32Query<'a,C,R,N>
+    {
+        I32Query
+        {
+            client: self.client, params: self.params, stmt: self.stmt,
+            extractor: self.extractor, mapper,
+        }
+    } pub async fn one(self) -> Result<T, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?; let row =
+        self.client.query_one(stmt, &self.params).await?;
+        Ok((self.mapper)((self.extractor)(&row)))
+    } pub async fn all(self) -> Result<Vec<T>, tokio_postgres::Error>
+    { self.iter().await?.try_collect().await } pub async fn opt(self) ->
+    Result<Option<T>, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?;
+        Ok(self.client.query_opt(stmt, &self.params) .await?
+        .map(|row| (self.mapper)((self.extractor)(&row))))
+    } pub async fn iter(self,) -> Result<impl futures::Stream<Item = Result<T,
+    tokio_postgres::Error>> + 'a, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?; let it =
+        self.client.query_raw(stmt,
+        cornucopia_async::private::slice_iter(&self.params)) .await?
+        .map(move |res|
+        res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
+        Ok(it)
+    }
 }pub fn get_litter_names() -> GetLitterNamesStmt
 { GetLitterNamesStmt(cornucopia_async::private::Stmt::new("SELECT
 	id,
@@ -591,28 +672,33 @@ VALUES(
 	$1,
 	$2,
 	$3,
-	$4
-)")) } pub struct
+	$4)
+RETURNING
+	id")) } pub struct
 InsertLitterStmt(cornucopia_async::private::Stmt); impl InsertLitterStmt
-{ pub async fn bind<'a, C:
+{ pub fn bind<'a, C:
 GenericClient,T1:
 cornucopia_async::StringSql,T2:
 cornucopia_async::StringSql,T3:
 cornucopia_async::StringSql,T4:
 cornucopia_async::ArraySql<Item = T3>,>(&'a mut self, client: &'a  C,
-name: &'a T1,breed: &'a super::super::types::public::Breed,parents_image: &'a T2,images: &'a T4,) -> Result<u64, tokio_postgres::Error>
+name: &'a T1,breed: &'a super::super::types::public::Breed,parents_image: &'a T2,images: &'a T4,) -> I32Query<'a,C,
+i32, 4>
 {
-    let stmt = self.0.prepare(client).await?;
-    client.execute(stmt, &[name,breed,parents_image,images,]).await
-} }impl <'a, C: GenericClient + Send + Sync, T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,>
-cornucopia_async::Params<'a, InsertLitterParams<T1,T2,T3,T4,>, std::pin::Pin<Box<dyn futures::Future<Output = Result<u64,
-tokio_postgres::Error>> + Send + 'a>>, C> for InsertLitterStmt
+    I32Query
+    {
+        client, params: [name,breed,parents_image,images,], stmt: &mut self.0, extractor:
+        |row| { row.get(0) }, mapper: |it| { it },
+    }
+} }impl <'a, C: GenericClient,T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> cornucopia_async::Params<'a,
+InsertLitterParams<T1,T2,T3,T4,>, I32Query<'a, C,
+i32, 4>, C> for InsertLitterStmt
 {
     fn
     params(&'a mut self, client: &'a  C, params: &'a
-    InsertLitterParams<T1,T2,T3,T4,>) -> std::pin::Pin<Box<dyn futures::Future<Output = Result<u64,
-    tokio_postgres::Error>> + Send + 'a>>
-    { Box::pin(self.bind(client, &params.name,&params.breed,&params.parents_image,&params.images,)) }
+    InsertLitterParams<T1,T2,T3,T4,>) -> I32Query<'a, C,
+    i32, 4>
+    { self.bind(client, &params.name,&params.breed,&params.parents_image,&params.images,) }
 }pub fn update_litter() -> UpdateLitterStmt
 { UpdateLitterStmt(cornucopia_async::private::Stmt::new("UPDATE
 	litters
@@ -701,6 +787,45 @@ GenericClient
         res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
         Ok(it)
     }
+}pub struct I32Query<'a, C: GenericClient, T, const N: usize>
+{
+    client: &'a  C, params:
+    [&'a (dyn postgres_types::ToSql + Sync); N], stmt: &'a mut
+    cornucopia_async::private::Stmt, extractor: fn(&tokio_postgres::Row) -> i32,
+    mapper: fn(i32) -> T,
+} impl<'a, C, T:'a, const N: usize> I32Query<'a, C, T, N> where C:
+GenericClient
+{
+    pub fn map<R>(self, mapper: fn(i32) -> R) ->
+    I32Query<'a,C,R,N>
+    {
+        I32Query
+        {
+            client: self.client, params: self.params, stmt: self.stmt,
+            extractor: self.extractor, mapper,
+        }
+    } pub async fn one(self) -> Result<T, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?; let row =
+        self.client.query_one(stmt, &self.params).await?;
+        Ok((self.mapper)((self.extractor)(&row)))
+    } pub async fn all(self) -> Result<Vec<T>, tokio_postgres::Error>
+    { self.iter().await?.try_collect().await } pub async fn opt(self) ->
+    Result<Option<T>, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?;
+        Ok(self.client.query_opt(stmt, &self.params) .await?
+        .map(|row| (self.mapper)((self.extractor)(&row))))
+    } pub async fn iter(self,) -> Result<impl futures::Stream<Item = Result<T,
+    tokio_postgres::Error>> + 'a, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?; let it =
+        self.client.query_raw(stmt,
+        cornucopia_async::private::slice_iter(&self.params)) .await?
+        .map(move |res|
+        res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
+        Ok(it)
+    }
 }pub fn get_n_news_older_than() -> GetNNewsOlderThanStmt
 { GetNNewsOlderThanStmt(cornucopia_async::private::Stmt::new("SELECT
 	id,
@@ -746,28 +871,33 @@ VALUES(
 	$1,
 	$2,
 	$3,
-	$4
-)")) } pub struct
+	$4)
+RETURNING
+	id")) } pub struct
 InsertNewsStmt(cornucopia_async::private::Stmt); impl InsertNewsStmt
-{ pub async fn bind<'a, C:
+{ pub fn bind<'a, C:
 GenericClient,T1:
 cornucopia_async::StringSql,T2:
 cornucopia_async::StringSql,T3:
 cornucopia_async::StringSql,T4:
 cornucopia_async::ArraySql<Item = T3>,>(&'a mut self, client: &'a  C,
-title: &'a T1,text: &'a T2,date: &'a i64,images: &'a T4,) -> Result<u64, tokio_postgres::Error>
+title: &'a T1,text: &'a T2,date: &'a i64,images: &'a T4,) -> I32Query<'a,C,
+i32, 4>
 {
-    let stmt = self.0.prepare(client).await?;
-    client.execute(stmt, &[title,text,date,images,]).await
-} }impl <'a, C: GenericClient + Send + Sync, T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,>
-cornucopia_async::Params<'a, InsertNewsParams<T1,T2,T3,T4,>, std::pin::Pin<Box<dyn futures::Future<Output = Result<u64,
-tokio_postgres::Error>> + Send + 'a>>, C> for InsertNewsStmt
+    I32Query
+    {
+        client, params: [title,text,date,images,], stmt: &mut self.0, extractor:
+        |row| { row.get(0) }, mapper: |it| { it },
+    }
+} }impl <'a, C: GenericClient,T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::ArraySql<Item = T3>,> cornucopia_async::Params<'a,
+InsertNewsParams<T1,T2,T3,T4,>, I32Query<'a, C,
+i32, 4>, C> for InsertNewsStmt
 {
     fn
     params(&'a mut self, client: &'a  C, params: &'a
-    InsertNewsParams<T1,T2,T3,T4,>) -> std::pin::Pin<Box<dyn futures::Future<Output = Result<u64,
-    tokio_postgres::Error>> + Send + 'a>>
-    { Box::pin(self.bind(client, &params.title,&params.text,&params.date,&params.images,)) }
+    InsertNewsParams<T1,T2,T3,T4,>) -> I32Query<'a, C,
+    i32, 4>
+    { self.bind(client, &params.title,&params.text,&params.date,&params.images,) }
 }pub fn update_news() -> UpdateNewsStmt
 { UpdateNewsStmt(cornucopia_async::private::Stmt::new("UPDATE
 	news
@@ -856,6 +986,45 @@ GenericClient
         res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
         Ok(it)
     }
+}pub struct I32Query<'a, C: GenericClient, T, const N: usize>
+{
+    client: &'a  C, params:
+    [&'a (dyn postgres_types::ToSql + Sync); N], stmt: &'a mut
+    cornucopia_async::private::Stmt, extractor: fn(&tokio_postgres::Row) -> i32,
+    mapper: fn(i32) -> T,
+} impl<'a, C, T:'a, const N: usize> I32Query<'a, C, T, N> where C:
+GenericClient
+{
+    pub fn map<R>(self, mapper: fn(i32) -> R) ->
+    I32Query<'a,C,R,N>
+    {
+        I32Query
+        {
+            client: self.client, params: self.params, stmt: self.stmt,
+            extractor: self.extractor, mapper,
+        }
+    } pub async fn one(self) -> Result<T, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?; let row =
+        self.client.query_one(stmt, &self.params).await?;
+        Ok((self.mapper)((self.extractor)(&row)))
+    } pub async fn all(self) -> Result<Vec<T>, tokio_postgres::Error>
+    { self.iter().await?.try_collect().await } pub async fn opt(self) ->
+    Result<Option<T>, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?;
+        Ok(self.client.query_opt(stmt, &self.params) .await?
+        .map(|row| (self.mapper)((self.extractor)(&row))))
+    } pub async fn iter(self,) -> Result<impl futures::Stream<Item = Result<T,
+    tokio_postgres::Error>> + 'a, tokio_postgres::Error>
+    {
+        let stmt = self.stmt.prepare(self.client).await?; let it =
+        self.client.query_raw(stmt,
+        cornucopia_async::private::slice_iter(&self.params)) .await?
+        .map(move |res|
+        res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
+        Ok(it)
+    }
 }pub fn get_by_litter() -> GetByLitterStmt
 { GetByLitterStmt(cornucopia_async::private::Stmt::new("SELECT
 	id,
@@ -893,26 +1062,31 @@ VALUES(
 	$2,
 	$3,
 	$4,
-	$5
-)")) } pub struct
+	$5)
+RETURNING
+	id")) } pub struct
 InsertPuppyStmt(cornucopia_async::private::Stmt); impl InsertPuppyStmt
-{ pub async fn bind<'a, C:
+{ pub fn bind<'a, C:
 GenericClient,T1:
 cornucopia_async::StringSql,T2:
 cornucopia_async::StringSql,>(&'a mut self, client: &'a  C,
-litter_id: &'a i32,name: &'a T1,gender: &'a super::super::types::public::Gender,availability: &'a super::super::types::public::Availability,image: &'a T2,) -> Result<u64, tokio_postgres::Error>
+litter_id: &'a i32,name: &'a T1,gender: &'a super::super::types::public::Gender,availability: &'a super::super::types::public::Availability,image: &'a T2,) -> I32Query<'a,C,
+i32, 5>
 {
-    let stmt = self.0.prepare(client).await?;
-    client.execute(stmt, &[litter_id,name,gender,availability,image,]).await
-} }impl <'a, C: GenericClient + Send + Sync, T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,>
-cornucopia_async::Params<'a, InsertPuppyParams<T1,T2,>, std::pin::Pin<Box<dyn futures::Future<Output = Result<u64,
-tokio_postgres::Error>> + Send + 'a>>, C> for InsertPuppyStmt
+    I32Query
+    {
+        client, params: [litter_id,name,gender,availability,image,], stmt: &mut self.0, extractor:
+        |row| { row.get(0) }, mapper: |it| { it },
+    }
+} }impl <'a, C: GenericClient,T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,> cornucopia_async::Params<'a,
+InsertPuppyParams<T1,T2,>, I32Query<'a, C,
+i32, 5>, C> for InsertPuppyStmt
 {
     fn
     params(&'a mut self, client: &'a  C, params: &'a
-    InsertPuppyParams<T1,T2,>) -> std::pin::Pin<Box<dyn futures::Future<Output = Result<u64,
-    tokio_postgres::Error>> + Send + 'a>>
-    { Box::pin(self.bind(client, &params.litter_id,&params.name,&params.gender,&params.availability,&params.image,)) }
+    InsertPuppyParams<T1,T2,>) -> I32Query<'a, C,
+    i32, 5>
+    { self.bind(client, &params.litter_id,&params.name,&params.gender,&params.availability,&params.image,) }
 }pub fn update_puppy() -> UpdatePuppyStmt
 { UpdatePuppyStmt(cornucopia_async::private::Stmt::new("UPDATE
 	puppies

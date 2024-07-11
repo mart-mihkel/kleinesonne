@@ -25,8 +25,9 @@ VALUES(
 	:name,
 	:gender,
 	:availability,
-	:image
-);
+	:image)
+RETURNING
+	id;
 
 --! update_puppy
 UPDATE

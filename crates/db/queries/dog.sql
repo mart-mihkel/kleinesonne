@@ -36,9 +36,7 @@ SELECT
 FROM
 	dogs
 WHERE
-	breed = :breed
-AND
-	alive = :alive;
+	breed = :breed and alive = :alive;
 
 --! insert_dog
 INSERT INTO
@@ -68,8 +66,9 @@ VALUES(
 	:thumbnail,
 	:images,
 	:health,
-	:titles
-);
+	:titles)
+RETURNING
+	id;
 
 --! update_dog
 UPDATE

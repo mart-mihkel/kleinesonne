@@ -24,8 +24,9 @@ VALUES(
 	:title,
 	:text,
 	:date,
-	:images
-);
+	:images)
+RETURNING
+	id;
 
 --! update_news
 UPDATE

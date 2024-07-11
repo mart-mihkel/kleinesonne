@@ -29,8 +29,9 @@ VALUES(
 	:name,
 	:breed,
 	:parents_image,
-	:images
-);
+	:images)
+RETURNING
+	id;
 
 --! update_litter
 UPDATE

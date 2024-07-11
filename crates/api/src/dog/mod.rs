@@ -1,4 +1,7 @@
-use axum::{routing::post, Router};
+use axum::{
+    routing::{delete, get, post, put},
+    Router,
+};
 
 mod delete;
 mod new;
@@ -7,9 +10,9 @@ mod update;
 
 pub fn routes() -> Router {
     Router::new()
-        .route("/dog/id", post(read::dog_by_id))
-        .route("/dog/breed", post(read::dogs_by_breed_and_status))
-        .route("/dog/new", post(new::new_dog))
-        .route("/dog/update", post(update::update_dog))
-        .route("/dog/delete", post(delete::delete_dog))
+        .route("/dog/id", get(read::dog_by_id))
+        .route("/dog", get(read::dogs_by_breed_and_status))
+        .route("/dog", post(new::new_dog))
+        .route("/dog", put(update::update_dog))
+        .route("/dog", delete(delete::delete_dog))
 }

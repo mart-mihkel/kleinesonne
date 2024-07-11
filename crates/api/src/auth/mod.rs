@@ -36,7 +36,7 @@ async fn auth(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    let dbadmin = db::admin::get_by_name()
+    let dbadmin = db::admin::admin_by_name()
         .bind(&tx, &user)
         .one()
         .await

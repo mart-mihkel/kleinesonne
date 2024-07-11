@@ -10,7 +10,8 @@ mod update;
 
 pub fn routes() -> Router {
     Router::new()
-        .route("/dog/id", get(read::dog_by_id))
+        .route("/dog/names", get(read::all_names))
+        .route("/dog/one", get(read::dog_by_id))
         .route("/dog", get(read::dogs_by_breed_and_status))
         .route("/dog", post(new::new_dog))
         .route("/dog", put(update::update_dog))

@@ -7,6 +7,24 @@ use tokio::sync::Mutex;
 
 use crate::{errors::ApiError, util::de_primitive};
 
+pub async fn all_names(
+    Extension(client): Extension<Arc<Mutex<db::Client>>>,
+) -> Result<impl IntoResponse, ApiError> {
+    let mut client = client.lock().await;
+    let tx = client
+        .transaction()
+        .await
+        .map_err(|_| ApiError::DatabaseError)?;
+
+    let names = db::dog::all_names()
+        .bind(&tx)
+        .all()
+        .await
+        .map_err(|_| ApiError::DatabaseError)?;
+
+    Ok(Json(json!({"names": names})))
+}
+
 #[derive(Deserialize)]
 pub struct DogById {
     #[serde(deserialize_with = "de_primitive")]

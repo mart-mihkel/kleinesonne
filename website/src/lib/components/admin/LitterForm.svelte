@@ -1,6 +1,5 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
-    import { fetchNames, fetchLitter } from "$lib/mock-server";
     import { Modal } from "$lib/components/admin";
     import { Loading, Error } from "$lib/components";
     import { Breed, type Litter } from "$lib/types";

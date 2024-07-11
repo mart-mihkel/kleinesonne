@@ -1,4 +1,3 @@
-import { API_ADMIN_LOGIN } from "$lib/api";
 import type { Actions, PageServerLoad } from "./$types";
 import { fail } from "@sveltejs/kit";
 
@@ -7,7 +6,7 @@ export const load: PageServerLoad = ({ cookies }) => {
     const authenticated = id === "temp" ? true : false;
 
     return { authenticated };
-}
+};
 
 export const actions: Actions = {
     login: async ({ request, cookies }) => {
@@ -20,8 +19,6 @@ export const actions: Actions = {
         }
 
         cookies.set("sessionid", "temp", { path: "/admin" });
-        const r = await fetch(API_ADMIN_LOGIN);
-        console.log(r);
     },
     newsCreate: async ({ request }) => {
         const data = await request.formData();

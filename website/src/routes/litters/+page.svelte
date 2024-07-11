@@ -9,7 +9,7 @@
     import { type Litter } from "$lib/types";
     import { slide } from "svelte/transition";
     import { format } from "svelte-i18n";
-    import { fetchLitter } from "$lib/mock-server";
+    import { fetchLitter } from "$lib/api";
 
     export let data: PageData;
 
@@ -17,11 +17,11 @@
     let active = "";
     let extended = true;
 
-    data.names.then((ns) => loadLitter(ns[0]));
+    data.names.then((ns) => loadLitter(ns[0].id));
 
-    function loadLitter(name: string) {
-        active = name;
-        promise = fetchLitter(name);
+    function loadLitter(id: number) {
+        active = id;
+        promise = fetchLitter(id);
     }
 </script>
 

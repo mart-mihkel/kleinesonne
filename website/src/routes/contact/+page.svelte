@@ -1,5 +1,5 @@
 <script>
-    import { Person, Mail, Call, MapPin } from "$lib/components/svg";
+    import { Person, Mail, Call, MapPin } from "$lib/svg";
     import { format } from "svelte-i18n";
 </script>
 

@@ -1,8 +1,8 @@
-import { fetchNames } from "$lib/mock-server";
+import { fetchLitterNames } from "$lib/api";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = () => {
     return {
-        names: fetchNames(),
+        names: fetchLitterNames(),
     };
 };

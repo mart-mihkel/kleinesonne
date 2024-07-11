@@ -3,6 +3,11 @@ export type LongBreed =
     | "Bernese Mountain Dog"
     | "Entlebuch Cattle Dog";
 
+export type Login = {
+    user: string;
+    secret: string;
+};
+
 export type DogPreview = {
     id: string;
     name: string;
@@ -14,7 +19,7 @@ export type DogPreview = {
 };
 
 export type Dog = {
-    id: string;
+    id: number;
     name: string;
     nickname: string;
     father: string;
@@ -36,7 +41,7 @@ export type Family = {
 };
 
 export type Puppy = {
-    id: string;
+    id: number;
     name: string;
     image: string;
     gender: Gender;
@@ -44,14 +49,16 @@ export type Puppy = {
 };
 
 export type Litter = {
+    id: number;
     name: string;
-    parents: string;
+    parents_image: string;
     breed: Breed;
     images: string[];
     puppies: Puppy[];
 };
 
 export type Article = {
+    id: number;
     title: string;
     text: string;
     date: Date;

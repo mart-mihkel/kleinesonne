@@ -1,7 +1,13 @@
 <script>
-    import { Arrow } from "$lib/components/svg";
+    import { fetchNews } from "$lib/api";
+    import { Arrow } from "$lib/svg";
     import { Breed } from "$lib/types";
+    import { onMount } from "svelte";
     import { format } from "svelte-i18n";
+
+    onMount(() => {
+        fetchNews(new Date(2050, 5, 5), 5);
+    });
 </script>
 
 <a href="/puppies" class="flex justify-center p-4 text-4xl font-bold">

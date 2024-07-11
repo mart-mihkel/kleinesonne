@@ -3,7 +3,7 @@ use std::sync::Arc;
 use axum::{serve, Extension, Router};
 use tokio::{net::TcpListener, sync::Mutex};
 
-mod admin;
+mod auth;
 mod dog;
 mod errors;
 mod litter;
@@ -16,7 +16,7 @@ async fn main() {
     let client = Arc::new(Mutex::new(db::connect().await.unwrap()));
 
     let routes = Router::new()
-        .merge(admin::routes())
+        .merge(auth::routes())
         .merge(dog::routes())
         .merge(litter::routes())
         .merge(puppy::routes())

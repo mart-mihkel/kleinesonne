@@ -4,7 +4,7 @@ use axum::{http::StatusCode, response::IntoResponse, Extension, Json};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::{errors::ApiError, util::de_primitive};
+use crate::{auth::jwt::Claims, errors::ApiError, util::de_primitive};
 
 #[derive(Deserialize)]
 pub struct UpdateDog {
@@ -28,6 +28,7 @@ pub struct UpdateDog {
 }
 
 pub async fn update_dog(
+    _claims: Claims,
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(dog): Json<UpdateDog>,
 ) -> Result<impl IntoResponse, ApiError> {

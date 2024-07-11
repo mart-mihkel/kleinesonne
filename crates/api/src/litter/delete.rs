@@ -4,7 +4,7 @@ use axum::{http::StatusCode, response::IntoResponse, Extension, Json};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::{errors::ApiError, util::de_primitive};
+use crate::{auth::jwt::Claims, errors::ApiError, util::de_primitive};
 
 #[derive(Deserialize)]
 pub struct DeleteLitter {
@@ -13,6 +13,7 @@ pub struct DeleteLitter {
 }
 
 pub async fn delete_litter(
+    _claims: Claims,
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(DeleteLitter { id }): Json<DeleteLitter>,
 ) -> Result<impl IntoResponse, ApiError> {

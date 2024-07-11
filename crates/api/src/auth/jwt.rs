@@ -10,6 +10,9 @@ use serde::{Deserialize, Serialize};
 
 use crate::errors::ApiError;
 
+/// JWT claims
+///
+/// Automatically validated when used as a handelr parameter
 #[derive(Serialize, Deserialize)]
 pub struct Claims {
     sub: String,

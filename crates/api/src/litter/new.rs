@@ -5,7 +5,7 @@ use serde::Deserialize;
 use serde_json::json;
 use tokio::sync::Mutex;
 
-use crate::errors::ApiError;
+use crate::{auth::jwt::Claims, errors::ApiError};
 
 #[derive(Deserialize)]
 pub struct NewLitter {
@@ -17,6 +17,7 @@ pub struct NewLitter {
 }
 
 pub async fn new_litter(
+    _claims: Claims,
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(litter): Json<NewLitter>,
 ) -> Result<impl IntoResponse, ApiError> {

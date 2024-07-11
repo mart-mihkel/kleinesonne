@@ -8,7 +8,7 @@ use tokio::sync::Mutex;
 
 use crate::errors::ApiError;
 
-mod jwt;
+pub mod jwt;
 
 pub fn routes() -> Router {
     Router::new().route("/auth", post(auth))

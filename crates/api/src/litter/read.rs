@@ -23,11 +23,11 @@ pub async fn litter_by_id(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    let news = db::litter::get_litter()
+    let litter = db::litter::get_litter()
         .bind(&tx, &id)
         .all()
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"news": news})))
+    Ok(Json(json!({"litter": litter})))
 }

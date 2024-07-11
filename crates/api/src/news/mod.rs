@@ -13,5 +13,5 @@ pub fn routes() -> Router {
         .route("/news", get(read::n_news_older_than))
         .route("/news", post(new::new_article))
         .route("/news", put(update::new_article))
-        .route("/news", delete(delete::delete_dog))
+        .route("/news", delete(delete::delete_article))
 }

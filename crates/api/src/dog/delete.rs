@@ -1,14 +1,14 @@
 use std::sync::Arc;
 
-use axum::{response::IntoResponse, Extension, Json};
+use axum::{http::StatusCode, response::IntoResponse, Extension, Json};
 use serde::Deserialize;
-use serde_json::json;
 use tokio::sync::Mutex;
 
-use crate::errors::ApiError;
+use crate::{errors::ApiError, util::de_primitive};
 
 #[derive(Deserialize)]
 pub struct DeleteDog {
+    #[serde(deserialize_with = "de_primitive")]
     id: i32,
 }
 
@@ -22,10 +22,12 @@ pub async fn delete_dog(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    let id = db::dog::delete_dog()
+    db::dog::delete_dog()
         .bind(&tx, &id)
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"id": id})))
+    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+
+    Ok(StatusCode::OK)
 }

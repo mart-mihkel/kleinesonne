@@ -1,8 +1,7 @@
 use std::sync::Arc;
 
-use axum::{response::IntoResponse, Extension, Json};
+use axum::{http::StatusCode, response::IntoResponse, Extension, Json};
 use serde::Deserialize;
-use serde_json::json;
 use tokio::sync::Mutex;
 
 use crate::{errors::ApiError, util::de_primitive};
@@ -38,7 +37,7 @@ pub async fn update_dog(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    let id = db::dog::update_dog()
+    db::dog::update_dog()
         .bind(
             &tx,
             &dog.name,
@@ -58,5 +57,7 @@ pub async fn update_dog(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"id": id})))
+    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+
+    Ok(StatusCode::OK)
 }

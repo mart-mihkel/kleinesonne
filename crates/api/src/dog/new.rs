@@ -53,6 +53,7 @@ pub async fn new_dog(
             &dog.health,
             &dog.titles,
         )
+        .one()
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 

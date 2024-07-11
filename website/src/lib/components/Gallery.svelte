@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Next, Prev, Close } from "$lib/components/svg";
+    import { Next, Prev, Close } from "$lib/svg";
 
     export let images: string[];
     export let alts: string[] = [];

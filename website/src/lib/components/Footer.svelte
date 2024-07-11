@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Call, Mail, MapPin, Facebook } from "$lib/components/svg";
+    import { Call, Mail, MapPin, Facebook } from "$lib/svg";
 </script>
 
 <footer

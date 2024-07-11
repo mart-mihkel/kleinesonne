@@ -8,6 +8,7 @@ mod dog;
 mod errors;
 mod litter;
 mod news;
+mod puppy;
 mod util;
 
 #[tokio::main]
@@ -18,6 +19,7 @@ async fn main() {
         .merge(admin::routes())
         .merge(dog::routes())
         .merge(litter::routes())
+        .merge(puppy::routes())
         .merge(news::routes())
         .layer(Extension(client));
 

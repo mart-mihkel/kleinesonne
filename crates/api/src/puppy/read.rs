@@ -1,20 +1,21 @@
 use std::sync::Arc;
 
-use axum::{http::StatusCode, response::IntoResponse, Extension, Json};
+use axum::{response::IntoResponse, Extension, Json};
 use serde::Deserialize;
+use serde_json::json;
 use tokio::sync::Mutex;
 
 use crate::{errors::ApiError, util::de_primitive};
 
 #[derive(Deserialize)]
-pub struct DeleteDog {
+pub struct PuppiesByLitter {
     #[serde(deserialize_with = "de_primitive")]
-    id: i32,
+    litter_id: i32,
 }
 
-pub async fn delete_dog(
+pub async fn puppies_by_litter(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
-    Json(DeleteDog { id }): Json<DeleteDog>,
+    Json(PuppiesByLitter { litter_id }): Json<PuppiesByLitter>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
     let tx = client
@@ -22,12 +23,11 @@ pub async fn delete_dog(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    db::dog::delete_dog()
-        .bind(&tx, &id)
+    let puppies = db::puppy::get_by_litter()
+        .bind(&tx, &litter_id)
+        .all()
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
-
-    Ok(StatusCode::OK)
+    Ok(Json(json!({"puppies": puppies})))
 }

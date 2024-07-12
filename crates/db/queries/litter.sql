@@ -17,7 +17,7 @@ FROM
 WHERE
 	id = :id;
 
---! litters_by_breed : Litter()
+--! available_litters_by_breed : Litter()
 SELECT
 	id,
 	name,
@@ -25,9 +25,11 @@ SELECT
 	parents_image,
 	images
 FROM
-	litters
+	litters l
 WHERE
-	id = :id and breed = :breed;
+	breed = :breed
+AND
+	(SELECT count(id) FROM puppies WHERE litter_id = l.id and availability = 'Available') > 0;
 
 --! insert_litter
 INSERT INTO

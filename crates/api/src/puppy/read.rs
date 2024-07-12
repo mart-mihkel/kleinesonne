@@ -49,3 +49,22 @@ pub async fn puppies_by_litter(
 
     Ok(Json(json!({"puppies": puppies})))
 }
+
+pub async fn available_puppies_by_litter(
+    Extension(client): Extension<Arc<Mutex<db::Client>>>,
+    Json(ById { litter_id }): Json<ById>,
+) -> Result<impl IntoResponse, ApiError> {
+    let mut client = client.lock().await;
+    let tx = client
+        .transaction()
+        .await
+        .map_err(|_| ApiError::DatabaseError)?;
+
+    let puppies = db::puppy::avaliable_puppies_by_litter()
+        .bind(&tx, &litter_id)
+        .all()
+        .await
+        .map_err(|_| ApiError::DatabaseError)?;
+
+    Ok(Json(json!({"puppies": puppies})))
+}

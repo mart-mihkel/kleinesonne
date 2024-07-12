@@ -17,6 +17,18 @@ FROM
 WHERE
 	id = :id;
 
+--! litters_by_breed : Litter()
+SELECT
+	id,
+	name,
+	breed,
+	parents_image,
+	images
+FROM
+	litters
+WHERE
+	id = :id and breed = :breed;
+
 --! insert_litter
 INSERT INTO
 	litters(

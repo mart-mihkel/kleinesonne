@@ -20,6 +20,19 @@ FROM
 WHERE
 	litter_id = :litter_id;
 
+--! avaliable_puppies_by_litter : Litter()
+SELECT
+	id,
+	litter_id,
+	name,
+	gender,
+	availability,
+	image
+FROM
+	puppies
+WHERE
+	litter_id = :litter_id and availability = 'Available';
+
 --! insert_puppy
 INSERT INTO
 	puppies(

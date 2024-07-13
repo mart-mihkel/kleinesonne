@@ -722,6 +722,28 @@ Litter, 1>
         client, params: [id,], stmt: &mut self.0, extractor:
         |row| { LitterBorrowed { id: row.get(0),name: row.get(1),breed: row.get(2),parents_image: row.get(3),images: row.get(4),} }, mapper: |it| { <Litter>::from(it) },
     }
+} }pub fn available_litters() -> AvailableLittersStmt
+{ AvailableLittersStmt(cornucopia_async::private::Stmt::new("SELECT
+	id,
+	name,
+	breed,
+	parents_image,
+	images
+FROM
+	litters l
+WHERE
+	(SELECT count(id) FROM puppies WHERE litter_id = l.id and availability = 'Available') > 0")) } pub struct
+AvailableLittersStmt(cornucopia_async::private::Stmt); impl AvailableLittersStmt
+{ pub fn bind<'a, C:
+GenericClient,>(&'a mut self, client: &'a  C,
+) -> LitterQuery<'a,C,
+Litter, 0>
+{
+    LitterQuery
+    {
+        client, params: [], stmt: &mut self.0, extractor:
+        |row| { LitterBorrowed { id: row.get(0),name: row.get(1),breed: row.get(2),parents_image: row.get(3),images: row.get(4),} }, mapper: |it| { <Litter>::from(it) },
+    }
 } }pub fn available_litters_by_breed() -> AvailableLittersByBreedStmt
 { AvailableLittersByBreedStmt(cornucopia_async::private::Stmt::new("SELECT
 	id,

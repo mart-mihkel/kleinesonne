@@ -55,6 +55,24 @@ pub async fn litter_by_id(
     Ok(Json(json!({"litter": litter})))
 }
 
+pub async fn available_litters(
+    Extension(client): Extension<Arc<Mutex<db::Client>>>,
+) -> Result<impl IntoResponse, ApiError> {
+    let mut client = client.lock().await;
+    let tx = client
+        .transaction()
+        .await
+        .map_err(|_| ApiError::DatabaseError)?;
+
+    let litter = db::litter::available_litters()
+        .bind(&tx)
+        .all()
+        .await
+        .map_err(|_| ApiError::DatabaseError)?;
+
+    Ok(Json(json!({"litter": litter})))
+}
+
 pub async fn available_litters_by_breed(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ByBreed { breed }): Json<ByBreed>,

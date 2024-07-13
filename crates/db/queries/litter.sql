@@ -17,6 +17,18 @@ FROM
 WHERE
 	id = :id;
 
+--! available_litters : Litter()
+SELECT
+	id,
+	name,
+	breed,
+	parents_image,
+	images
+FROM
+	litters l
+WHERE
+	(SELECT count(id) FROM puppies WHERE litter_id = l.id and availability = 'Available') > 0;
+
 --! available_litters_by_breed : Litter()
 SELECT
 	id,

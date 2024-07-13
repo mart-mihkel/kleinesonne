@@ -2,7 +2,6 @@ use std::sync::Arc;
 
 use axum::{response::IntoResponse, Extension, Json};
 use serde::Deserialize;
-use serde_json::json;
 use tokio::sync::Mutex;
 
 use crate::{auth::jwt::Claims, errors::ApiError};
@@ -42,5 +41,5 @@ pub async fn new_puppy(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"id": id})))
+    Ok(Json(id))
 }

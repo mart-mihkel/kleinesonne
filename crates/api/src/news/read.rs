@@ -2,7 +2,6 @@ use std::sync::Arc;
 
 use axum::{response::IntoResponse, Extension, Json};
 use serde::Deserialize;
-use serde_json::json;
 use tokio::sync::Mutex;
 
 use crate::errors::ApiError;
@@ -33,7 +32,7 @@ pub async fn all_titles(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"titles": titles})))
+    Ok(Json(titles))
 }
 
 pub async fn article_by_id(
@@ -52,7 +51,7 @@ pub async fn article_by_id(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"article": article})))
+    Ok(Json(article))
 }
 
 pub async fn n_news_older_than(
@@ -71,5 +70,5 @@ pub async fn n_news_older_than(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"news": news})))
+    Ok(Json(news))
 }

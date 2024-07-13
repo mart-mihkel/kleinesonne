@@ -2,7 +2,6 @@ use std::sync::Arc;
 
 use axum::{response::IntoResponse, Extension, Json};
 use serde::Deserialize;
-use serde_json::json;
 use tokio::sync::Mutex;
 
 use crate::errors::ApiError;
@@ -33,7 +32,7 @@ pub async fn puppy_by_id(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"puppy": puppy})))
+    Ok(Json(puppy))
 }
 
 pub async fn names_by_litter(
@@ -52,7 +51,7 @@ pub async fn names_by_litter(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"names": names})))
+    Ok(Json(names))
 }
 
 pub async fn puppies_by_litter(
@@ -71,7 +70,7 @@ pub async fn puppies_by_litter(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"puppies": puppies})))
+    Ok(Json(puppies))
 }
 
 pub async fn available_puppies_by_litter(
@@ -90,5 +89,5 @@ pub async fn available_puppies_by_litter(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    Ok(Json(json!({"puppies": puppies})))
+    Ok(Json(puppies))
 }

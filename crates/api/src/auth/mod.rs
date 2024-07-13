@@ -2,7 +2,6 @@ use std::sync::Arc;
 
 use axum::{response::IntoResponse, routing::post, Extension, Json, Router};
 use serde::Deserialize;
-use serde_json::json;
 use sha2::{Digest, Sha512};
 use tokio::sync::Mutex;
 
@@ -50,6 +49,6 @@ async fn auth(
     if hash != dbadmin.hash {
         Err(ApiError::WrongCredentials)
     } else {
-        Ok(Json(json!({"jwt": jwt::create_token(user)?})))
+        Ok(Json(jwt::create_token(user)))
     }
 }

@@ -70,6 +70,24 @@ export type ModalDispatch = {
     delete: string;
 };
 
+export type Id = {
+    id: number;
+};
+
+export type Name = {
+    id: number;
+    name: string;
+};
+
+export type Title = {
+    id: number;
+    title: string;
+};
+
+export type Jwt = {
+    jwt: string;
+};
+
 export enum Gender {
     MALE = "male",
     FEMALE = "female",

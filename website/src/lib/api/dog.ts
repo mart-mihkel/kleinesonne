@@ -1,71 +1,76 @@
-import type { Breed, Dog } from "$lib/types";
+import type { Breed, Dog, Id, Name } from "$lib/types";
 import { API, JSON_HEADERS } from ".";
 
 const API_DOG = `${API}/dog`;
 
-export async function fetchDogNames(): Promise<Response> {
+export async function fetchDogNames(): Promise<Name[]> {
     const options = {
         headers: JSON_HEADERS,
         method: "GET",
     };
 
-    return fetch(API_DOG + "/names", options);
+    const res = await fetch(API_DOG + "/names", options);
+    const body: Name[] = await res.json();
+    return body;
 }
 
-export async function fetchDog(id: number): Promise<Response> {
+export async function fetchDog(id: number): Promise<Dog> {
     const options = {
         headers: JSON_HEADERS,
         method: "POST",
         body: JSON.stringify({ id }),
     };
 
-    return fetch(API_DOG + "/one", options);
+    const res = await fetch(API_DOG + "/one", options);
+    const body: Dog = await res.json();
+    return body;
 }
 
-export async function fetchDogs(
-    breed: Breed,
-    alive: boolean,
-): Promise<Response> {
-    const body = JSON.stringify({
-        breed,
-        alive,
-    });
-
+export async function fetchDogs(breed: Breed, alive: boolean): Promise<Dog[]> {
     const options = {
         headers: JSON_HEADERS,
         method: "POST",
-        body,
+        body: JSON.stringify({
+            breed,
+            alive,
+        }),
     };
 
-    return fetch(API_DOG + "/breed", options);
+    const res = await fetch(API_DOG + "/breed", options);
+    const body: Dog[] = await res.json();
+    return body;
 }
 
-export async function uploadDog(dog: Dog) {
+export async function uploadDog(dog: Dog): Promise<Id> {
     const options = {
         headers: JSON_HEADERS,
         method: "PUT",
         body: JSON.stringify({ dog }),
     };
 
-    return fetch(API_DOG + "/new", options);
+    const res = await fetch(API_DOG + "/new", options);
+    const body: Id = await res.json();
+    return body;
 }
 
-export async function updateDog(dog: Dog) {
+export async function updateDog(dog: Dog): Promise<boolean> {
     const options = {
         headers: JSON_HEADERS,
         method: "PUT",
         body: JSON.stringify({ dog }),
     };
 
-    return fetch(API_DOG + "/update", options);
+    const res = await fetch(API_DOG + "/update", options);
+    return res.ok;
 }
 
-export async function deleteDog(id: number) {
+export async function deleteDog(id: number): Promise<boolean> {
     const options = {
         headers: JSON_HEADERS,
         method: "DELETE",
         body: JSON.stringify({ id }),
     };
 
-    return fetch(API_DOG + "/delete", options);
+    const res = await fetch(API_DOG + "/delete", options);
+    return res.ok;
 }

@@ -5,6 +5,18 @@ SELECT
 FROM
 	news;
 
+--! article_by_id : Article()
+SELECT
+	id,
+	title,
+	text,
+	date,
+	images
+FROM
+	news
+WHERE
+	id = :id;
+
 --! n_news_older_than : Article()
 SELECT
 	id,

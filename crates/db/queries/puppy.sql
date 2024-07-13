@@ -7,7 +7,21 @@ FROM
 WHERE
 	litter_id = :litter_id;
 
---! puppies_by_litter : Litter()
+--! puppy_by_id : Puppy()
+SELECT
+	id,
+	litter_id,
+	name,
+	gender,
+	availability,
+	image
+FROM
+	puppies
+WHERE
+	id = :id;
+
+
+--! puppies_by_litter : Puppy()
 SELECT
 	id,
 	litter_id,
@@ -20,7 +34,7 @@ FROM
 WHERE
 	litter_id = :litter_id;
 
---! avaliable_puppies_by_litter : Litter()
+--! avaliable_puppies_by_litter : Puppy()
 SELECT
 	id,
 	litter_id,

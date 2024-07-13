@@ -25,7 +25,7 @@ FROM
 WHERE
 	id = :id;
 
---! dogs_by_breed_and_status : Dog()
+--! alive_dogs_by_breed_and_gender: Dog()
 SELECT
 	id,
 	name,
@@ -43,7 +43,33 @@ SELECT
 FROM
 	dogs
 WHERE
-	breed = :breed and alive = :alive;
+	breed = :breed
+AND
+	gender = :gender
+AND
+	alive = true;
+
+--! retired_dogs_by_breed: Dog()
+SELECT
+	id,
+	name,
+	nickname,
+	father,
+	mother,
+	breed,
+	gender,
+	dob,
+	alive,
+	thumbnail,
+	images,
+	health,
+	titles
+FROM
+	dogs
+WHERE
+	breed = :breed
+AND
+	alive = false;
 
 --! insert_dog
 INSERT INTO

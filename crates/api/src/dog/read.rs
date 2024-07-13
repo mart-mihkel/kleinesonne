@@ -8,15 +8,22 @@ use tokio::sync::Mutex;
 use crate::errors::ApiError;
 
 #[derive(Deserialize)]
-pub struct DogById {
+pub struct ById {
     id: i32,
 }
 
 #[derive(Deserialize)]
-pub struct DogByBreedStatus {
+pub struct ByBreedGender {
     #[serde(with = "db::BreedDef")]
     breed: db::Breed,
-    alive: bool,
+    #[serde(with = "db::GenderDef")]
+    gender: db::Gender,
+}
+
+#[derive(Deserialize)]
+pub struct ByBreed {
+    #[serde(with = "db::BreedDef")]
+    breed: db::Breed,
 }
 
 pub async fn all_names(
@@ -39,7 +46,7 @@ pub async fn all_names(
 
 pub async fn dog_by_id(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
-    Json(DogById { id }): Json<DogById>,
+    Json(ById { id }): Json<ById>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
     let tx = client
@@ -56,9 +63,9 @@ pub async fn dog_by_id(
     Ok(Json(json!({"dog": dog})))
 }
 
-pub async fn dogs_by_breed_and_status(
+pub async fn alive_dogs_by_breed_and_gender(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
-    Json(DogByBreedStatus { breed, alive }): Json<DogByBreedStatus>,
+    Json(ByBreedGender { breed, gender }): Json<ByBreedGender>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
     let tx = client
@@ -66,8 +73,27 @@ pub async fn dogs_by_breed_and_status(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
-    let dogs = db::dog::dogs_by_breed_and_status()
-        .bind(&tx, &breed, &alive)
+    let dogs = db::dog::alive_dogs_by_breed_and_gender()
+        .bind(&tx, &breed, &gender)
+        .all()
+        .await
+        .map_err(|_| ApiError::DatabaseError)?;
+
+    Ok(Json(json!({"dogs": dogs})))
+}
+
+pub async fn retired_dogs_by_breed(
+    Extension(client): Extension<Arc<Mutex<db::Client>>>,
+    Json(ByBreed { breed }): Json<ByBreed>,
+) -> Result<impl IntoResponse, ApiError> {
+    let mut client = client.lock().await;
+    let tx = client
+        .transaction()
+        .await
+        .map_err(|_| ApiError::DatabaseError)?;
+
+    let dogs = db::dog::retired_dogs_by_breed()
+        .bind(&tx, &breed)
         .all()
         .await
         .map_err(|_| ApiError::DatabaseError)?;

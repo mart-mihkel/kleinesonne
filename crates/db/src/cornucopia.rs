@@ -219,7 +219,7 @@ Admin, 1>
         |row| { AdminBorrowed { id: row.get(0),name: row.get(1),salt: row.get(2),hash: row.get(3),} }, mapper: |it| { <Admin>::from(it) },
     }
 } }}pub mod dog
-{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive(Clone,Copy, Debug)] pub struct DogsByBreedAndStatusParams<> { pub breed: super::super::types::public::Breed,pub alive: bool,}#[derive( Debug)] pub struct InsertDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,}#[derive( Debug)] pub struct UpdateDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,pub id: i32,}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct AllNames
+{ use futures::{{StreamExt, TryStreamExt}};use futures; use cornucopia_async::GenericClient;#[derive(Clone,Copy, Debug)] pub struct AliveDogsByBreedAndGenderParams<> { pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,}#[derive( Debug)] pub struct InsertDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,}#[derive( Debug)] pub struct UpdateDogParams<T1: cornucopia_async::StringSql,T2: cornucopia_async::StringSql,T3: cornucopia_async::StringSql,T4: cornucopia_async::StringSql,T5: cornucopia_async::StringSql,T6: cornucopia_async::StringSql,T7: cornucopia_async::ArraySql<Item = T6>,T8: cornucopia_async::StringSql,T9: cornucopia_async::ArraySql<Item = T8>,T10: cornucopia_async::StringSql,T11: cornucopia_async::ArraySql<Item = T10>,> { pub name: T1,pub nickname: T2,pub father: T3,pub mother: T4,pub breed: super::super::types::public::Breed,pub gender: super::super::types::public::Gender,pub dob: i64,pub alive: bool,pub thumbnail: T5,pub images: T7,pub health: T9,pub titles: T11,pub id: i32,}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct AllNames
 { pub id : i32,pub name : String,}pub struct AllNamesBorrowed<'a> { pub id : i32,pub name : &'a str,}
 impl<'a> From<AllNamesBorrowed<'a>> for AllNames
 {
@@ -395,8 +395,8 @@ Dog, 1>
         client, params: [id,], stmt: &mut self.0, extractor:
         |row| { DogBorrowed { id: row.get(0),name: row.get(1),nickname: row.get(2),father: row.get(3),mother: row.get(4),breed: row.get(5),gender: row.get(6),dob: row.get(7),alive: row.get(8),thumbnail: row.get(9),images: row.get(10),health: row.get(11),titles: row.get(12),} }, mapper: |it| { <Dog>::from(it) },
     }
-} }pub fn dogs_by_breed_and_status() -> DogsByBreedAndStatusStmt
-{ DogsByBreedAndStatusStmt(cornucopia_async::private::Stmt::new("SELECT
+} }pub fn alive_dogs_by_breed_and_gender() -> AliveDogsByBreedAndGenderStmt
+{ AliveDogsByBreedAndGenderStmt(cornucopia_async::private::Stmt::new("SELECT
 	id,
 	name,
 	nickname,
@@ -413,28 +413,64 @@ Dog, 1>
 FROM
 	dogs
 WHERE
-	breed = $1 and alive = $2")) } pub struct
-DogsByBreedAndStatusStmt(cornucopia_async::private::Stmt); impl DogsByBreedAndStatusStmt
+	breed = $1
+AND
+	gender = $2
+AND
+	alive = true")) } pub struct
+AliveDogsByBreedAndGenderStmt(cornucopia_async::private::Stmt); impl AliveDogsByBreedAndGenderStmt
 { pub fn bind<'a, C:
 GenericClient,>(&'a mut self, client: &'a  C,
-breed: &'a super::super::types::public::Breed,alive: &'a bool,) -> DogQuery<'a,C,
+breed: &'a super::super::types::public::Breed,gender: &'a super::super::types::public::Gender,) -> DogQuery<'a,C,
 Dog, 2>
 {
     DogQuery
     {
-        client, params: [breed,alive,], stmt: &mut self.0, extractor:
+        client, params: [breed,gender,], stmt: &mut self.0, extractor:
         |row| { DogBorrowed { id: row.get(0),name: row.get(1),nickname: row.get(2),father: row.get(3),mother: row.get(4),breed: row.get(5),gender: row.get(6),dob: row.get(7),alive: row.get(8),thumbnail: row.get(9),images: row.get(10),health: row.get(11),titles: row.get(12),} }, mapper: |it| { <Dog>::from(it) },
     }
 } }impl <'a, C: GenericClient,> cornucopia_async::Params<'a,
-DogsByBreedAndStatusParams<>, DogQuery<'a, C,
-Dog, 2>, C> for DogsByBreedAndStatusStmt
+AliveDogsByBreedAndGenderParams<>, DogQuery<'a, C,
+Dog, 2>, C> for AliveDogsByBreedAndGenderStmt
 {
     fn
     params(&'a mut self, client: &'a  C, params: &'a
-    DogsByBreedAndStatusParams<>) -> DogQuery<'a, C,
+    AliveDogsByBreedAndGenderParams<>) -> DogQuery<'a, C,
     Dog, 2>
-    { self.bind(client, &params.breed,&params.alive,) }
-}pub fn insert_dog() -> InsertDogStmt
+    { self.bind(client, &params.breed,&params.gender,) }
+}pub fn retired_dogs_by_breed() -> RetiredDogsByBreedStmt
+{ RetiredDogsByBreedStmt(cornucopia_async::private::Stmt::new("SELECT
+	id,
+	name,
+	nickname,
+	father,
+	mother,
+	breed,
+	gender,
+	dob,
+	alive,
+	thumbnail,
+	images,
+	health,
+	titles
+FROM
+	dogs
+WHERE
+	breed = $1
+AND
+	alive = false")) } pub struct
+RetiredDogsByBreedStmt(cornucopia_async::private::Stmt); impl RetiredDogsByBreedStmt
+{ pub fn bind<'a, C:
+GenericClient,>(&'a mut self, client: &'a  C,
+breed: &'a super::super::types::public::Breed,) -> DogQuery<'a,C,
+Dog, 1>
+{
+    DogQuery
+    {
+        client, params: [breed,], stmt: &mut self.0, extractor:
+        |row| { DogBorrowed { id: row.get(0),name: row.get(1),nickname: row.get(2),father: row.get(3),mother: row.get(4),breed: row.get(5),gender: row.get(6),dob: row.get(7),alive: row.get(8),thumbnail: row.get(9),images: row.get(10),health: row.get(11),titles: row.get(12),} }, mapper: |it| { <Dog>::from(it) },
+    }
+} }pub fn insert_dog() -> InsertDogStmt
 { InsertDogStmt(cornucopia_async::private::Stmt::new("INSERT INTO
 	dogs(
 		name,
@@ -996,6 +1032,28 @@ AllTitles, 0>
         client, params: [], stmt: &mut self.0, extractor:
         |row| { AllTitlesBorrowed { id: row.get(0),title: row.get(1),} }, mapper: |it| { <AllTitles>::from(it) },
     }
+} }pub fn article_by_id() -> ArticleByIdStmt
+{ ArticleByIdStmt(cornucopia_async::private::Stmt::new("SELECT
+	id,
+	title,
+	text,
+	date,
+	images
+FROM
+	news
+WHERE
+	id = $1")) } pub struct
+ArticleByIdStmt(cornucopia_async::private::Stmt); impl ArticleByIdStmt
+{ pub fn bind<'a, C:
+GenericClient,>(&'a mut self, client: &'a  C,
+id: &'a i32,) -> ArticleQuery<'a,C,
+Article, 1>
+{
+    ArticleQuery
+    {
+        client, params: [id,], stmt: &mut self.0, extractor:
+        |row| { ArticleBorrowed { id: row.get(0),title: row.get(1),text: row.get(2),date: row.get(3),images: row.get(4),} }, mapper: |it| { <Article>::from(it) },
+    }
 } }pub fn n_news_older_than() -> NNewsOlderThanStmt
 { NNewsOlderThanStmt(cornucopia_async::private::Stmt::new("SELECT
 	id,
@@ -1156,25 +1214,25 @@ GenericClient
         res.map(|row| (self.mapper)((self.extractor)(&row)))) .into_stream();
         Ok(it)
     }
-}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct Litter
-{ pub id : i32,pub litter_id : i32,pub name : String,pub gender : super::super::types::public::Gender,pub availability : super::super::types::public::Availability,pub image : String,}pub struct LitterBorrowed<'a> { pub id : i32,pub litter_id : i32,pub name : &'a str,pub gender : super::super::types::public::Gender,pub availability : super::super::types::public::Availability,pub image : &'a str,}
-impl<'a> From<LitterBorrowed<'a>> for Litter
+}#[derive(serde::Serialize, Debug, Clone, PartialEq,)] pub struct Puppy
+{ pub id : i32,pub litter_id : i32,pub name : String,pub gender : super::super::types::public::Gender,pub availability : super::super::types::public::Availability,pub image : String,}pub struct PuppyBorrowed<'a> { pub id : i32,pub litter_id : i32,pub name : &'a str,pub gender : super::super::types::public::Gender,pub availability : super::super::types::public::Availability,pub image : &'a str,}
+impl<'a> From<PuppyBorrowed<'a>> for Puppy
 {
-    fn from(LitterBorrowed { id,litter_id,name,gender,availability,image,}: LitterBorrowed<'a>) ->
+    fn from(PuppyBorrowed { id,litter_id,name,gender,availability,image,}: PuppyBorrowed<'a>) ->
     Self { Self { id,litter_id,name: name.into(),gender,availability,image: image.into(),} }
-}pub struct LitterQuery<'a, C: GenericClient, T, const N: usize>
+}pub struct PuppyQuery<'a, C: GenericClient, T, const N: usize>
 {
     client: &'a  C, params:
     [&'a (dyn postgres_types::ToSql + Sync); N], stmt: &'a mut
-    cornucopia_async::private::Stmt, extractor: fn(&tokio_postgres::Row) -> LitterBorrowed,
-    mapper: fn(LitterBorrowed) -> T,
-} impl<'a, C, T:'a, const N: usize> LitterQuery<'a, C, T, N> where C:
+    cornucopia_async::private::Stmt, extractor: fn(&tokio_postgres::Row) -> PuppyBorrowed,
+    mapper: fn(PuppyBorrowed) -> T,
+} impl<'a, C, T:'a, const N: usize> PuppyQuery<'a, C, T, N> where C:
 GenericClient
 {
-    pub fn map<R>(self, mapper: fn(LitterBorrowed) -> R) ->
-    LitterQuery<'a,C,R,N>
+    pub fn map<R>(self, mapper: fn(PuppyBorrowed) -> R) ->
+    PuppyQuery<'a,C,R,N>
     {
-        LitterQuery
+        PuppyQuery
         {
             client: self.client, params: self.params, stmt: self.stmt,
             extractor: self.extractor, mapper,
@@ -1259,6 +1317,29 @@ NamesByLitter, 1>
         client, params: [litter_id,], stmt: &mut self.0, extractor:
         |row| { NamesByLitterBorrowed { id: row.get(0),name: row.get(1),} }, mapper: |it| { <NamesByLitter>::from(it) },
     }
+} }pub fn puppy_by_id() -> PuppyByIdStmt
+{ PuppyByIdStmt(cornucopia_async::private::Stmt::new("SELECT
+	id,
+	litter_id,
+	name,
+	gender,
+	availability,
+	image
+FROM
+	puppies
+WHERE
+	id = $1")) } pub struct
+PuppyByIdStmt(cornucopia_async::private::Stmt); impl PuppyByIdStmt
+{ pub fn bind<'a, C:
+GenericClient,>(&'a mut self, client: &'a  C,
+id: &'a i32,) -> PuppyQuery<'a,C,
+Puppy, 1>
+{
+    PuppyQuery
+    {
+        client, params: [id,], stmt: &mut self.0, extractor:
+        |row| { PuppyBorrowed { id: row.get(0),litter_id: row.get(1),name: row.get(2),gender: row.get(3),availability: row.get(4),image: row.get(5),} }, mapper: |it| { <Puppy>::from(it) },
+    }
 } }pub fn puppies_by_litter() -> PuppiesByLitterStmt
 { PuppiesByLitterStmt(cornucopia_async::private::Stmt::new("SELECT
 	id,
@@ -1274,13 +1355,13 @@ WHERE
 PuppiesByLitterStmt(cornucopia_async::private::Stmt); impl PuppiesByLitterStmt
 { pub fn bind<'a, C:
 GenericClient,>(&'a mut self, client: &'a  C,
-litter_id: &'a i32,) -> LitterQuery<'a,C,
-Litter, 1>
+litter_id: &'a i32,) -> PuppyQuery<'a,C,
+Puppy, 1>
 {
-    LitterQuery
+    PuppyQuery
     {
         client, params: [litter_id,], stmt: &mut self.0, extractor:
-        |row| { LitterBorrowed { id: row.get(0),litter_id: row.get(1),name: row.get(2),gender: row.get(3),availability: row.get(4),image: row.get(5),} }, mapper: |it| { <Litter>::from(it) },
+        |row| { PuppyBorrowed { id: row.get(0),litter_id: row.get(1),name: row.get(2),gender: row.get(3),availability: row.get(4),image: row.get(5),} }, mapper: |it| { <Puppy>::from(it) },
     }
 } }pub fn avaliable_puppies_by_litter() -> AvaliablePuppiesByLitterStmt
 { AvaliablePuppiesByLitterStmt(cornucopia_async::private::Stmt::new("SELECT
@@ -1297,13 +1378,13 @@ WHERE
 AvaliablePuppiesByLitterStmt(cornucopia_async::private::Stmt); impl AvaliablePuppiesByLitterStmt
 { pub fn bind<'a, C:
 GenericClient,>(&'a mut self, client: &'a  C,
-litter_id: &'a i32,) -> LitterQuery<'a,C,
-Litter, 1>
+litter_id: &'a i32,) -> PuppyQuery<'a,C,
+Puppy, 1>
 {
-    LitterQuery
+    PuppyQuery
     {
         client, params: [litter_id,], stmt: &mut self.0, extractor:
-        |row| { LitterBorrowed { id: row.get(0),litter_id: row.get(1),name: row.get(2),gender: row.get(3),availability: row.get(4),image: row.get(5),} }, mapper: |it| { <Litter>::from(it) },
+        |row| { PuppyBorrowed { id: row.get(0),litter_id: row.get(1),name: row.get(2),gender: row.get(3),availability: row.get(4),image: row.get(5),} }, mapper: |it| { <Puppy>::from(it) },
     }
 } }pub fn insert_puppy() -> InsertPuppyStmt
 { InsertPuppyStmt(cornucopia_async::private::Stmt::new("INSERT INTO

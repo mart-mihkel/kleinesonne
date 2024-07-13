@@ -1,5 +1,6 @@
 --! all_names
 SELECT
+	id,
 	name
 FROM
 	dogs;

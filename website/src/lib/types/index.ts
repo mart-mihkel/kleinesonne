@@ -25,7 +25,7 @@ export type Dog = {
     father: string;
     mother: string;
     thumbnail: string;
-    dob: Date;
+    dob: number;
     breed: Breed;
     gender: Gender;
     alive: boolean;
@@ -69,7 +69,7 @@ export type Article = {
     id: number;
     title: string;
     text: string;
-    date: Date;
+    date: number;
     images: string[];
 };
 
@@ -97,18 +97,18 @@ export type Jwt = {
 };
 
 export enum Gender {
-    MALE = "male",
-    FEMALE = "female",
+    MALE = "Male",
+    FEMALE = "Female",
 }
 
 export enum Breed {
-    AUSTRALIAN = "aus",
-    BERNESE = "ber",
-    ENTLEBUCH = "ent",
+    AUSTRALIAN = "Australian",
+    BERNESE = "Bernese",
+    ENTLEBUCH = "Entlebuch",
 }
 
 export enum Availability {
-    AVAILABLE = "available",
-    UNAVAILABLE = "unavailable",
-    CO_OWNERSHIP = "co",
+    AVAILABLE = "Available",
+    UNAVAILABLE = "Unavailable",
+    CO_OWNERSHIP = "Co",
 }

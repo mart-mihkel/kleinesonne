@@ -43,7 +43,9 @@
                         </tr>
                         <tr class="border-t border-black dark:border-white">
                             <td class="font-medium">{$format("dog.dob")}:</td>
-                            <td class="font-medium">{dob.toDateString()}</td>
+                            <td class="font-medium"
+                                >{new Date(dob).toDateString()}</td
+                            >
                         </tr>
                         <tr class="border-t border-black dark:border-white">
                             <td class="font-medium">{$format("dog.breed")}:</td>

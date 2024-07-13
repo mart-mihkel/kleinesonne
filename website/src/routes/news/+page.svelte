@@ -41,7 +41,9 @@
             return;
         }
 
-        news.push(...newNews);
+        console.log(newNews);
+
+        news.concat(newNews);
         news = news;
         oldest = newNews[newNews.length - 1].date;
     }

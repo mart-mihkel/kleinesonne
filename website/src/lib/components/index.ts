@@ -10,6 +10,8 @@ import Error from "./Error.svelte";
 import Empty from "./Empty.svelte";
 import ThemeToggle from "./ThemeToggle.svelte";
 import Locale from "./Locale.svelte";
+import Dogs from "./Dogs.svelte";
+import LitterList from "./LitterList.svelte";
 
 export {
     Header,
@@ -24,4 +26,6 @@ export {
     Empty,
     ThemeToggle,
     Locale,
+    Dogs,
+    LitterList,
 };

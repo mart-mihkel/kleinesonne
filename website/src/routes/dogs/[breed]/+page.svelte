@@ -1,13 +1,15 @@
 <script lang="ts">
-    import { Thumbnail, Loading, Empty, Error } from "$lib/components";
+    import { Dogs } from "$lib/components";
     import { page } from "$app/stores";
-    import type { PageData } from "./$types";
     import { format } from "svelte-i18n";
+    import type { PageData } from "./$types";
+    import type { Breed } from "$lib/types";
 
     export let data: PageData;
 
-    $: breed = $format(`breed.${$page.params.breed}.one`);
-    $: options = { values: { breed } };
+    $: breed = $page.params.breed as Breed;
+    $: translated = $format(`breed.${breed}.one`);
+    $: options = { values: { breed: translated } };
 </script>
 
 <div class="flex flex-col items-center gap-4 md:px-[5%] lg:px-[25%]">
@@ -19,70 +21,19 @@
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format("dog.male")}
             </h3>
-            {#await data.male}
-                <Loading text={$format("dog.loading.dogs")} />
-            {:then dogs}
-                {#if dogs.length > 0}
-                    {#each dogs as { name, nickname, thumbnail }}
-                        <Thumbnail
-                            href={`${breed}/${nickname}`}
-                            src={thumbnail}
-                            {name}
-                            {nickname}
-                        />
-                    {/each}
-                {:else}
-                    <Empty />
-                {/if}
-            {:catch}
-                <Error message={$format("dog.error.dogs")} />
-            {/await}
+            <Dogs promise={data.male} {breed} />
         </div>
         <div class="flex flex-col gap-4 md:w-1/3">
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format("dog.female")}
             </h3>
-            {#await data.female}
-                <Loading text={$format("dog.loading.dogs")} />
-            {:then dogs}
-                {#if dogs.length > 0}
-                    {#each dogs as { name, nickname, thumbnail }}
-                        <Thumbnail
-                            href={`${breed}/${nickname}`}
-                            src={thumbnail}
-                            {name}
-                            {nickname}
-                        />
-                    {/each}
-                {:else}
-                    <Empty />
-                {/if}
-            {:catch}
-                <Error message={$format("dog.error.dogs")} />
-            {/await}
+            <Dogs promise={data.female} {breed} />
         </div>
         <div class="flex flex-col gap-4 md:w-1/3">
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format("dog.retired")}
             </h3>
-            {#await data.retired}
-                <Loading text={$format("dog.loading.dogs")} />
-            {:then dogs}
-                {#if dogs.length > 0}
-                    {#each dogs as { name, nickname, thumbnail }}
-                        <Thumbnail
-                            href={`${breed}/${nickname}`}
-                            src={thumbnail}
-                            {name}
-                            {nickname}
-                        />
-                    {/each}
-                {:else}
-                    <Empty />
-                {/if}
-            {:catch}
-                <Error message={$format("dog.error.dogs")} />
-            {/await}
+            <Dogs promise={data.retired} {breed} />
         </div>
     </div>
 </div>

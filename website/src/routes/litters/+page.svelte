@@ -5,23 +5,18 @@
         Loading,
         Error,
         Empty,
+        LitterList,
     } from "$lib/components";
     import { type Litter } from "$lib/types";
-    import { slide } from "svelte/transition";
     import { format } from "svelte-i18n";
     import { fetchLitter } from "$lib/api";
 
     export let data: PageData;
 
-    let promise: Promise<Litter>;
-    let active = "";
-    let extended = true;
+    let litter: Promise<Litter>;
 
-    data.names.then((ns) => loadLitter(ns[0].id));
-
-    function loadLitter(id: number) {
-        active = id;
-        promise = fetchLitter(id);
+    function select(id: number) {
+        litter = fetchLitter(id);
     }
 </script>
 
@@ -30,39 +25,10 @@
     <div
         class="relative flex flex-col border-t border-black md:w-1/4 dark:border-white"
     >
-        {#if extended}
-            <div class="flex flex-col" transition:slide>
-                {#await data.names}
-                    <Loading text={$format("litter.loading.many")} />
-                {:then names}
-                    <button
-                        class="p-2 font-medium md:hidden"
-                        on:click={() => (extended = false)}
-                    >
-                        <p>{$format("litter.close")}</p>
-                    </button>
-                    {#each names as name}
-                        <button
-                            class="text-nowrap p-2 font-semibold transition-colors duration-300 hover:bg-gray-200 dark:border-white dark:hover:bg-gray-500"
-                            class:bg-gray-300={active === name}
-                            class:dark:bg-gray-700={active === name}
-                            on:click={() => loadLitter(name)}
-                        >
-                            {name}
-                        </button>
-                    {/each}
-                {:catch}
-                    <Error message={$format("litter.error.many")} />
-                {/await}
-            </div>
-        {:else}
-            <button class="p-2 font-medium" on:click={() => (extended = true)}>
-                {$format("litter.open")}
-            </button>
-        {/if}
+        <LitterList on:select={select} />
     </div>
     <div class="border-t border-black md:w-3/4 dark:border-white">
-        {#await promise}
+        {#await litter}
             <Loading text={$format("litter.loading.one")} />
         {:then litter}
             {#if litter}

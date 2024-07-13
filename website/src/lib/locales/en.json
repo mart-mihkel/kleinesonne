@@ -60,7 +60,7 @@
         "error": {
             "dogs": "Failed to load dogs, something went wrong",
             "info": "Failed to load info, something went wrong",
-            "tree": "Failed to family tree info, something went wrong"
+            "tree": "Failed to load family tree info, something went wrong"
         }
     },
     "puppies": {

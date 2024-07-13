@@ -2,27 +2,27 @@
     import { enhance } from "$app/forms";
     import { Modal } from "$lib/components/admin";
     import { Loading, Error } from "$lib/components";
-    import { Breed, type Litter } from "$lib/types";
+    import { Breed, type Litter, type Name } from "$lib/types";
+    import { fetchLitter, fetchLitterNames } from "$lib/api";
 
     let name = "";
     let breed = Breed.AUSTRALIAN;
-    let parents = "";
-    let puppies = "";
+    let parents_image = "";
     let images: string[] = [];
+    let puppies = "";
 
     let modal = false;
-    let names: Promise<string[]> = fetchNames();
-    let loading: Promise<Litter | undefined>;
+    let names: Promise<Name[]> = fetchLitterNames();
+    let loading: Promise<Litter>;
 
     function reset() {
         name = "";
         breed = Breed.AUSTRALIAN;
-        parents = "";
-        puppies = "";
+        parents_image = "";
         images = [];
     }
 
-    function select(e: CustomEvent<string>) {
+    function select(e: CustomEvent<number>) {
         loading = fetchLitter(e.detail);
         loading.then((l) => {
             if (l === undefined) {
@@ -32,13 +32,13 @@
 
             name = l.name;
             breed = l.breed;
-            parents = l.parents;
+            parents_image = l.parents_image;
             images = l.images;
-            puppies = l.puppies.map((p) => p.name).join(",");
+            puppies = ""; // TODO: get
         });
     }
 
-    function del(e: CustomEvent<string>) {
+    function del(e: CustomEvent<number>) {
         // TODO: server side things
         console.log("delete", e.detail);
     }
@@ -117,18 +117,18 @@
             <p class="w-1/3 font-semibold">Parents</p>
             <input class="w-2/3 p-2" type="file" name="parents" />
         </label>
-        {#if parents !== ""}
+        {#if parents_image !== ""}
             <div class="flex w-full flex-row flex-wrap gap-4">
                 <div class="flex w-full flex-row items-center gap-4">
                     <img
                         class="size-full object-cover"
                         loading="lazy"
-                        src={parents}
+                        src={parents_image}
                         alt=""
                     />
                     <button
                         class="size-fit rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                        on:click|preventDefault={() => delImg(parents)}
+                        on:click|preventDefault={() => delImg(parents_image)}
                     >
                         Delete thumbnail
                     </button>

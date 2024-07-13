@@ -1,15 +1,17 @@
 <script lang="ts">
-    import { type ModalDispatch } from "$lib/types";
+    import { type ModalDispatch, type Name } from "$lib/types";
     import { createEventDispatcher } from "svelte";
 
     export let open: boolean;
-    export let items: string[];
-    export let active: string = "";
+    export let items: Name[];
+    export let active: number = 0;
 
     let dispatch = createEventDispatcher<ModalDispatch>();
     let filter: string;
     $: filtered = filter
-        ? items.filter((i) => i.toLowerCase().includes(filter.toLowerCase()))
+        ? items.filter((i) =>
+              i.name.toLowerCase().includes(filter.toLowerCase()),
+          )
         : items;
 
     function pick() {
@@ -26,7 +28,10 @@
             return;
         }
 
-        items.splice(items.indexOf(active), 1);
+        items.splice(
+            items.findIndex((i) => i.id === active),
+            1,
+        );
         items = items;
         dispatch("delete", active);
     }
@@ -53,14 +58,14 @@
                 <div
                     class="flex h-[300px] w-full flex-col overflow-auto border-2 border-black"
                 >
-                    {#each filtered as item}
+                    {#each filtered as { id, name }}
                         <button
                             class="px-4 py-2 text-center font-medium"
-                            class:hover:bg-gray-300={active !== item}
-                            class:bg-gray-500={active === item}
-                            on:click={() => (active = item)}
+                            class:hover:bg-gray-300={active !== id}
+                            class:bg-gray-500={active === id}
+                            on:click={() => (active = id)}
                         >
-                            {item}
+                            {name}
                         </button>
                     {/each}
                 </div>

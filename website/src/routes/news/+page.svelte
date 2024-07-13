@@ -4,7 +4,7 @@
     import type { PageData } from "./$types";
     import { format } from "svelte-i18n";
     import { onMount } from "svelte";
-    import { fetchNews } from "$lib/mock-server";
+    import { fetchNews } from "$lib/api";
 
     export let data: PageData;
 
@@ -30,7 +30,7 @@
     function observerCallback(entries: IntersectionObserverEntry[]) {
         const intersecting = entries.find((e) => e.isIntersecting);
         if (intersecting) {
-            more = fetchNews(oldest);
+            more = fetchNews(oldest, 5);
             more.then(updateNews);
         }
     }

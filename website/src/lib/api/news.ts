@@ -1,22 +1,33 @@
-import type { Article, Id, Title } from "$lib/types";
-import { API, JSON_HEADERS } from ".";
+import type { Article, Id, Name, Title } from "$lib/types";
 
-const API_NEWS = `${API}/news`;
+const API_NEWS = "http://127.0.0.1:3000/news";
 
-export async function fetchTitles(): Promise<Title[]> {
+export async function fetchTitles(): Promise<Name[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
     const res = await fetch(API_NEWS + "/titles", options);
     const body: Title[] = await res.json();
+    return body.map((t) => ({ id: t.id, name: t.title }));
+}
+
+export async function fetchArticle(id: number): Promise<Article> {
+    const options = {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ id }),
+    };
+
+    const res = await fetch(API_NEWS + "/one", options);
+    const body: Article = await res.json();
     return body;
 }
 
 export async function fetchNews(from: Date, n: number): Promise<Article[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({
             from: Math.floor(from.getTime() / 1000),
@@ -31,7 +42,7 @@ export async function fetchNews(from: Date, n: number): Promise<Article[]> {
 
 export async function uploadArticle(article: Article): Promise<Id> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({ article }),
     };
@@ -43,7 +54,7 @@ export async function uploadArticle(article: Article): Promise<Id> {
 
 export async function updateArticle(article: Article): Promise<boolean> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({ article }),
     };
@@ -54,7 +65,7 @@ export async function updateArticle(article: Article): Promise<boolean> {
 
 export async function deleteArticle(id: number): Promise<boolean> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "DELETE",
         body: JSON.stringify({ id }),
     };

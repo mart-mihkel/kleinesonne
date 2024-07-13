@@ -1,10 +1,10 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
-    import { fetchDog, fetchDogNames } from "$lib/mock-server";
-    import { dateInput } from "$lib/util";
     import { Modal } from "$lib/components/admin";
     import { Loading, Error } from "$lib/components";
-    import { Breed, Gender, type Dog } from "$lib/types";
+    import { Breed, Gender, type Dog, type Name } from "$lib/types";
+    import { dateInput } from "$lib";
+    import { fetchDog, fetchDogNames } from "$lib/api";
 
     let name = "";
     let nickname = "";
@@ -20,7 +20,7 @@
     let thumbnail = "";
 
     let modal = false;
-    let names: Promise<string[]> = fetchDogNames();
+    let names: Promise<Name[]> = fetchDogNames();
     let loading: Promise<Dog | undefined>;
 
     function reset() {
@@ -38,7 +38,7 @@
         thumbnail = "";
     }
 
-    function select(e: CustomEvent<string>) {
+    function select(e: CustomEvent<number>) {
         loading = fetchDog(e.detail);
         loading.then((d) => {
             if (d === undefined) {
@@ -61,7 +61,7 @@
         });
     }
 
-    function del(e: CustomEvent<string>) {
+    function del(e: CustomEvent<number>) {
         // TODO: server side things
         console.log("delete", e.detail);
     }

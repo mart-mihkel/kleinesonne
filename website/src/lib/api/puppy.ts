@@ -1,11 +1,10 @@
 import { type Id, type Name, type Puppy } from "$lib/types";
-import { API, JSON_HEADERS } from ".";
 
-const API_PUPPY = `${API}/puppy`;
+const API_PUPPY = "http://127.0.0.1:3000/puppy";
 
 export async function fetchPuppyNames(litter_id: number): Promise<Name[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({ litter_id }),
     };
@@ -15,11 +14,23 @@ export async function fetchPuppyNames(litter_id: number): Promise<Name[]> {
     return body;
 }
 
+export async function fetchPuppy(id: number): Promise<Puppy> {
+    const options = {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ id }),
+    };
+
+    const res = await fetch(API_PUPPY + "/one", options);
+    const body: Puppy = await res.json();
+    return body;
+}
+
 export async function fetchPuppies(litter_id: number): Promise<Puppy[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
-        body: JSON.stringify({ id: litter_id }),
+        body: JSON.stringify({ litter_id }),
     };
 
     const res = await fetch(API_PUPPY + "/litter", options);
@@ -31,9 +42,9 @@ export async function fetchAvailablePuppies(
     litter_id: number,
 ): Promise<Puppy[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
-        body: JSON.stringify({ id: litter_id }),
+        body: JSON.stringify({ litter_id }),
     };
 
     const res = await fetch(API_PUPPY + "/available", options);
@@ -43,7 +54,7 @@ export async function fetchAvailablePuppies(
 
 export async function uploadPuppy(puppy: Puppy): Promise<Id> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({ puppy }),
     };
@@ -55,7 +66,7 @@ export async function uploadPuppy(puppy: Puppy): Promise<Id> {
 
 export async function updatePuppy(puppy: Puppy): Promise<boolean> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({ puppy }),
     };
@@ -66,7 +77,7 @@ export async function updatePuppy(puppy: Puppy): Promise<boolean> {
 
 export async function deletePuppy(id: number): Promise<boolean> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "DELETE",
         body: JSON.stringify({ id }),
     };

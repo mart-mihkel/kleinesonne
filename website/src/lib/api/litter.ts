@@ -1,11 +1,10 @@
 import { Breed, type Id, type Litter, type Name } from "$lib/types";
-import { API, JSON_HEADERS } from ".";
 
-const API_LITTER = `${API}/litter`;
+const API_LITTER = "http://127.0.0.1:3000/litter";
 
 export async function fetchLitterNames(): Promise<Name[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
@@ -14,21 +13,34 @@ export async function fetchLitterNames(): Promise<Name[]> {
     return body;
 }
 
-export async function fetchLitter(id: number): Promise<Litter[]> {
+export async function fetchLitter(id: number): Promise<Litter> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({ id }),
     };
 
     const res = await fetch(API_LITTER + "/one", options);
+    const body: Litter = await res.json();
+    return body;
+}
+
+export async function fetchAvaialbleLitters(): Promise<Litter[]> {
+    const options = {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+    };
+
+    const res = await fetch(API_LITTER + "/available", options);
     const body: Litter[] = await res.json();
     return body;
 }
 
-export async function fetchAvaialbleLitters(breed: Breed): Promise<Litter[]> {
+export async function fetchAvaialbleLittersByBreed(
+    breed: Breed,
+): Promise<Litter[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({ breed }),
     };
@@ -40,7 +52,7 @@ export async function fetchAvaialbleLitters(breed: Breed): Promise<Litter[]> {
 
 export async function uploadLitter(litter: Litter): Promise<Id> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({ litter }),
     };
@@ -52,7 +64,7 @@ export async function uploadLitter(litter: Litter): Promise<Id> {
 
 export async function updateLitter(litter: Litter): Promise<boolean> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({ litter }),
     };
@@ -63,7 +75,7 @@ export async function updateLitter(litter: Litter): Promise<boolean> {
 
 export async function deleteLitter(id: number): Promise<boolean> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "DELETE",
         body: JSON.stringify({ id }),
     };

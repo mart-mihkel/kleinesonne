@@ -1,17 +1,18 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { Modal } from "$lib/components/admin";
-    import { Availability, Gender, type Puppy } from "$lib/types";
+    import { Availability, Gender, type Name, type Puppy } from "$lib/types";
     import { Loading, Error } from "$lib/components";
-    import { fetchPuppy, fetchPuppyNames } from "$lib/mock-server";
+    import { fetchPuppy, fetchPuppyNames } from "$lib/api";
 
     let name = "";
     let gender = Gender.MALE;
     let availability = Availability.UNAVAILABLE;
     let image = "";
 
+    let litter_id = 0; // TODO: get
     let modal = false;
-    let names: Promise<string[]> = fetchPuppyNames();
+    let names: Promise<Name[]> = fetchPuppyNames(litter_id);
     let loading: Promise<Puppy | undefined>;
 
     function reset() {
@@ -21,7 +22,7 @@
         image = "";
     }
 
-    function select(e: CustomEvent<string>) {
+    function select(e: CustomEvent<number>) {
         loading = fetchPuppy(e.detail);
         loading.then((p) => {
             if (p === undefined) {
@@ -36,7 +37,7 @@
         });
     }
 
-    function del(e: CustomEvent<string>) {
+    function del(e: CustomEvent<number>) {
         // TODO: server side things
         console.log("delete", e.detail);
     }

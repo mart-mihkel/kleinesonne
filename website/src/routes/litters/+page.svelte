@@ -13,7 +13,7 @@
 
     export let data: PageData;
 
-    let promise: Promise<Litter | undefined>;
+    let promise: Promise<Litter>;
     let active = "";
     let extended = true;
 

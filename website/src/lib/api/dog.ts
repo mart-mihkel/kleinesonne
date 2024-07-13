@@ -1,11 +1,15 @@
-import type { Breed, Dog, Id, Name } from "$lib/types";
-import { API, JSON_HEADERS } from ".";
+import type { Breed, Dog, Family, Gender, Id, Name } from "$lib/types";
 
-const API_DOG = `${API}/dog`;
+const API_DOG = "http://127.0.0.1:3000/dog";
+
+export async function fetchFamily(name: string): Promise<Family> {
+    // TODO: graphdb
+    return { name };
+}
 
 export async function fetchDogNames(): Promise<Name[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
@@ -16,7 +20,7 @@ export async function fetchDogNames(): Promise<Name[]> {
 
 export async function fetchDog(id: number): Promise<Dog> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({ id }),
     };
@@ -26,24 +30,41 @@ export async function fetchDog(id: number): Promise<Dog> {
     return body;
 }
 
-export async function fetchDogs(breed: Breed, alive: boolean): Promise<Dog[]> {
+export async function fetchAliveDogs(
+    breed: Breed,
+    gender: Gender,
+): Promise<Dog[]> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({
             breed,
-            alive,
+            gender,
         }),
     };
 
-    const res = await fetch(API_DOG + "/breed", options);
+    const res = await fetch(API_DOG + "/alive", options);
+    const body: Dog[] = await res.json();
+    return body;
+}
+
+export async function fetchRetiredDogs(breed: Breed): Promise<Dog[]> {
+    const options = {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({
+            breed,
+        }),
+    };
+
+    const res = await fetch(API_DOG + "/retired", options);
     const body: Dog[] = await res.json();
     return body;
 }
 
 export async function uploadDog(dog: Dog): Promise<Id> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({ dog }),
     };
@@ -55,7 +76,7 @@ export async function uploadDog(dog: Dog): Promise<Id> {
 
 export async function updateDog(dog: Dog): Promise<boolean> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({ dog }),
     };
@@ -66,7 +87,7 @@ export async function updateDog(dog: Dog): Promise<boolean> {
 
 export async function deleteDog(id: number): Promise<boolean> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "DELETE",
         body: JSON.stringify({ id }),
     };

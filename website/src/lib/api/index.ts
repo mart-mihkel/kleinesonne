@@ -1,18 +1,15 @@
 import type { Login, Jwt } from "$lib/types";
 
-export const API = "http://127.0.0.1:3000";
-export const JSON_HEADERS = {
-    "Content-Type": "application/json",
-};
+const API_AUTH = "http://127.0.0.1:3000/auth";
 
 export async function authenticate(login: Login): Promise<Jwt> {
     const options = {
-        headers: JSON_HEADERS,
+        headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({ login }),
     };
 
-    const res = await fetch(API + "/auth", options);
+    const res = await fetch(API_AUTH, options);
     const body: Jwt = await res.json();
     return body;
 }
@@ -20,7 +17,8 @@ export async function authenticate(login: Login): Promise<Jwt> {
 export {
     fetchDogNames,
     fetchDog,
-    fetchDogs,
+    fetchAliveDogs,
+    fetchRetiredDogs,
     uploadDog,
     updateDog,
     deleteDog,
@@ -28,6 +26,7 @@ export {
 
 export {
     fetchPuppyNames,
+    fetchPuppy,
     fetchPuppies,
     fetchAvailablePuppies,
     uploadPuppy,
@@ -39,6 +38,7 @@ export {
     fetchLitterNames,
     fetchLitter,
     fetchAvaialbleLitters,
+    fetchAvaialbleLittersByBreed,
     uploadLitter,
     updateLitter,
     deleteLitter,
@@ -46,6 +46,7 @@ export {
 
 export {
     fetchTitles,
+    fetchArticle,
     fetchNews,
     uploadArticle,
     updateArticle,

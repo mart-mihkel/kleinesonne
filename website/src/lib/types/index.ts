@@ -54,6 +54,14 @@ export type Litter = {
     parents_image: string;
     breed: Breed;
     images: string[];
+};
+
+export type LitterWithPuppies = {
+    id: number;
+    name: string;
+    parents_image: string;
+    breed: Breed;
+    images: string[];
     puppies: Puppy[];
 };
 
@@ -66,8 +74,8 @@ export type Article = {
 };
 
 export type ModalDispatch = {
-    select: string;
-    delete: string;
+    select: number;
+    delete: number;
 };
 
 export type Id = {

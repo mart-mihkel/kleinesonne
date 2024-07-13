@@ -1,10 +1,10 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
-    import { fetchTitles, fetchNewsPiece } from "$lib/mock-server";
-    import { dateInput } from "$lib/util";
-    import type { Article } from "$lib/types";
+    import type { Article, Name } from "$lib/types";
     import { Modal } from "$lib/components/admin";
     import { Loading, Error } from "$lib/components";
+    import { fetchArticle, fetchTitles } from "$lib/api";
+    import { dateInput } from "$lib";
 
     let title = "";
     let date = dateInput(new Date());
@@ -12,7 +12,7 @@
     let images: string[] = [];
 
     let modal = false;
-    let titles: Promise<string[]> = fetchTitles();
+    let titles: Promise<Name[]> = fetchTitles();
     let loading: Promise<Article | undefined>;
 
     function reset() {
@@ -22,8 +22,8 @@
         date = dateInput(new Date());
     }
 
-    function select(e: CustomEvent<string>) {
-        loading = fetchNewsPiece(e.detail);
+    function select(e: CustomEvent<number>) {
+        loading = fetchArticle(e.detail);
         loading.then((n) => {
             if (n === undefined) {
                 reset();
@@ -37,7 +37,7 @@
         });
     }
 
-    function del(e: CustomEvent<string>) {
+    function del(e: CustomEvent<number>) {
         // TODO: server side things
         console.log("delete", e.detail);
     }

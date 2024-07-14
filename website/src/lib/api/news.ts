@@ -40,11 +40,14 @@ export async function fetchNews(from: Date, n: number): Promise<Article[]> {
     return body;
 }
 
-export async function uploadArticle(article: Article): Promise<Id> {
+export async function uploadArticle(
+    article: Article,
+    jwt: string,
+): Promise<Id> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
-        body: JSON.stringify({ article }),
+        body: JSON.stringify(article),
     };
 
     const res = await fetch(API_NEWS + "/new", options);
@@ -52,20 +55,23 @@ export async function uploadArticle(article: Article): Promise<Id> {
     return body;
 }
 
-export async function updateArticle(article: Article): Promise<boolean> {
+export async function updateArticle(
+    article: Article,
+    jwt: string,
+): Promise<boolean> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
-        body: JSON.stringify({ article }),
+        body: JSON.stringify(article),
     };
 
     const res = await fetch(API_NEWS + "/update", options);
     return res.ok;
 }
 
-export async function deleteArticle(id: number): Promise<boolean> {
+export async function deleteArticle(id: number, jwt: string): Promise<boolean> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
         body: JSON.stringify({ id }),
     };

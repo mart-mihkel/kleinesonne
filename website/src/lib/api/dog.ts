@@ -62,11 +62,11 @@ export async function fetchRetiredDogs(breed: Breed): Promise<Dog[]> {
     return body;
 }
 
-export async function uploadDog(dog: Dog): Promise<Id> {
+export async function uploadDog(dog: Dog, jwt: string): Promise<Id> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
-        body: JSON.stringify({ dog }),
+        body: JSON.stringify(dog),
     };
 
     const res = await fetch(API_DOG + "/new", options);
@@ -74,20 +74,20 @@ export async function uploadDog(dog: Dog): Promise<Id> {
     return body;
 }
 
-export async function updateDog(dog: Dog): Promise<boolean> {
+export async function updateDog(dog: Dog, jwt: string): Promise<boolean> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
-        body: JSON.stringify({ dog }),
+        body: JSON.stringify(dog),
     };
 
     const res = await fetch(API_DOG + "/update", options);
     return res.ok;
 }
 
-export async function deleteDog(id: number): Promise<boolean> {
+export async function deleteDog(id: number, jwt: string): Promise<boolean> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
         body: JSON.stringify({ id }),
     };

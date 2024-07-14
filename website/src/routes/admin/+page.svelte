@@ -9,16 +9,16 @@
 
     export let data: PageData;
 
-    let authenticated = data.authenticated;
+    let { jwt } = data;
 </script>
 
 <div class="flex flex-col gap-4 py-4 md:px-[5%] lg:px-[25%]">
     <h2 class="p-4 text-center text-4xl font-bold">Admin</h2>
-    {#if authenticated}
-        <NewsForm />
-        <DogForm />
-        <LitterForm />
-        <PuppyForm />
+    {#if jwt !== undefined}
+        <NewsForm {jwt} />
+        <DogForm {jwt} />
+        <LitterForm {jwt} />
+        <PuppyForm {jwt} />
     {:else}
         <h3
             class="border-t border-black p-4 text-center text-2xl font-semibold dark:border-white"
@@ -31,7 +31,7 @@
                 <input
                     class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                     type="text"
-                    name="username"
+                    name="user"
                     required
                 />
             </label>
@@ -40,7 +40,7 @@
                 <input
                     class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                     type="password"
-                    name="password"
+                    name="secret"
                     required
                 />
             </label>

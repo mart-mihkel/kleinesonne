@@ -52,11 +52,11 @@ export async function fetchAvailablePuppies(
     return body;
 }
 
-export async function uploadPuppy(puppy: Puppy): Promise<Id> {
+export async function uploadPuppy(puppy: Puppy, jwt: string): Promise<Id> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
-        body: JSON.stringify({ puppy }),
+        body: JSON.stringify(puppy),
     };
 
     const res = await fetch(API_PUPPY + "/new", options);
@@ -64,20 +64,20 @@ export async function uploadPuppy(puppy: Puppy): Promise<Id> {
     return body;
 }
 
-export async function updatePuppy(puppy: Puppy): Promise<boolean> {
+export async function updatePuppy(puppy: Puppy, jwt: string): Promise<boolean> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
-        body: JSON.stringify({ puppy }),
+        body: JSON.stringify(puppy),
     };
 
-    const res = await fetch(API_PUPPY + "/modify", options);
+    const res = await fetch(API_PUPPY + "/update", options);
     return res.ok;
 }
 
-export async function deletePuppy(id: number): Promise<boolean> {
+export async function deletePuppy(id: number, jwt: string): Promise<boolean> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
         body: JSON.stringify({ id }),
     };

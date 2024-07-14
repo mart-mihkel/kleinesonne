@@ -42,6 +42,7 @@ export type Family = {
 
 export type Puppy = {
     id: number;
+    litter_id: number;
     name: string;
     image: string;
     gender: Gender;
@@ -90,10 +91,6 @@ export type Name = {
 export type Title = {
     id: number;
     title: string;
-};
-
-export type Jwt = {
-    jwt: string;
 };
 
 export enum Gender {

@@ -1,53 +1,38 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { Modal } from "$lib/components/admin";
-    import { Loading, Error } from "$lib/components";
-    import { Breed, type Litter, type Name } from "$lib/types";
-    import { fetchLitter, fetchLitterNames } from "$lib/api";
+    import { Loading, Error, Gallery } from "$lib/components";
+    import { Breed, type Name } from "$lib/types";
+    import { deleteLitter, fetchLitter, fetchLitterNames } from "$lib/api";
+    import { onMount } from "svelte";
 
-    let name = "";
-    let breed = Breed.AUSTRALIAN;
-    let parents_image = "";
-    let images: string[] = [];
-    let puppies = "";
+    export let jwt: string;
 
+    const INITIAL_DATA = {
+        id: -1,
+        name: "",
+        breed: Breed.AUSTRALIAN,
+        parents_image: <string[]>[],
+        images: <string[]>[],
+    };
+
+    let form = { ...INITIAL_DATA };
     let modal = false;
-    let names: Promise<Name[]> = fetchLitterNames();
-    let loading: Promise<Litter>;
+    let names: Promise<Name[]>;
+
+    onMount(() => (names = fetchLitterNames()));
 
     function reset() {
-        name = "";
-        breed = Breed.AUSTRALIAN;
-        parents_image = "";
-        images = [];
+        form = { ...INITIAL_DATA };
     }
 
-    function select(e: CustomEvent<number>) {
-        loading = fetchLitter(e.detail);
-        loading.then((l) => {
-            if (l === undefined) {
-                reset();
-                return;
-            }
-
-            name = l.name;
-            breed = l.breed;
-            parents_image = l.parents_image;
-            images = l.images;
-            puppies = ""; // TODO: get
-        });
+    async function select(e: CustomEvent<number>) {
+        const litter = await fetchLitter(e.detail);
+        form = { ...litter, parents_image: [litter.parents_image] };
     }
 
     function del(e: CustomEvent<number>) {
-        // TODO: server side things
-        console.log("delete", e.detail);
-    }
-
-    function delImg(path: string) {
-        // TODO: server side things
-        console.log("delete img", path);
-        images.splice(images.indexOf(path), 1);
-        images = images;
+        deleteLitter(e.detail, jwt);
     }
 </script>
 
@@ -57,29 +42,15 @@
     >
         Litters
     </h3>
-    {#await loading}
-        <Loading text="Loading form data..." />
-    {:catch}
-        <Error message="Failed to load form data, something went wrong" />
-    {/await}
-    {#await names}
-        <Loading text="Loading modal data..." />
-    {:then titles}
-        <Modal
-            bind:open={modal}
-            items={titles}
-            on:select={select}
-            on:delete={del}
-        />
-    {:catch}
-        <Error message="Failed to load litters, something went wrong" />
-    {/await}
     <form
         method="POST"
         class="flex flex-col"
         enctype="multipart/form-data"
         use:enhance
     >
+        <label class="hidden">
+            <input type="hidden" name="id" bind:value={form.id} />
+        </label>
         <label class="flex flex-row items-center p-2">
             <p class="w-1/3 font-semibold">Litter name</p>
             <input
@@ -87,17 +58,7 @@
                 type="text"
                 name="name"
                 required
-                bind:value={name}
-            />
-        </label>
-        <label class="flex flex-row items-center p-2">
-            <p class="w-1/3 font-semibold">Puppies (csv)</p>
-            <input
-                class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
-                type="text"
-                name="puppies"
-                required
-                bind:value={puppies}
+                bind:value={form.name}
             />
         </label>
         <label class="flex flex-row items-center p-2">
@@ -106,7 +67,7 @@
                 class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                 name="breed"
                 required
-                bind:value={breed}
+                bind:value={form.breed}
             >
                 <option value={Breed.AUSTRALIAN}>{Breed.AUSTRALIAN}</option>
                 <option value={Breed.ENTLEBUCH}>{Breed.ENTLEBUCH}</option>
@@ -115,26 +76,9 @@
         </label>
         <label class="flex flex-row items-center p-2">
             <p class="w-1/3 font-semibold">Parents</p>
-            <input class="w-2/3 p-2" type="file" name="parents" />
+            <input class="w-2/3 p-2" type="file" name="parents_image" />
         </label>
-        {#if parents_image !== ""}
-            <div class="flex w-full flex-row flex-wrap gap-4">
-                <div class="flex w-full flex-row items-center gap-4">
-                    <img
-                        class="size-full object-cover"
-                        loading="lazy"
-                        src={parents_image}
-                        alt=""
-                    />
-                    <button
-                        class="size-fit rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                        on:click|preventDefault={() => delImg(parents_image)}
-                    >
-                        Delete thumbnail
-                    </button>
-                </div>
-            </div>
-        {/if}
+        <Gallery bind:images={form.parents_image} />
         <label class="flex flex-row items-center p-2">
             <p class="w-1/3 font-semibold">Images</p>
             <input
@@ -144,52 +88,48 @@
                 multiple={true}
             />
         </label>
-        {#if images.length > 0}
-            <div class="flex w-full flex-row flex-wrap gap-4">
-                {#each images as src}
-                    <div class="flex w-full flex-row items-center gap-4">
-                        <img
-                            class="size-full object-cover"
-                            loading="lazy"
-                            {src}
-                            alt=""
-                        />
-                        <button
-                            class="size-fit rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                            on:click|preventDefault={() => delImg(src)}
-                        >
-                            Delete picture
-                        </button>
-                    </div>
-                {/each}
-            </div>
-        {/if}
+        <Gallery bind:images={form.images} />
         <div class="flex flex-row justify-center gap-4 p-4">
             <button
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click|preventDefault={() => (modal = true)}
-            >
-                Select
-            </button>
-            <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click|preventDefault={reset}
-            >
-                Reset
-            </button>
-            <span class="flex-grow"></span>
-            <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 formaction="?/litterCreate"
+                on:click={() => (names = fetchLitterNames())}
             >
                 Create
             </button>
             <button
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 formaction="?/litterUpdate"
+                on:click={() => (names = fetchLitterNames())}
             >
                 Update
             </button>
         </div>
     </form>
+    {#await names}
+        <Loading text="Loading modal data..." />
+    {:then titles}
+        <div class="flex flex-row justify-center gap-4 p-4">
+            <button
+                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                on:click={() => (modal = true)}
+            >
+                Select
+            </button>
+            <button
+                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                on:click={reset}
+            >
+                Reset
+            </button>
+        </div>
+        <Modal
+            bind:open={modal}
+            items={titles}
+            on:select={select}
+            on:delete={del}
+        />
+    {:catch}
+        <Error message="Failed to load litters, something went wrong" />
+    {/await}
 </div>

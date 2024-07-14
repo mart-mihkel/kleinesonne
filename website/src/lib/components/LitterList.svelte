@@ -1,39 +1,33 @@
 <script lang="ts">
     import { Loading, Error, Empty } from "$lib/components";
-    import type { ModalDispatch } from "$lib/types";
+    import type { ModalDispatch, Name } from "$lib/types";
     import { slide } from "svelte/transition";
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import { fetchLitterNames } from "$lib/api";
     import { format } from "svelte-i18n";
 
     let dispatch = createEventDispatcher<ModalDispatch>();
     let extended = true;
     let active = 0;
-    let names = fetchLitterNames();
+    let promise: Promise<Name[]> | undefined;
 
-    names.then((ns) => {
-        if (ns.length === 0) {
-            return;
-        }
-
-        const id = ns[0].id;
-        active = id;
-        dispatch("select", id);
-    });
+    onMount(() => (promise = fetchLitterNames()));
 </script>
 
 {#if extended}
     <div class="flex flex-col" transition:slide>
-        {#await names}
-            <Loading text={$format("litter.loading.many")} />
-        {:then names}
-            <button
-                class="p-2 font-medium md:hidden"
-                on:click={() => (extended = false)}
-            >
-                <p>{$format("litter.close")}</p>
-            </button>
-            {#if names.length > 0}
+        {#if promise === undefined}
+            <Empty />
+        {:else}
+            {#await promise}
+                <Loading text={$format("litter.loading.many")} />
+            {:then names}
+                <button
+                    class="p-2 font-medium md:hidden"
+                    on:click={() => (extended = false)}
+                >
+                    <p>{$format("litter.close")}</p>
+                </button>
                 {#each names as { id, name }}
                     <button
                         class="text-nowrap p-2 font-semibold transition-colors duration-300 hover:bg-gray-200 dark:border-white dark:hover:bg-gray-500"
@@ -44,12 +38,10 @@
                         {name}
                     </button>
                 {/each}
-            {:else}
-                <Empty />
-            {/if}
-        {:catch}
-            <Error message={$format("litter.error.many")} />
-        {/await}
+            {:catch}
+                <Error message={$format("litter.error.many")} />
+            {/await}
+        {/if}
     </div>
 {:else}
     <button class="p-2 font-medium" on:click={() => (extended = true)}>

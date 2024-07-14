@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { PageData } from "./$types";
     import {
         Litter as LitterDisplay,
         Loading,
@@ -11,12 +10,10 @@
     import { format } from "svelte-i18n";
     import { fetchLitter } from "$lib/api";
 
-    export let data: PageData;
+    let litter: Promise<Litter> | undefined = undefined;
 
-    let litter: Promise<Litter>;
-
-    function select(id: number) {
-        litter = fetchLitter(id);
+    function select(e: CustomEvent<number>) {
+        litter = fetchLitter(e.detail);
     }
 </script>
 
@@ -28,16 +25,20 @@
         <LitterList on:select={select} />
     </div>
     <div class="border-t border-black md:w-3/4 dark:border-white">
-        {#await litter}
-            <Loading text={$format("litter.loading.one")} />
-        {:then litter}
-            {#if litter}
-                <LitterDisplay {litter} />
-            {:else}
-                <Empty />
-            {/if}
-        {:catch}
-            <Error message={$format("litter.error.one")} />
-        {/await}
+        {#if litter !== undefined}
+            {#await litter}
+                <Loading text={$format("litter.loading.one")} />
+            {:then litter}
+                {#if litter}
+                    <LitterDisplay {litter} />
+                {:else}
+                    <Empty />
+                {/if}
+            {:catch}
+                <Error message={$format("litter.error.one")} />
+            {/await}
+        {:else}
+            <Empty />
+        {/if}
     </div>
 </div>

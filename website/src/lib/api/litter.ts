@@ -50,11 +50,11 @@ export async function fetchAvaialbleLittersByBreed(
     return body;
 }
 
-export async function uploadLitter(litter: Litter): Promise<Id> {
+export async function uploadLitter(litter: Litter, jwt: string): Promise<Id> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
-        body: JSON.stringify({ litter }),
+        body: JSON.stringify(litter),
     };
 
     const res = await fetch(API_LITTER + "/new", options);
@@ -62,20 +62,23 @@ export async function uploadLitter(litter: Litter): Promise<Id> {
     return body;
 }
 
-export async function updateLitter(litter: Litter): Promise<boolean> {
+export async function updateLitter(
+    litter: Litter,
+    jwt: string,
+): Promise<boolean> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
-        body: JSON.stringify({ litter }),
+        body: JSON.stringify(litter),
     };
 
     const res = await fetch(API_LITTER + "/update", options);
     return res.ok;
 }
 
-export async function deleteLitter(id: number): Promise<boolean> {
+export async function deleteLitter(id: number, jwt: string): Promise<boolean> {
     const options = {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
         body: JSON.stringify({ id }),
     };

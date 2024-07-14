@@ -37,6 +37,10 @@ where
         let token_data = decode::<Claims>(bearer.token(), &key, &Validation::default())
             .map_err(|_| ApiError::InvalidToken)?;
 
+        if token_data.claims.exp < secs_from_now(0) {
+            return Err(ApiError::InvalidToken);
+        }
+
         Ok(token_data.claims)
     }
 }

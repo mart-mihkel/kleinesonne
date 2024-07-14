@@ -28,6 +28,8 @@ FROM
 	news
 WHERE
 	date < :date
+ORDER
+	by date desc
 LIMIT
 	:n;
 

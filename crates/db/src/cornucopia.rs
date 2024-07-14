@@ -1065,6 +1065,8 @@ FROM
 	news
 WHERE
 	date < $1
+ORDER
+	by date desc
 LIMIT
 	$2")) } pub struct
 NNewsOlderThanStmt(cornucopia_async::private::Stmt); impl NNewsOlderThanStmt

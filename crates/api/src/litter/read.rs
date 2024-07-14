@@ -47,7 +47,7 @@ pub async fn litter_by_id(
 
     let litter = db::litter::litter_by_id()
         .bind(&tx, &id)
-        .all()
+        .one()
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 

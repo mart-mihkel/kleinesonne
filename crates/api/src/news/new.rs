@@ -38,5 +38,7 @@ pub async fn new_article(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
+    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+
     Ok(Json(json!({"id": id})))
 }

@@ -38,5 +38,7 @@ pub async fn new_litter(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
+    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+
     Ok(Json(id))
 }

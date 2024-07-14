@@ -28,7 +28,7 @@ pub async fn puppy_by_id(
 
     let puppy = db::puppy::puppy_by_id()
         .bind(&tx, &id)
-        .all()
+        .one()
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 

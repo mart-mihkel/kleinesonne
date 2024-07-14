@@ -55,5 +55,7 @@ pub async fn new_dog(
         .await
         .map_err(|_| ApiError::DatabaseError)?;
 
+    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+
     Ok(Json(id))
 }

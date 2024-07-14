@@ -12,12 +12,17 @@
     let promise: Promise<Name[]> | undefined;
 
     onMount(() => (promise = fetchLitterNames()));
+
+    function select(id: number) {
+        active = id;
+        dispatch("select", id);
+    }
 </script>
 
 {#if extended}
     <div class="flex flex-col" transition:slide>
         {#if promise === undefined}
-            <Empty />
+            <Empty text="No litter names found" />
         {:else}
             {#await promise}
                 <Loading text={$format("litter.loading.many")} />
@@ -33,7 +38,7 @@
                         class="text-nowrap p-2 font-semibold transition-colors duration-300 hover:bg-gray-200 dark:border-white dark:hover:bg-gray-500"
                         class:bg-gray-300={active === id}
                         class:dark:bg-gray-700={active === id}
-                        on:click={() => dispatch("select", id)}
+                        on:click={() => select(id)}
                     >
                         {name}
                     </button>

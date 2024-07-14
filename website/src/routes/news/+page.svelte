@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Gallery, Loading, Empty, Error } from "$lib/components";
+    import { Loading, Empty, Error, News } from "$lib/components";
     import type { Article } from "$lib/types";
     import type { PageData } from "./$types";
     import { format } from "svelte-i18n";
@@ -8,69 +8,53 @@
 
     export let data: PageData;
 
-    let news: Article[] = [];
-    let oldest = new Date();
-    $: more = data.news;
-    $: loaded = false;
-
-    let observer: IntersectionObserver;
+    let promise = data.news;
+    let old: Article[] = [];
+    let oldest = Math.floor(new Date().getTime() / 1000);
+    let end = false;
     let bottom: Element;
 
-    $: if (bottom !== undefined) {
-        observer.observe(bottom);
-    }
-
-    data.news.then(updateNews).then(() => (loaded = true));
+    promise.then(update);
 
     onMount(() => {
-        const options = { threshold: 1.0 };
-        observer = new IntersectionObserver(observerCallback, options);
+        const opts = { threshold: 1.0 };
+        const observer = new IntersectionObserver(onIntersect, opts);
+
+        observer.observe(bottom);
+
+        return () => observer.disconnect();
     });
 
-    function observerCallback(entries: IntersectionObserverEntry[]) {
+    async function onIntersect(entries: IntersectionObserverEntry[]) {
         const intersecting = entries.find((e) => e.isIntersecting);
-        if (intersecting) {
-            more = fetchNews(oldest, 5);
-            more.then(updateNews);
-        }
-    }
-
-    function updateNews(newNews: Article[]) {
-        if (newNews.length === 0) {
-            observer.disconnect();
+        if (!intersecting) {
             return;
         }
 
-        console.log(newNews);
+        update(await fetchNews(oldest, 5));
+    }
 
-        news.concat(newNews);
-        news = news;
-        oldest = newNews[newNews.length - 1].date;
+    function update(news: Article[]) {
+        if (news.length === 0) {
+            end = true;
+            return;
+        }
+
+        old = [...old, ...news];
+        oldest = news[news.length - 1].date;
     }
 </script>
 
 <div class="flex flex-col md:px-[5%] lg:px-[25%]">
     <h2 class="p-4 text-center text-4xl font-bold">{$format("nav.news")}</h2>
-    {#if news.length > 0}
-        {#each news as { title, date, text, images }}
-            <div
-                class="flex flex-col items-center border-t border-black pb-2 dark:border-white"
-            >
-                <h3 class="pt-2 text-center text-2xl font-semibold">{title}</h3>
-                <p class="pb-2 text-lg font-medium">{date.toDateString()}</p>
-                <p class="text-justify">{text}</p>
-                {#if images.length > 0}
-                    <Gallery {images} />
-                {/if}
-            </div>
-        {/each}
-        <div bind:this={bottom}></div>
-    {:else if loaded}
-        <Empty />
-    {/if}
-    {#await more}
+    <News bind:news={old} />
+    {#await promise}
         <Loading text={$format("news.loading")} />
     {:catch}
         <Error message={$format("news.error")} />
     {/await}
+    {#if end}
+        <Empty text="No more news" />
+    {/if}
+    <div bind:this={bottom}></div>
 </div>

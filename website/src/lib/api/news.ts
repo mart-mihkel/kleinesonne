@@ -25,14 +25,11 @@ export async function fetchArticle(id: number): Promise<Article> {
     return body;
 }
 
-export async function fetchNews(from: Date, n: number): Promise<Article[]> {
+export async function fetchNews(from: number, n: number): Promise<Article[]> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
-        body: JSON.stringify({
-            from: Math.floor(from.getTime() / 1000),
-            n,
-        }),
+        body: JSON.stringify({ from, n }),
     };
 
     const res = await fetch(API_NEWS + "/from", options);

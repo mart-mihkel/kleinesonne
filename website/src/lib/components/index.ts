@@ -12,6 +12,7 @@ import ThemeToggle from "./ThemeToggle.svelte";
 import Locale from "./Locale.svelte";
 import Dogs from "./Dogs.svelte";
 import LitterList from "./LitterList.svelte";
+import News from "./News.svelte";
 
 export {
     Header,
@@ -28,4 +29,5 @@ export {
     Locale,
     Dogs,
     LitterList,
+    News,
 };

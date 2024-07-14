@@ -29,5 +29,5 @@ export function formDate(secs: number): string {
 
 export function parseDate(date: string): number {
     const [yyyy, mm, dd] = date.split("-").map(Number);
-    return Math.floor(new Date(yyyy, mm, dd).getTime() / 1000);
+    return Math.floor(new Date(yyyy, mm - 1, dd).getTime() / 1000);
 }

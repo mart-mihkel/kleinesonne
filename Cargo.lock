@@ -81,12 +81,14 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "axum-extra",
+ "base64 0.22.1",
  "db",
  "jsonwebtoken",
  "serde",
  "serde_json",
  "sha2",
  "tokio",
+ "tokio-util",
  "tower-http",
 ]
 

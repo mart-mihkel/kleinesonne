@@ -10,6 +10,7 @@ mod errors;
 mod litter;
 mod news;
 mod puppy;
+mod uploads;
 
 #[tokio::main]
 async fn main() {
@@ -17,6 +18,7 @@ async fn main() {
 
     let routes = Router::new()
         .merge(auth::routes())
+        .merge(uploads::routes())
         .merge(dog::routes())
         .merge(litter::routes())
         .merge(puppy::routes())

@@ -9,6 +9,8 @@ use serde_json::json;
 #[derive(Serialize)]
 pub enum ApiError {
     Internal,
+    FileExists,
+    NotFound,
     DatabaseError,
     WrongCredentials,
     MissingCredentials,
@@ -20,6 +22,8 @@ impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         let (code, message) = match self {
             ApiError::Internal => (StatusCode::INTERNAL_SERVER_ERROR, "Intenral server error"),
+            ApiError::FileExists => (StatusCode::BAD_REQUEST, "File already exists"),
+            ApiError::NotFound => (StatusCode::NOT_FOUND, "Requested resource not found"),
             ApiError::DatabaseError => (StatusCode::INTERNAL_SERVER_ERROR, "Database error"),
             ApiError::WrongCredentials => (StatusCode::UNAUTHORIZED, "Wrong credentials"),
             ApiError::MissingCredentials => (StatusCode::BAD_REQUEST, "Missing credentials"),

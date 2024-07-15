@@ -4,7 +4,5 @@ import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ params }) => {
     const breed = params.breed as Breed;
-    const litters = await fetchAvaialbleLittersByBreed(breed);
-
-    return { litters };
+    return { litters: fetchAvaialbleLittersByBreed(breed) };
 };

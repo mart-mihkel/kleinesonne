@@ -29,6 +29,8 @@ export async function login(user: string, secret: string): Promise<Token> {
     return body;
 }
 
+export { uploadImages } from "./uploads";
+
 export {
     fetchDogNames,
     fetchDog,

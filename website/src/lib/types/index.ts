@@ -93,6 +93,11 @@ export type Title = {
     title: string;
 };
 
+export type Image = {
+    name: string;
+    b64: string;
+};
+
 export enum Gender {
     MALE = "Male",
     FEMALE = "Female",

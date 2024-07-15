@@ -25,6 +25,7 @@ import {
     type Puppy,
 } from "$lib/types";
 import { API_UPLOADS } from "$lib/api/uploads";
+import { nanoid } from "nanoid";
 
 export const load: PageServerLoad = async ({ cookies }) => {
     const jwt = cookies.get("jwt");
@@ -172,7 +173,7 @@ async function mapImages(images: File[]): Promise<Image[]> {
     const promises = (images as File[])
         .filter((f) => f.size !== 0)
         .map(async (f) => {
-            const name = API_UPLOADS + f.name;
+            const name = `${API_UPLOADS}/${nanoid()}.avif`;
             const buf = await f.arrayBuffer();
             const bytes = new Uint8Array(buf);
             const ascii = [...bytes]
@@ -255,7 +256,7 @@ async function formDog(data: FormData): Promise<[Dog | undefined, Image[]]> {
             nickname: nickname as string,
             father: father as string,
             mother: mother as string,
-            thumbnail: file[0].name,
+            thumbnail: file[0]?.name ?? "",
             dob: parseDate(dob as string),
             breed: breed as Breed,
             gender: gender as Gender,
@@ -281,6 +282,7 @@ async function formLitter(
         return [undefined, []];
     }
 
+    const file = await mapImages([parents_image as File]);
     const files = await mapImages(images as File[]);
 
     return [
@@ -288,10 +290,10 @@ async function formLitter(
             id: Number(id),
             name: name as string,
             breed: breed as Breed,
-            parents_image: "/img.jpg",
+            parents_image: file[0]?.name ?? "",
             images: files.map((f) => f.name),
         },
-        files,
+        file.concat(files),
     ];
 }
 
@@ -309,7 +311,7 @@ async function formPuppy(
         return [undefined, []];
     }
 
-    const files = await mapImages([image as File]);
+    const file = await mapImages([image as File]);
 
     return [
         {
@@ -318,8 +320,8 @@ async function formPuppy(
             name: name as string,
             gender: gender as Gender,
             availability: availability as Availability,
-            image: files[0] ? files[0].name : "",
+            image: file[0]?.name ?? "",
         },
-        files,
+        file,
     ];
 }

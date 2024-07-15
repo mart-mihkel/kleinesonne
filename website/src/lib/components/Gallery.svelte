@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Next, Prev, Close } from "$lib/svg";
+    import { smallImage } from "$lib";
 
     export let images: string[];
     export let alts: string[] = [];
@@ -65,7 +66,7 @@
         >
             <img
                 class="size-full object-cover"
-                {src}
+                src={smallImage(src)}
                 alt={alts[i]}
                 loading="lazy"
             />

@@ -9,7 +9,6 @@ use serde_json::json;
 #[derive(Serialize)]
 pub enum ApiError {
     Internal,
-    FileExists,
     NotFound,
     DatabaseError,
     WrongCredentials,
@@ -22,7 +21,6 @@ impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         let (code, message) = match self {
             ApiError::Internal => (StatusCode::INTERNAL_SERVER_ERROR, "Intenral server error"),
-            ApiError::FileExists => (StatusCode::BAD_REQUEST, "File already exists"),
             ApiError::NotFound => (StatusCode::NOT_FOUND, "Requested resource not found"),
             ApiError::DatabaseError => (StatusCode::INTERNAL_SERVER_ERROR, "Database error"),
             ApiError::WrongCredentials => (StatusCode::UNAUTHORIZED, "Wrong credentials"),
@@ -33,5 +31,23 @@ impl IntoResponse for ApiError {
 
         let body = json!({"error": message});
         (code, Json(body)).into_response()
+    }
+}
+
+impl From<std::io::Error> for ApiError {
+    fn from(_value: std::io::Error) -> Self {
+        ApiError::Internal
+    }
+}
+
+impl From<std::env::VarError> for ApiError {
+    fn from(_value: std::env::VarError) -> Self {
+        ApiError::Internal
+    }
+}
+
+impl From<image::ImageError> for ApiError {
+    fn from(_value: image::ImageError) -> Self {
+        ApiError::Internal
     }
 }

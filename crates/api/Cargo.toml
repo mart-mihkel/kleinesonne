@@ -17,3 +17,4 @@ axum-extra = { version = "0.9.3", features = ["typed-header"] }
 tower-http = { version = "0.5.2", features = ["cors"] }
 base64 = "0.22.1"
 tokio-util = { version = "0.7.11", features = ["io"] }
+image = "0.25.1"

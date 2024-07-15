@@ -5,7 +5,7 @@
 </script>
 
 <a href="/puppies" class="flex justify-center p-4 text-4xl font-bold">
-    {$format("nav.available")}
+    {$format("about.puppies")}
 </a>
 <div class="flex flex-col md:h-[600px] md:flex-row">
     <a
@@ -27,7 +27,7 @@
         <p
             class="absolute left-1/2 top-1/2 flex -translate-x-1/2 flex-row items-center text-center text-xl font-semibold text-gray-300 transition-all duration-700 ease-in-out group-hover:opacity-0"
         >
-            {$format("nav.aus")}
+            {$format(`nav.puppy.${Breed.AUSTRALIAN}`)}
             <Arrow />
         </p>
     </a>
@@ -50,7 +50,7 @@
         <p
             class="absolute left-1/2 top-1/2 flex -translate-x-1/2 flex-row items-center text-center text-xl font-semibold text-gray-300 transition-all duration-700 ease-in-out group-hover:opacity-0"
         >
-            {$format("nav.ent")}
+            {$format(`nav.puppy.${Breed.ENTLEBUCH}`)}
             <Arrow />
         </p>
     </a>
@@ -73,7 +73,7 @@
         <p
             class="absolute left-1/2 top-1/2 flex -translate-x-1/2 flex-row items-center text-center text-xl font-semibold text-gray-300 transition-all duration-700 ease-in-out group-hover:opacity-0"
         >
-            {$format("nav.ber")}
+            {$format(`nav.puppy.${Breed.BERNESE}`)}
             <Arrow />
         </p>
     </a>

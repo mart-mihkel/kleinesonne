@@ -1,46 +1,38 @@
 {
-    "nothing": "Tühi",
     "nav": {
         "open": "Ava menüü",
         "close": "Sulge menüü",
-        "available": "Kutsikad",
         "puppies": "Kutsikad",
         "dogs": "Koerad",
         "litters": "Pesakonnad",
         "news": "Uudised",
         "contact": "Kontakt",
-        "aus": "Austraalia lambakoer",
-        "ent": "Entlebuchi alpi karjakoer",
-        "ber": "Berni alpi karjakoer"
+        "puppy": {
+            "Australian": "Austraalia lambakoera kutsikad",
+            "Entlebuch": "Entlebuchi alpi karjakoera kutsikad",
+            "Bernese": "Berni alpi karjakoera kutsikad"
+        },
+        "dog": {
+            "Australian": "Austraalia lambakoer",
+            "Entlebuch": "Entlebuchi alpi karjakoer",
+            "Bernese": "Berni alpi karjakoer"
+        }
     },
     "about": {
+        "puppies": "Kutsikad",
         "title": "Meist",
         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor. Vestibulum eros sapien, tempor in elit a, faucibus vehicula ipsum. Aliquam vel dapibus massa. Curabitur sed porta eros. Pellentesque quis ligula vel risus congue commodo nec ut urna. Fusce ut nibh neque. Aliquam ac purus facilisis, elementum felis luctus, tincidunt quam. Nullam id diam a mi lobortis sodales aliquet et justo. Donec tristique lectus sit amet porttitor pharetra. Proin a luctus velit. Mauris malesuada, eros eu maximus ultricies, massa dolor hendrerit dui, id malesuada turpis purus at tortor. Donec feugiat tempor ex vitae pellentesque. Ut non arcu in massa faucibus aliquam at nec risus. Fusce vulputate lacinia aliquet. Proin viverra dolor mauris, at ultricies neque ullamcorper nec. Fusce egestas mi eu nunc lacinia, imperdiet gravida felis auctor. Vestibulum id dapibus elit, ac molestie risus. In hac habitasse platea dictumst. Duis in maximus odio. Nam nec purus tellus. Cras vulputate purus sed neque eleifend, eget finibus massa vehicula. Nam eleifend metus nec erat volutpat vehicula. Integer id massa sit amet sem sagittis ultrices. Proin a sodales massa, in dictum ex. Duis viverra elit eu leo pellentesque tincidunt. Pellentesque a neque eget tortor sagittis venenatis vitae vel odio. Maecenas sit amet ipsum eu orci tristique pretium. Etiam dictum sagittis risus, non lacinia urna vestibulum et. Phasellus facilisis euismod lectus eu tincidunt. Aenean in diam ac lectus molestie venenatis ac et sapien. Suspendisse justo elit, venenatis eget consectetur vitae, condimentum acrisus. Nullam ut dolor est. Cras placerat ultricies libero mollis sollicitudin. Quisque vel velit est. Pellentesque nisl velit, varius vel euismod quis, tempor vel ex. Nulla ut faucibus nisi. Phasellus pharetra arcu odio, at rutrum eros auctor ac."
     },
     "intro": {
-        "aus": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor. Vestibulum eros sapien, tempor in elit a, faucibus vehicula ipsum. Aliquam vel dapibus massa. Curabitur sed porta eros. Pellentesque quis ligula vel risus congue commodo nec ut urna. Fusce ut nibh neque. Aliquam ac purus facilisis, elementum felis luctus, tincidunt quam. Nullam id diam a mi lobortis sodales aliquet et justo. Donec tristique lectus sit amet porttitor pharetra. Proin a luctus velit. Mauris malesuada, eros eu maximus ultricies, massa dolor hendrerit dui, id malesuada turpis purus at tortor. Donec feugiat tempor ex vitae pellentesque. Ut non arcu in massa faucibus aliquam at nec risus. Fusce vulputate lacinia aliquet. Proin viverra dolor mauris, at ultricies neque ullamcorper nec. Fusce egestas mi eu nunc lacinia, imperdiet gravida felis auctor. Vestibulum id dapibus elit, ac molestie risus. In hac habitasse platea dictumst. Duis in maximus odio. Nam nec purus tellus. Cras vulputate purus sed neque eleifend, eget finibus massa vehicula. Nam eleifend metus nec erat volutpat vehicula. Integer id massa sit amet sem sagittis ultrices. Proin a sodales massa, in dictum ex. Duis viverra elit eu leo pellentesque tincidunt. Pellentesque a neque eget tortor sagittis venenatis vitae vel odio. Maecenas sit amet ipsum eu orci tristique pretium. Etiam dictum sagittis risus, non lacinia urna vestibulum et. Phasellus facilisis euismod lectus eu tincidunt. Aenean in diam ac lectus molestie venenatis ac et sapien. Suspendisse justo elit, venenatis eget consectetur vitae, condimentum acrisus. Nullam ut dolor est. Cras placerat ultricies libero mollis sollicitudin. Quisque vel velit est. Pellentesque nisl velit, varius vel euismod quis, tempor vel ex. Nulla ut faucibus nisi. Phasellus pharetra arcu odio, at rutrum eros auctor ac.",
-        "ent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor. Vestibulum eros sapien, tempor in elit a, faucibus vehicula ipsum. Aliquam vel dapibus massa. Curabitur sed porta eros. Pellentesque quis ligula vel risus congue commodo nec ut urna. Fusce ut nibh neque. Aliquam ac purus facilisis, elementum felis luctus, tincidunt quam. Nullam id diam a mi lobortis sodales aliquet et justo. Donec tristique lectus sit amet porttitor pharetra. Proin a luctus velit. Mauris malesuada, eros eu maximus ultricies, massa dolor hendrerit dui, id malesuada turpis purus at tortor. Donec feugiat tempor ex vitae pellentesque. Ut non arcu in massa faucibus aliquam at nec risus. Fusce vulputate lacinia aliquet. Proin viverra dolor mauris, at ultricies neque ullamcorper nec. Fusce egestas mi eu nunc lacinia, imperdiet gravida felis auctor. Vestibulum id dapibus elit, ac molestie risus. In hac habitasse platea dictumst. Duis in maximus odio. Nam nec purus tellus. Cras vulputate purus sed neque eleifend, eget finibus massa vehicula. Nam eleifend metus nec erat volutpat vehicula. Integer id massa sit amet sem sagittis ultrices. Proin a sodales massa, in dictum ex. Duis viverra elit eu leo pellentesque tincidunt. Pellentesque a neque eget tortor sagittis venenatis vitae vel odio. Maecenas sit amet ipsum eu orci tristique pretium. Etiam dictum sagittis risus, non lacinia urna vestibulum et. Phasellus facilisis euismod lectus eu tincidunt. Aenean in diam ac lectus molestie venenatis ac et sapien. Suspendisse justo elit, venenatis eget consectetur vitae, condimentum acrisus. Nullam ut dolor est. Cras placerat ultricies libero mollis sollicitudin. Quisque vel velit est. Pellentesque nisl velit, varius vel euismod quis, tempor vel ex. Nulla ut faucibus nisi. Phasellus pharetra arcu odio, at rutrum eros auctor ac.",
-        "ber": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor. Vestibulum eros sapien, tempor in elit a, faucibus vehicula ipsum. Aliquam vel dapibus massa. Curabitur sed porta eros. Pellentesque quis ligula vel risus congue commodo nec ut urna. Fusce ut nibh neque. Aliquam ac purus facilisis, elementum felis luctus, tincidunt quam. Nullam id diam a mi lobortis sodales aliquet et justo. Donec tristique lectus sit amet porttitor pharetra. Proin a luctus velit. Mauris malesuada, eros eu maximus ultricies, massa dolor hendrerit dui, id malesuada turpis purus at tortor. Donec feugiat tempor ex vitae pellentesque. Ut non arcu in massa faucibus aliquam at nec risus. Fusce vulputate lacinia aliquet. Proin viverra dolor mauris, at ultricies neque ullamcorper nec. Fusce egestas mi eu nunc lacinia, imperdiet gravida felis auctor. Vestibulum id dapibus elit, ac molestie risus. In hac habitasse platea dictumst. Duis in maximus odio. Nam nec purus tellus. Cras vulputate purus sed neque eleifend, eget finibus massa vehicula. Nam eleifend metus nec erat volutpat vehicula. Integer id massa sit amet sem sagittis ultrices. Proin a sodales massa, in dictum ex. Duis viverra elit eu leo pellentesque tincidunt. Pellentesque a neque eget tortor sagittis venenatis vitae vel odio. Maecenas sit amet ipsum eu orci tristique pretium. Etiam dictum sagittis risus, non lacinia urna vestibulum et. Phasellus facilisis euismod lectus eu tincidunt. Aenean in diam ac lectus molestie venenatis ac et sapien. Suspendisse justo elit, venenatis eget consectetur vitae, condimentum acrisus. Nullam ut dolor est. Cras placerat ultricies libero mollis sollicitudin. Quisque vel velit est. Pellentesque nisl velit, varius vel euismod quis, tempor vel ex. Nulla ut faucibus nisi. Phasellus pharetra arcu odio, at rutrum eros auctor ac.",
+        "Australian": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor. Vestibulum eros sapien, tempor in elit a, faucibus vehicula ipsum. Aliquam vel dapibus massa. Curabitur sed porta eros. Pellentesque quis ligula vel risus congue commodo nec ut urna. Fusce ut nibh neque. Aliquam ac purus facilisis, elementum felis luctus, tincidunt quam. Nullam id diam a mi lobortis sodales aliquet et justo. Donec tristique lectus sit amet porttitor pharetra. Proin a luctus velit. Mauris malesuada, eros eu maximus ultricies, massa dolor hendrerit dui, id malesuada turpis purus at tortor. Donec feugiat tempor ex vitae pellentesque. Ut non arcu in massa faucibus aliquam at nec risus. Fusce vulputate lacinia aliquet. Proin viverra dolor mauris, at ultricies neque ullamcorper nec. Fusce egestas mi eu nunc lacinia, imperdiet gravida felis auctor. Vestibulum id dapibus elit, ac molestie risus. In hac habitasse platea dictumst. Duis in maximus odio. Nam nec purus tellus. Cras vulputate purus sed neque eleifend, eget finibus massa vehicula. Nam eleifend metus nec erat volutpat vehicula. Integer id massa sit amet sem sagittis ultrices. Proin a sodales massa, in dictum ex. Duis viverra elit eu leo pellentesque tincidunt. Pellentesque a neque eget tortor sagittis venenatis vitae vel odio. Maecenas sit amet ipsum eu orci tristique pretium. Etiam dictum sagittis risus, non lacinia urna vestibulum et. Phasellus facilisis euismod lectus eu tincidunt. Aenean in diam ac lectus molestie venenatis ac et sapien. Suspendisse justo elit, venenatis eget consectetur vitae, condimentum acrisus. Nullam ut dolor est. Cras placerat ultricies libero mollis sollicitudin. Quisque vel velit est. Pellentesque nisl velit, varius vel euismod quis, tempor vel ex. Nulla ut faucibus nisi. Phasellus pharetra arcu odio, at rutrum eros auctor ac.",
+        "Entlebuch": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor. Vestibulum eros sapien, tempor in elit a, faucibus vehicula ipsum. Aliquam vel dapibus massa. Curabitur sed porta eros. Pellentesque quis ligula vel risus congue commodo nec ut urna. Fusce ut nibh neque. Aliquam ac purus facilisis, elementum felis luctus, tincidunt quam. Nullam id diam a mi lobortis sodales aliquet et justo. Donec tristique lectus sit amet porttitor pharetra. Proin a luctus velit. Mauris malesuada, eros eu maximus ultricies, massa dolor hendrerit dui, id malesuada turpis purus at tortor. Donec feugiat tempor ex vitae pellentesque. Ut non arcu in massa faucibus aliquam at nec risus. Fusce vulputate lacinia aliquet. Proin viverra dolor mauris, at ultricies neque ullamcorper nec. Fusce egestas mi eu nunc lacinia, imperdiet gravida felis auctor. Vestibulum id dapibus elit, ac molestie risus. In hac habitasse platea dictumst. Duis in maximus odio. Nam nec purus tellus. Cras vulputate purus sed neque eleifend, eget finibus massa vehicula. Nam eleifend metus nec erat volutpat vehicula. Integer id massa sit amet sem sagittis ultrices. Proin a sodales massa, in dictum ex. Duis viverra elit eu leo pellentesque tincidunt. Pellentesque a neque eget tortor sagittis venenatis vitae vel odio. Maecenas sit amet ipsum eu orci tristique pretium. Etiam dictum sagittis risus, non lacinia urna vestibulum et. Phasellus facilisis euismod lectus eu tincidunt. Aenean in diam ac lectus molestie venenatis ac et sapien. Suspendisse justo elit, venenatis eget consectetur vitae, condimentum acrisus. Nullam ut dolor est. Cras placerat ultricies libero mollis sollicitudin. Quisque vel velit est. Pellentesque nisl velit, varius vel euismod quis, tempor vel ex. Nulla ut faucibus nisi. Phasellus pharetra arcu odio, at rutrum eros auctor ac.",
+        "Bernese": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus commodo leo aliquet massa viverra dapibus. Aliquam at viverra tortor. Vestibulum eros sapien, tempor in elit a, faucibus vehicula ipsum. Aliquam vel dapibus massa. Curabitur sed porta eros. Pellentesque quis ligula vel risus congue commodo nec ut urna. Fusce ut nibh neque. Aliquam ac purus facilisis, elementum felis luctus, tincidunt quam. Nullam id diam a mi lobortis sodales aliquet et justo. Donec tristique lectus sit amet porttitor pharetra. Proin a luctus velit. Mauris malesuada, eros eu maximus ultricies, massa dolor hendrerit dui, id malesuada turpis purus at tortor. Donec feugiat tempor ex vitae pellentesque. Ut non arcu in massa faucibus aliquam at nec risus. Fusce vulputate lacinia aliquet. Proin viverra dolor mauris, at ultricies neque ullamcorper nec. Fusce egestas mi eu nunc lacinia, imperdiet gravida felis auctor. Vestibulum id dapibus elit, ac molestie risus. In hac habitasse platea dictumst. Duis in maximus odio. Nam nec purus tellus. Cras vulputate purus sed neque eleifend, eget finibus massa vehicula. Nam eleifend metus nec erat volutpat vehicula. Integer id massa sit amet sem sagittis ultrices. Proin a sodales massa, in dictum ex. Duis viverra elit eu leo pellentesque tincidunt. Pellentesque a neque eget tortor sagittis venenatis vitae vel odio. Maecenas sit amet ipsum eu orci tristique pretium. Etiam dictum sagittis risus, non lacinia urna vestibulum et. Phasellus facilisis euismod lectus eu tincidunt. Aenean in diam ac lectus molestie venenatis ac et sapien. Suspendisse justo elit, venenatis eget consectetur vitae, condimentum acrisus. Nullam ut dolor est. Cras placerat ultricies libero mollis sollicitudin. Quisque vel velit est. Pellentesque nisl velit, varius vel euismod quis, tempor vel ex. Nulla ut faucibus nisi. Phasellus pharetra arcu odio, at rutrum eros auctor ac.",
         "fci": "FCI tõustandard"
     },
-    "breed": {
-        "aus": {
-            "one": "Austraalia lambakoer",
-            "many": "Austraalia lambakoerad"
-        },
-        "ent": {
-            "one": "Entlebuchi alpi karjakoer",
-            "many": "Entlebuchi alpi karjakoerad"
-        },
-        "ber": {
-            "one": "Berni alpi karjakoer",
-            "many": "Berni alpi karjakoerad"
-        }
-    },
     "dog": {
-        "our_breed": "Meie {breed}ad",
-        "male": "Isane",
-        "female": "Emane",
+        "our": "Meie {breed}ad",
+        "Male": "Isane",
+        "Female": "Emane",
         "retired": "Puhkusel",
         "name": "Nimi",
         "nickname": "Hüüdnimi",
@@ -53,29 +45,26 @@
         "titles": "Tiitlid",
         "tree": "Sugupuu",
         "loading": {
-            "dogs": "Otsib koerasid...",
+            "dogs": "Laeb koerasid...",
             "info": "Laeb koera infot...",
             "tree": "Laeb sugupuud..."
         },
         "error": {
-            "dogs": "Ei suutnud koerasid leida, midagi läks valesti",
-            "info": "Ei suutnud infot laadida, midagi läks valesti",
-            "tree": "Ei suutnud sugupuud laadida, midagi läks valesti"
+            "dogs": "Ei suutnud koerasid leida",
+            "info": "Ei suutnud infot laadida",
+            "tree": "Ei suutnud sugupuud laadida"
         }
     },
     "puppies": {
         "available": "Vabad kutsikad",
-        "unavailable": "Hetkel ei ole kutsikaid saadaval",
-        "available_breed": "Vabad {breed} kutsikad",
-        "unavailable_breed": "Hetkel ei ole {breed} kutsikaid saadaval",
+        "available_breed": "Vabad {breed}a kutsikad",
         "available_gender": "{gender} saadaval",
         "available_gender_co": "{gender} saadaval kaasomandisse",
-        "loading": "Otsib vabu kutsikaid...",
-        "loading_breed": "Otsib saadaval {breed}a kutsikaid...",
-        "error": "Ei suutnud kutsikaid leida, midagi läks valesti",
-        "aus": "Austraalia lambakoera kutsikad",
-        "ent": "Entlebuchi alpi karjakoera kutsikad",
-        "ber": "Berni alpi karjakoera kutsikad",
+        "loading": "Laeb vabu kutsikaid...",
+        "loading_breed": "Otsib vabu {breed}te kutsikaid...",
+        "empty": "Hetkel ei ole kutsikaid saadaval",
+        "empty_breed": "Hetkel ei ole {breed}te kutsikaid saadaval",
+        "error": "Ei suutnud kutsikaid laadida",
         "info": "Kutsikad lähevad uute koju koos kutsikapakiga, milles on toitu, snäkke ja mänguasju. Kutsikad on veterinaar arsti poolt üle kontrollitud, nad on vaksineeritud ja saanud parasiidi tõrje. Kutsikad on kiibistatud, FCI registreeritud ja euro-passiga."
     },
     "litter": {
@@ -84,18 +73,22 @@
         "gallery": "Galerii",
         "open": "Ava menüü",
         "close": "Sulge menüü",
-        "loading": {
-            "one": "Laeb pesakonda...",
-            "many": "Laeb pesakondasid..."
+        "inactive": "Vali pesakond",
+        "names": {
+            "loading": "Laeb pesakondaside nimesid...",
+            "empty": "Pesakondasid ei ole",
+            "many": "Ei suutnud pesakondade nimesid laadida"
         },
-        "error": {
-            "one": "Ei suutnud pesakonda laadida, midagi läks valesti",
-            "many": "Ei suutnud pesakondasid laadida, midagi läks valesti"
+        "display": {
+            "loading": "Laeb pesakonda...",
+            "empty": "Pesakonnas ei ole kutsikaid",
+            "error": "Ei suutnud pesakonda laadida"
         }
     },
     "news": {
         "loading": "Laeb uudiseid...",
-        "error": "Ei suutnud uudiseid laadida, midagi läks valesti"
+        "empty": "Pole rohkem uudiseid",
+        "error": "Ei suutnud uudiseid laadida"
     },
     "contact": {
         "location": "Kuusalu vald, Harjumaa, Eesti"

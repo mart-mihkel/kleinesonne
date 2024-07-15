@@ -39,15 +39,15 @@
 <div class="flex flex-col gap-8 pb-4 md:px-[5%] lg:px-[25%]">
     <div class="flex flex-col">
         <h2 class="p-4 text-center text-4xl font-bold">
-            {$format("breed.aus.one")}
+            {$format(`nav.dog.${Breed.AUSTRALIAN}`)}
         </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.AUSTRALIAN}"
             >
-                {$format("dog.our_breed", {
-                    values: { breed: $format("breed.aus.one") },
+                {$format("dog.our", {
+                    values: { breed: $format(`nav.dog.${Breed.AUSTRALIAN}`) },
                 })}
             </a>
             <a
@@ -58,12 +58,12 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={aus} alts={ausAlt} />
-        <p class="text-justify">{$format("intro.aus")}</p>
+        <Gallery images={aus} alts={ausAlt} thumbnails={false} />
+        <p class="text-justify">{$format(`intro.${Breed.AUSTRALIAN}`)}</p>
     </div>
     <div class="flex flex-col border-t border-black dark:border-white">
         <h2 class="p-4 text-center text-4xl font-bold">
-            {$format("breed.ent.one")}
+            {$format(`nav.dog.${Breed.ENTLEBUCH}`)}
         </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
@@ -71,7 +71,7 @@
                 href="/dogs/{Breed.ENTLEBUCH}"
             >
                 {$format("dog.our_breed", {
-                    values: { breed: $format("breed.ent.one") },
+                    values: { breed: $format(`nav.dog.${Breed.ENTLEBUCH}`) },
                 })}
             </a>
             <a
@@ -82,12 +82,12 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={ent} alts={entAlt} />
-        <p class="text-justify">{$format("intro.ent")}</p>
+        <Gallery images={ent} alts={entAlt} thumbnails={false} />
+        <p class="text-justify">{$format(`intro.${Breed.ENTLEBUCH}`)}</p>
     </div>
     <div class="flex flex-col border-t border-black dark:border-white">
         <h2 class="p-4 text-center text-4xl font-bold">
-            {$format("breed.ber.one")}
+            {$format(`nav.dog.${Breed.BERNESE}`)}
         </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
@@ -95,7 +95,7 @@
                 href="/dogs/{Breed.BERNESE}"
             >
                 {$format("dog.our_breed", {
-                    values: { breed: $format("breed.ber.one") },
+                    values: { breed: $format(`nav.dog.${Breed.BERNESE}`) },
                 })}
             </a>
             <a
@@ -106,7 +106,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={ber} alts={berAlt} />
-        <p class="text-justify">{$format("intro.ber")}</p>
+        <Gallery images={ber} alts={berAlt} thumbnails={false} />
+        <p class="text-justify">{$format(`intro.${Breed.BERNESE}`)}</p>
     </div>
 </div>

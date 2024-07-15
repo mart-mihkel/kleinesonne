@@ -27,7 +27,7 @@
     <div class="border-t border-black md:w-3/4 dark:border-white">
         {#if litter !== undefined}
             {#await litter}
-                <Loading text={$format("litter.loading.one")} />
+                <Loading text={$format("litter.display.loading")} />
             {:then litter}
                 {#if litter}
                     <LitterDisplay {litter} />
@@ -35,10 +35,10 @@
                     <Empty />
                 {/if}
             {:catch}
-                <Error message={$format("litter.error.one")} />
+                <Error message={$format("litter.display.error")} />
             {/await}
         {:else}
-            <Empty />
+            <Empty text={$format("litter.inactive")} />
         {/if}
     </div>
 </div>

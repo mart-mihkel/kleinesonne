@@ -54,7 +54,7 @@
         <Error message={$format("news.error")} />
     {/await}
     {#if end}
-        <Empty text="No more news" />
+        <Empty text={$format("news.empty")} />
     {/if}
     <div bind:this={bottom}></div>
 </div>

@@ -22,29 +22,33 @@
 {#if extended}
     <div class="flex flex-col" transition:slide>
         {#if promise === undefined}
-            <Empty text="No litter names found" />
+            <Empty text={$format("litter.names.empty")} />
         {:else}
             {#await promise}
-                <Loading text={$format("litter.loading.many")} />
+                <Loading text={$format("litter.names.loading")} />
             {:then names}
-                <button
-                    class="p-2 font-medium md:hidden"
-                    on:click={() => (extended = false)}
-                >
-                    <p>{$format("litter.close")}</p>
-                </button>
-                {#each names as { id, name }}
+                {#if names.length === 0}
+                    <Empty text={$format("litter.names.empty")} />
+                {:else}
                     <button
-                        class="text-nowrap p-2 font-semibold transition-colors duration-300 hover:bg-gray-200 dark:border-white dark:hover:bg-gray-500"
-                        class:bg-gray-300={active === id}
-                        class:dark:bg-gray-700={active === id}
-                        on:click={() => select(id)}
+                        class="p-2 font-medium md:hidden"
+                        on:click={() => (extended = false)}
                     >
-                        {name}
+                        <p>{$format("litter.close")}</p>
                     </button>
-                {/each}
+                    {#each names as { id, name }}
+                        <button
+                            class="text-nowrap p-2 font-semibold transition-colors duration-300 hover:bg-gray-200 dark:border-white dark:hover:bg-gray-500"
+                            class:bg-gray-300={active === id}
+                            class:dark:bg-gray-700={active === id}
+                            on:click={() => select(id)}
+                        >
+                            {name}
+                        </button>
+                    {/each}
+                {/if}
             {:catch}
-                <Error message={$format("litter.error.many")} />
+                <Error message={$format("litter.names.error")} />
             {/await}
         {/if}
     </div>

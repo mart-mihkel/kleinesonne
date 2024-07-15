@@ -4,6 +4,7 @@
 
     export let images: string[];
     export let alts: string[] = [];
+    export let thumbnails = true;
 
     let count = images.length;
     let show = false;
@@ -66,7 +67,7 @@
         >
             <img
                 class="size-full object-cover"
-                src={smallImage(src)}
+                src={thumbnails ? smallImage(src) : src}
                 alt={alts[i]}
                 loading="lazy"
             />

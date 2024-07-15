@@ -43,14 +43,14 @@
                         </tr>
                         <tr class="border-t border-black dark:border-white">
                             <td class="font-medium">{$format("dog.dob")}:</td>
-                            <td class="font-medium"
-                                >{new Date(dob).toDateString()}</td
-                            >
+                            <td class="font-medium">
+                                {new Date(dob).toDateString()}
+                            </td>
                         </tr>
                         <tr class="border-t border-black dark:border-white">
                             <td class="font-medium">{$format("dog.breed")}:</td>
                             <td class="font-medium">
-                                {$format(`breed.${breed}.one`)}
+                                {$format(`nav.dog.${breed}`)}
                             </td>
                         </tr>
                         <tr class="border-t border-black dark:border-white">
@@ -89,7 +89,7 @@
         </div>
         <Gallery {images} />
     {:catch}
-        <Error message={$format("dog.loading.info")} />
+        <Error message={$format("dog.error.info")} />
     {/await}
     <div class="flex flex-col border-t border-black pb-4 dark:border-white">
         <h2 class="p-4 text-center text-4xl">{$format("dog.tree")}</h2>
@@ -103,25 +103,25 @@
                             class="border border-black text-center font-medium dark:border-white"
                             rowspan="4"
                         >
-                            {father?.name}
+                            {father?.name ?? ""}
                         </td>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                             rowspan="2"
                         >
-                            {father?.father?.name}
+                            {father?.father?.name ?? ""}
                         </td>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                         >
-                            {father?.father?.father?.name}
+                            {father?.father?.father?.name ?? ""}
                         </td>
                     </tr>
                     <tr>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                         >
-                            {father?.father?.mother?.name}
+                            {father?.father?.mother?.name ?? ""}
                         </td>
                     </tr>
                     <tr>
@@ -129,19 +129,19 @@
                             class="border border-black text-center font-medium dark:border-white"
                             rowspan="2"
                         >
-                            {father?.mother?.name}
+                            {father?.mother?.name ?? ""}
                         </td>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                         >
-                            {father?.mother?.father?.name}
+                            {father?.mother?.father?.name ?? ""}
                         </td>
                     </tr>
                     <tr>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                         >
-                            {father?.mother?.mother?.name}
+                            {father?.mother?.mother?.name ?? ""}
                         </td>
                     </tr>
                     <tr>
@@ -149,25 +149,25 @@
                             class="border border-black text-center font-medium dark:border-white"
                             rowspan="4"
                         >
-                            {mother?.name}
+                            {mother?.name ?? ""}
                         </td>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                             rowspan="2"
                         >
-                            {mother?.father?.name}
+                            {mother?.father?.name ?? ""}
                         </td>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                         >
-                            {mother?.father?.father?.name}
+                            {mother?.father?.father?.name ?? ""}
                         </td>
                     </tr>
                     <tr>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                         >
-                            {mother?.father?.mother?.name}
+                            {mother?.father?.mother?.name ?? ""}
                         </td>
                     </tr>
                     <tr>
@@ -175,19 +175,19 @@
                             class="border border-black text-center font-medium dark:border-white"
                             rowspan="2"
                         >
-                            {mother?.mother?.name}
+                            {mother?.mother?.name ?? ""}
                         </td>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                         >
-                            {mother?.mother?.father?.name}
+                            {mother?.mother?.father?.name ?? ""}
                         </td>
                     </tr>
                     <tr>
                         <td
                             class="border border-black text-center font-medium dark:border-white"
                         >
-                            {mother?.mother?.mother?.name}
+                            {mother?.mother?.mother?.name ?? ""}
                         </td>
                     </tr>
                 </tbody>

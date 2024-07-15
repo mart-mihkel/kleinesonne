@@ -9,30 +9,30 @@
     $: puppies = [
         {
             href: "/puppies/" + Breed.AUSTRALIAN,
-            text: $format("puppies.aus"),
+            text: $format(`nav.puppy.${Breed.AUSTRALIAN}`),
         },
         {
             href: "/puppies/" + Breed.ENTLEBUCH,
-            text: $format("puppies.ent"),
+            text: $format(`nav.puppy.${Breed.ENTLEBUCH}`),
         },
         {
             href: "/puppies/" + Breed.BERNESE,
-            text: $format("puppies.ber"),
+            text: $format(`nav.puppy.${Breed.BERNESE}`),
         },
     ];
 
     $: dogs = [
         {
             href: "/dogs/" + Breed.AUSTRALIAN,
-            text: $format("breed.aus.many"),
+            text: $format(`nav.dog.${Breed.AUSTRALIAN}`),
         },
         {
             href: "/dogs/" + Breed.ENTLEBUCH,
-            text: $format("breed.ent.many"),
+            text: $format(`nav.dog.${Breed.ENTLEBUCH}`),
         },
         {
             href: "/dogs/" + Breed.BERNESE,
-            text: $format("breed.ber.many"),
+            text: $format(`nav.dog.${Breed.BERNESE}`),
         },
     ];
 </script>

@@ -70,7 +70,7 @@
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.ENTLEBUCH}"
             >
-                {$format("dog.our_breed", {
+                {$format("dog.our", {
                     values: { breed: $format(`nav.dog.${Breed.ENTLEBUCH}`) },
                 })}
             </a>
@@ -94,7 +94,7 @@
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.BERNESE}"
             >
-                {$format("dog.our_breed", {
+                {$format("dog.our", {
                     values: { breed: $format(`nav.dog.${Breed.BERNESE}`) },
                 })}
             </a>

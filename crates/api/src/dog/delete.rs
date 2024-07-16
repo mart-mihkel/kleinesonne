@@ -17,17 +17,9 @@ pub async fn delete_dog(
     Json(DeleteDog { id }): Json<DeleteDog>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    db::dog::delete_dog()
-        .bind(&tx, &id)
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+    let tx = client.transaction().await?;
+    db::dog::delete_dog().bind(&tx, &id).await?;
+    tx.commit().await?;
 
     Ok(StatusCode::OK)
 }

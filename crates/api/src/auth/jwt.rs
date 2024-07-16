@@ -49,7 +49,7 @@ pub fn create_token(sub: String) -> Result<String, ApiError> {
     let exp = secs_from_now(3600);
     let claims = Claims { sub, exp };
 
-    let secret = std::env::var("JWT_SECRET").map_err(|_| ApiError::Internal)?;
+    let secret = std::env::var("JWT_SECRET")?;
     let key = EncodingKey::from_secret(secret.as_bytes());
     let token = encode(&Header::default(), &claims, &key).map_err(|_| ApiError::TokenCreation)?;
 

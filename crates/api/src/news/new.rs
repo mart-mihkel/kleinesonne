@@ -21,11 +21,7 @@ pub async fn new_article(
     Json(article): Json<NewArticle>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     let id = db::news::insert_news()
         .bind(
             &tx,
@@ -35,10 +31,9 @@ pub async fn new_article(
             &article.images,
         )
         .one()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+    tx.commit().await?;
 
     Ok(Json(json!({"id": id})))
 }

@@ -30,11 +30,7 @@ pub async fn new_dog(
     Json(dog): Json<NewDog>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     let id = db::dog::insert_dog()
         .bind(
             &tx,
@@ -52,10 +48,9 @@ pub async fn new_dog(
             &dog.titles,
         )
         .one()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+    tx.commit().await?;
 
     Ok(Json(id))
 }

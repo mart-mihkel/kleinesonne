@@ -46,6 +46,12 @@ impl From<tokio::task::JoinError> for ApiError {
     }
 }
 
+impl From<tokio_postgres::error::Error> for ApiError {
+    fn from(_value: tokio_postgres::error::Error) -> Self {
+        ApiError::DatabaseError
+    }
+}
+
 impl From<std::env::VarError> for ApiError {
     fn from(_value: std::env::VarError) -> Self {
         ApiError::Internal

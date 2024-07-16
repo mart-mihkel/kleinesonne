@@ -17,17 +17,9 @@ pub async fn delete_litter(
     Json(DeleteLitter { id }): Json<DeleteLitter>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    db::litter::delete_litter()
-        .bind(&tx, &id)
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+    let tx = client.transaction().await?;
+    db::litter::delete_litter().bind(&tx, &id).await?;
+    tx.commit().await?;
 
     Ok(StatusCode::OK)
 }

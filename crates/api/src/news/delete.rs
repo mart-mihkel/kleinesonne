@@ -17,17 +17,9 @@ pub async fn delete_article(
     Json(DeleteArticle { id }): Json<DeleteArticle>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    db::news::delete_news()
-        .bind(&tx, &id)
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+    let tx = client.transaction().await?;
+    db::news::delete_news().bind(&tx, &id).await?;
+    tx.commit().await?;
 
     Ok(StatusCode::OK)
 }

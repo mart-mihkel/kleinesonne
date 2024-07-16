@@ -21,16 +21,8 @@ pub async fn puppy_by_id(
     Json(ById { id }): Json<ById>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    let puppy = db::puppy::puppy_by_id()
-        .bind(&tx, &id)
-        .one()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+    let tx = client.transaction().await?;
+    let puppy = db::puppy::puppy_by_id().bind(&tx, &id).one().await?;
 
     Ok(Json(puppy))
 }
@@ -40,16 +32,11 @@ pub async fn names_by_litter(
     Json(ByLitterId { litter_id }): Json<ByLitterId>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     let names = db::puppy::names_by_litter()
         .bind(&tx, &litter_id)
         .all()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
     Ok(Json(names))
 }
@@ -59,16 +46,11 @@ pub async fn puppies_by_litter(
     Json(ByLitterId { litter_id }): Json<ByLitterId>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     let puppies = db::puppy::puppies_by_litter()
         .bind(&tx, &litter_id)
         .all()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
     Ok(Json(puppies))
 }
@@ -78,16 +60,11 @@ pub async fn available_puppies_by_litter(
     Json(ByLitterId { litter_id }): Json<ByLitterId>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     let puppies = db::puppy::avaliable_puppies_by_litter()
         .bind(&tx, &litter_id)
         .all()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
     Ok(Json(puppies))
 }

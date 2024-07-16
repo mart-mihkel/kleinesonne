@@ -4,6 +4,7 @@ use axum::{http::StatusCode, response::IntoResponse, Json};
 use base64::engine::Engine;
 use image::{imageops::FilterType, ImageFormat};
 use serde::Deserialize;
+use tokio::task::JoinSet;
 
 use crate::{auth::jwt::Claims, errors::ApiError};
 
@@ -17,46 +18,34 @@ pub async fn upload_image(
     _claims: Claims,
     Json(uploads): Json<Vec<Upload>>,
 ) -> Result<impl IntoResponse, ApiError> {
-    for upload in uploads {
-        write_image(upload).await?;
+    let mut set = JoinSet::new();
+
+    for u in uploads {
+        set.spawn_blocking(move || Ok::<(), ApiError>(write_image(u)?));
+    }
+
+    while let Some(res) = set.join_next().await {
+        res??;
     }
 
     Ok(StatusCode::OK)
 }
 
-async fn write_image(Upload { name, b64 }: Upload) -> Result<(), ApiError> {
+fn write_image(Upload { name, b64 }: Upload) -> Result<(), ApiError> {
     let dir = std::env::var("UPLOAD_DIR")?;
+    let pieces = name.split("/").last();
+    let filename = if let Some(last) = pieces { last } else { &name };
     let bytes = base64::engine::general_purpose::STANDARD
         .decode(b64)
         .map_err(|_| ApiError::Internal)?;
 
-    let img = image::load_from_memory(&bytes)?;
-    let img_s = image::load_from_memory(&bytes)?;
+    let mut out = File::create_new(Path::new(&dir).join(&filename))?;
+    image::load_from_memory(&bytes)?.write_to(&mut out, ImageFormat::Avif)?;
 
-    let pieces = name.split("/").last();
-    let filename = if let Some(last) = pieces { last } else { &name };
-
-    let path = Path::new(&dir).join(&filename);
-    let path_s = Path::new(&dir).join(format!("sm-{}", &filename));
-
-    let handle = tokio::task::spawn_blocking(move || {
-        let mut out = File::create_new(path)?;
-        img.write_to(&mut out, ImageFormat::Avif)?;
-
-        Ok::<(), ApiError>(())
-    });
-
-    let handle_s = tokio::task::spawn_blocking(move || {
-        let mut out = File::create_new(path_s)?;
-        img_s
-            .resize(600, 600, FilterType::Triangle)
-            .write_to(&mut out, ImageFormat::Avif)?;
-
-        Ok::<(), ApiError>(())
-    });
-
-    handle.await??;
-    handle_s.await??;
+    let mut out = File::create_new(Path::new(&dir).join(format!("sm-{}", &filename)))?;
+    image::load_from_memory(&bytes)?
+        .resize(400, 400, FilterType::CatmullRom)
+        .write_to(&mut out, ImageFormat::Avif)?;
 
     Ok(())
 }

@@ -21,11 +21,7 @@ pub async fn new_litter(
     Json(litter): Json<NewLitter>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     let id = db::litter::insert_litter()
         .bind(
             &tx,
@@ -35,10 +31,9 @@ pub async fn new_litter(
             &litter.images,
         )
         .one()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+    tx.commit().await?;
 
     Ok(Json(id))
 }

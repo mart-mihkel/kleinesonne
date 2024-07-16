@@ -29,16 +29,8 @@ pub async fn all_names(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    let names = db::dog::all_names()
-        .bind(&tx)
-        .all()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+    let tx = client.transaction().await?;
+    let names = db::dog::all_names().bind(&tx).all().await?;
 
     Ok(Json(names))
 }
@@ -48,16 +40,8 @@ pub async fn dog_by_id(
     Json(ById { id }): Json<ById>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
-    let dog = db::dog::dog_by_id()
-        .bind(&tx, &id)
-        .one()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+    let tx = client.transaction().await?;
+    let dog = db::dog::dog_by_id().bind(&tx, &id).one().await?;
 
     Ok(Json(dog))
 }
@@ -67,16 +51,11 @@ pub async fn alive_dogs_by_breed_and_gender(
     Json(ByBreedGender { breed, gender }): Json<ByBreedGender>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     let dogs = db::dog::alive_dogs_by_breed_and_gender()
         .bind(&tx, &breed, &gender)
         .all()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
     Ok(Json(dogs))
 }
@@ -86,16 +65,11 @@ pub async fn retired_dogs_by_breed(
     Json(ByBreed { breed }): Json<ByBreed>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     let dogs = db::dog::retired_dogs_by_breed()
         .bind(&tx, &breed)
         .all()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
     Ok(Json(dogs))
 }

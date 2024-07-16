@@ -22,11 +22,7 @@ pub async fn update_litter(
     Json(litter): Json<UpdateLitter>,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
-
+    let tx = client.transaction().await?;
     db::litter::update_litter()
         .bind(
             &tx,
@@ -36,10 +32,9 @@ pub async fn update_litter(
             &litter.images,
             &litter.id,
         )
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+        .await?;
 
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+    tx.commit().await?;
 
     Ok(StatusCode::OK)
 }

@@ -41,16 +41,9 @@ async fn login(
     }
 
     let mut client = client.lock().await;
-    let tx = client
-        .transaction()
-        .await
-        .map_err(|_| ApiError::DatabaseError)?;
+    let tx = client.transaction().await?;
 
-    let admin = db::admin::admin_by_name()
-        .bind(&tx, &user)
-        .one()
-        .await
-        .map_err(|_| ApiError::WrongCredentials)?;
+    let admin = db::admin::admin_by_name().bind(&tx, &user).one().await?;
 
     let mut hasher = Sha512::new();
     let salted = format!("{}:{}", admin.salt, secret);

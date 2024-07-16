@@ -72,15 +72,15 @@ WHERE
 
 --! delete_litter_parents_image
 UPDATE
-	dogs
+	litters
 SET
-	thumbnail = null
+	parents_image = null
 WHERE
 	id = :id;
 
 --! delete_litter_image
 UPDATE
-	dogs
+	litters
 SET
 	images = array_remove(images, :image)
 WHERE

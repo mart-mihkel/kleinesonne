@@ -913,9 +913,9 @@ tokio_postgres::Error>> + Send + 'a>>, C> for UpdateLitterStmt
     { Box::pin(self.bind(client, &params.name,&params.breed,&params.parents_image,&params.images,&params.id,)) }
 }pub fn delete_litter_parents_image() -> DeleteLitterParentsImageStmt
 { DeleteLitterParentsImageStmt(cornucopia_async::private::Stmt::new("UPDATE
-	dogs
+	litters
 SET
-	thumbnail = null
+	parents_image = null
 WHERE
 	id = $1")) } pub struct
 DeleteLitterParentsImageStmt(cornucopia_async::private::Stmt); impl DeleteLitterParentsImageStmt
@@ -927,7 +927,7 @@ id: &'a i32,) -> Result<u64, tokio_postgres::Error>
     client.execute(stmt, &[id,]).await
 } }pub fn delete_litter_image() -> DeleteLitterImageStmt
 { DeleteLitterImageStmt(cornucopia_async::private::Stmt::new("UPDATE
-	dogs
+	litters
 SET
 	images = array_remove(images, $1)
 WHERE

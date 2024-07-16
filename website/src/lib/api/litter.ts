@@ -1,6 +1,6 @@
 import { Breed, type Id, type Litter, type Name } from "$lib/types";
 
-const API_LITTER = "http://127.0.0.1:3000/litter";
+export const API_LITTER = "http://127.0.0.1:3000/litter";
 
 export async function fetchLitterNames(): Promise<Name[]> {
     const options = {

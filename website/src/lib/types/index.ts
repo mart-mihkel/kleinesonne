@@ -77,6 +77,7 @@ export type Article = {
 export type ModalDispatch = {
     select: number;
     delete: number;
+    image: string;
 };
 
 export type Id = {

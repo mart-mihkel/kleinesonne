@@ -3,7 +3,13 @@
     import { Modal } from "$lib/components/admin";
     import { Loading, Error, Gallery } from "$lib/components";
     import { Breed, type Name } from "$lib/types";
-    import { deleteLitter, fetchLitter, fetchLitterNames } from "$lib/api";
+    import {
+        API_LITTER,
+        deleteImage,
+        deleteLitter,
+        fetchLitter,
+        fetchLitterNames,
+    } from "$lib/api";
     import { onMount } from "svelte";
 
     export let jwt: string;
@@ -28,11 +34,22 @@
 
     async function select(e: CustomEvent<number>) {
         const litter = await fetchLitter(e.detail);
-        form = { ...litter, parents_image: [litter.parents_image] };
+        form = {
+            ...litter,
+            parents_image: litter.parents_image ? [litter.parents_image] : [],
+        };
     }
 
     function del(e: CustomEvent<number>) {
         deleteLitter(e.detail, jwt);
+    }
+
+    function delParents() {
+        deleteImage(form.id, jwt, API_LITTER + "/delete/parents");
+    }
+
+    function delImage(e: CustomEvent<string>) {
+        deleteImage(form.id, jwt, API_LITTER + "/delete/image", e.detail);
     }
 </script>
 
@@ -78,7 +95,7 @@
             <p class="w-1/3 font-semibold">Parents</p>
             <input class="w-2/3 p-2" type="file" name="parents_image" />
         </label>
-        <Gallery bind:images={form.parents_image} />
+        <Gallery bind:images={form.parents_image} admin on:image={delParents} />
         <label class="flex flex-row items-center p-2">
             <p class="w-1/3 font-semibold">Images</p>
             <input
@@ -88,7 +105,7 @@
                 multiple={true}
             />
         </label>
-        <Gallery bind:images={form.images} />
+        <Gallery bind:images={form.images} admin on:image={delImage} />
         <div class="flex flex-row justify-center gap-4 p-4">
             <button
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"

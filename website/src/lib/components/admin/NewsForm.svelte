@@ -3,7 +3,13 @@
     import type { Name } from "$lib/types";
     import { Modal } from "$lib/components/admin";
     import { Loading, Error, Gallery } from "$lib/components";
-    import { deleteArticle, fetchArticle, fetchTitles } from "$lib/api";
+    import {
+        deleteImage,
+        deleteArticle,
+        fetchArticle,
+        fetchTitles,
+        API_NEWS,
+    } from "$lib/api";
     import { onMount } from "svelte";
     import { formDate } from "$lib";
 
@@ -34,6 +40,10 @@
 
     function del(e: CustomEvent<number>) {
         deleteArticle(e.detail, jwt);
+    }
+
+    function delImage(e: CustomEvent<string>) {
+        deleteImage(form.id, jwt, API_NEWS + "/delete/image", e.detail);
     }
 </script>
 
@@ -91,7 +101,7 @@
                 multiple={true}
             />
         </label>
-        <Gallery bind:images={form.images} />
+        <Gallery bind:images={form.images} admin on:image={delImage} />
         <div class="flex flex-row justify-center gap-4 p-4">
             <button
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"

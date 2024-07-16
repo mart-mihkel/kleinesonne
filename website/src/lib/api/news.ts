@@ -1,6 +1,6 @@
 import type { Article, Id, Name, Title } from "$lib/types";
 
-const API_NEWS = "http://127.0.0.1:3000/news";
+export const API_NEWS = "http://127.0.0.1:3000/news";
 
 export async function fetchTitles(): Promise<Name[]> {
     const options = {

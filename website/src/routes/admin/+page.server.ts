@@ -235,11 +235,15 @@ export const actions: Actions = {
     },
 };
 
-async function mapImages(images: File[]): Promise<Image[]> {
+type Prefix = "news" | "dogs" | "litters" | "";
+async function mapImages(
+    images: File[],
+    prefix: Prefix = "",
+): Promise<Image[]> {
     const promises = (images as File[])
         .filter((f) => f.size !== 0)
         .map(async (f) => {
-            const name = `${API_UPLOADS}/${nanoid()}.avif`;
+            const name = `${API_UPLOADS}/${prefix}-${nanoid()}.avif`;
             const buf = await f.arrayBuffer();
             const bytes = new Uint8Array(buf);
             const ascii = [...bytes]
@@ -265,7 +269,7 @@ async function formArticle(
         return [undefined, []];
     }
 
-    const files = await mapImages(images as File[]);
+    const files = await mapImages(images as File[], "news");
 
     return [
         {
@@ -311,7 +315,7 @@ async function formDog(data: FormData): Promise<[Dog | undefined, Image[]]> {
     }
 
     const file = await mapImages([thumbnail as File]);
-    const files = await mapImages(images as File[]);
+    const files = await mapImages(images as File[], "dogs");
 
     return [
         {
@@ -347,7 +351,7 @@ async function formLitter(
     }
 
     const file = await mapImages([parents_image as File]);
-    const files = await mapImages(images as File[]);
+    const files = await mapImages(images as File[], "litters");
 
     return [
         {

@@ -29,9 +29,10 @@ export async function login(user: string, secret: string): Promise<Token> {
     return body;
 }
 
-export { uploadImages } from "./uploads";
+export { API_UPLOADS, uploadImages, deleteImage } from "./uploads";
 
 export {
+    API_DOG,
     fetchDogNames,
     fetchDog,
     fetchAliveDogs,
@@ -42,6 +43,7 @@ export {
 } from "./dog";
 
 export {
+    API_PUPPY,
     fetchPuppyNames,
     fetchPuppy,
     fetchPuppies,
@@ -52,6 +54,7 @@ export {
 } from "./puppy";
 
 export {
+    API_LITTER,
     fetchLitterNames,
     fetchLitter,
     fetchAvaialbleLitters,
@@ -62,6 +65,7 @@ export {
 } from "./litter";
 
 export {
+    API_NEWS,
     fetchTitles,
     fetchArticle,
     fetchNews,

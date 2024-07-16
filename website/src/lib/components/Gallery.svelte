@@ -1,9 +1,13 @@
 <script lang="ts">
     import { Next, Prev, Close } from "$lib/svg";
+    import type { ModalDispatch } from "$lib/types";
+    import { createEventDispatcher } from "svelte";
 
     export let images: string[];
     export let alts: string[] = [];
+    export let admin = false;
 
+    let dispatch = createEventDispatcher<ModalDispatch>();
     let count = images.length;
     let show = false;
     let idx = 0;
@@ -27,6 +31,23 @@
         const last = path.lastIndexOf("/");
         return path.slice(0, last) + "/sm-" + path.slice(last + 1);
     }
+
+    function del() {
+        if (!admin) {
+            return;
+        }
+
+        dispatch("image", active);
+
+        images.splice(idx, 1);
+        images = images;
+
+        alts.splice(idx, 1);
+        alts = alts;
+
+        count = count - 1;
+        idx = idx % count;
+    }
 </script>
 
 <svelte:window on:keydown={(e) => close(e)} />
@@ -41,6 +62,14 @@
             </button>
             <div class="flex flex-col p-4">
                 <img src={active} {alt} loading="lazy" />
+                {#if admin}
+                    <button
+                        class="rounded-md border-2 border-black bg-white px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                        on:click={del}
+                    >
+                        Delete
+                    </button>
+                {/if}
                 <div class="flex flex-row justify-center gap-3 p-4">
                     {#each [...Array(images.length).keys()] as i}
                         <button

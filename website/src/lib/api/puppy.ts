@@ -1,6 +1,6 @@
 import { type Id, type Name, type Puppy } from "$lib/types";
 
-const API_PUPPY = "http://127.0.0.1:3000/puppy";
+export const API_PUPPY = "http://127.0.0.1:3000/puppy";
 
 export async function fetchPuppyNames(litter_id: number): Promise<Name[]> {
     const options = {

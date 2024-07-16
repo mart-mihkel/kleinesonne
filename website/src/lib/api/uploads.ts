@@ -15,3 +15,19 @@ export async function uploadImages(
     const res = await fetch(API_UPLOADS, options);
     return res.ok;
 }
+
+export async function deleteImage(
+    id: number,
+    jwt: string,
+    endpoint: string,
+    image?: string,
+): Promise<boolean> {
+    const options = {
+        headers: { "Content-Type": "application/json", Authorization: jwt },
+        method: "DELETE",
+        body: JSON.stringify({ id, image }),
+    };
+
+    const res = await fetch(endpoint, options);
+    return res.ok;
+}

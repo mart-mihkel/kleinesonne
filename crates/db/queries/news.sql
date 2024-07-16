@@ -56,7 +56,7 @@ SET
 	title = :title,
 	text = :text,
 	date = :date,
-	images = :images
+	images = array_cat(images, :images)
 WHERE
 	id = :id;
 

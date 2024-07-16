@@ -71,7 +71,7 @@ WHERE
 AND
 	alive = false;
 
---! insert_dog
+--! insert_dog (thumbnail?)
 INSERT INTO
 	dogs(
 		name,
@@ -103,7 +103,7 @@ VALUES(
 RETURNING
 	id;
 
---! update_dog
+--! update_dog (thumbnail?)
 UPDATE
 	dogs
 SET
@@ -116,7 +116,7 @@ SET
 	dob = :dob,
 	alive = :alive,
 	thumbnail = :thumbnail,
-	images = :images,
+	images = array_cat(images, :images),
 	health = :health,
 	titles = :titles
 WHERE

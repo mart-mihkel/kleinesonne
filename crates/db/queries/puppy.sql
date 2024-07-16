@@ -47,7 +47,7 @@ FROM
 WHERE
 	litter_id = :litter_id and availability = 'Available';
 
---! insert_puppy
+--! insert_puppy (image?)
 INSERT INTO
 	puppies(
 		litter_id,
@@ -65,7 +65,7 @@ VALUES(
 RETURNING
 	id;
 
---! update_puppy
+--! update_puppy (image?)
 UPDATE
 	puppies
 SET
@@ -73,7 +73,7 @@ SET
 	name = :name,
 	gender = :gender,
 	availability = :availability,
-	image = :thumbnail
+	image = :image
 WHERE
 	id = :id;
 

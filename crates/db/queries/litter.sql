@@ -43,7 +43,7 @@ WHERE
 AND
 	(SELECT count(id) FROM puppies WHERE litter_id = l.id and availability = 'Available') > 0;
 
---! insert_litter
+--! insert_litter (parents_image?)
 INSERT INTO
 	litters(
 		name,
@@ -59,14 +59,14 @@ VALUES(
 RETURNING
 	id;
 
---! update_litter
+--! update_litter (parents_image?)
 UPDATE
 	litters
 SET
 	name = :name,
 	breed = :breed,
 	parents_image = :parents_image,
-	images = :images
+	images = array_cat(images, :images)
 WHERE
 	id = :id;
 

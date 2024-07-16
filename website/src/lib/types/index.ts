@@ -80,10 +80,6 @@ export type ModalDispatch = {
     image: string;
 };
 
-export type Id = {
-    id: number;
-};
-
 export type Name = {
     id: number;
     name: string;
@@ -97,6 +93,14 @@ export type Title = {
 export type Image = {
     name: string;
     b64: string;
+};
+
+export type ApiResponse<D> = {
+    res:
+        | { type: "success" }
+        | { type: "error"; error: string }
+        | { type: "token"; token: string }
+        | { type: "data"; data: D };
 };
 
 export enum Gender {

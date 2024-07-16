@@ -1,11 +1,12 @@
 import { type Image } from "$lib/types";
+import type { ApiResponse } from "$lib/types";
 
 export const API_UPLOADS = "http://127.0.0.1:3000/uploads";
 
 export async function uploadImages(
     images: Image[],
     jwt: string,
-): Promise<boolean> {
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "POST",
@@ -13,7 +14,10 @@ export async function uploadImages(
     };
 
     const res = await fetch(API_UPLOADS, options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export async function deleteImage(
@@ -21,7 +25,7 @@ export async function deleteImage(
     jwt: string,
     endpoint: string,
     image?: string,
-): Promise<boolean> {
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
@@ -29,5 +33,8 @@ export async function deleteImage(
     };
 
     const res = await fetch(endpoint, options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }

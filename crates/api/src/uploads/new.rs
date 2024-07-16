@@ -1,6 +1,6 @@
 use std::{fs::File, path::Path};
 
-use axum::{http::StatusCode, response::IntoResponse, Json};
+use axum::Json;
 use base64::engine::Engine;
 use image::{imageops::FilterType, ImageFormat};
 use serde::Deserialize;
@@ -17,7 +17,7 @@ pub struct Upload {
 pub async fn upload_image(
     _claims: Claims,
     Json(uploads): Json<Vec<Upload>>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<String>, ApiError> {
     let mut set = JoinSet::new();
 
     for u in uploads {
@@ -28,7 +28,7 @@ pub async fn upload_image(
         res??;
     }
 
-    Ok(StatusCode::OK)
+    Ok(ApiResponse::Success)
 }
 
 fn write_image(Upload { name, b64 }: Upload) -> Result<ApiResponse<String>, ApiError> {

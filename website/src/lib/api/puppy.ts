@@ -1,8 +1,10 @@
-import { type Id, type Name, type Puppy } from "$lib/types";
+import { type ApiResponse, type Name, type Puppy } from "$lib/types";
 
 export const API_PUPPY = "http://127.0.0.1:3000/puppy";
 
-export async function fetchPuppyNames(litter_id: number): Promise<Name[]> {
+export async function fetchPuppyNames(
+    litter_id: number,
+): Promise<ApiResponse<Name[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -10,11 +12,13 @@ export async function fetchPuppyNames(litter_id: number): Promise<Name[]> {
     };
 
     const res = await fetch(API_PUPPY + "/names", options);
-    const body: Name[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchPuppy(id: number): Promise<Puppy> {
+export async function fetchPuppy(id: number): Promise<ApiResponse<Puppy>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -22,11 +26,15 @@ export async function fetchPuppy(id: number): Promise<Puppy> {
     };
 
     const res = await fetch(API_PUPPY + "/one", options);
-    const body: Puppy = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchPuppies(litter_id: number): Promise<Puppy[]> {
+export async function fetchPuppies(
+    litter_id: number,
+): Promise<ApiResponse<Puppy[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -34,13 +42,15 @@ export async function fetchPuppies(litter_id: number): Promise<Puppy[]> {
     };
 
     const res = await fetch(API_PUPPY + "/litter", options);
-    const body: Puppy[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export async function fetchAvailablePuppies(
     litter_id: number,
-): Promise<Puppy[]> {
+): Promise<ApiResponse<Puppy[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -48,11 +58,16 @@ export async function fetchAvailablePuppies(
     };
 
     const res = await fetch(API_PUPPY + "/available", options);
-    const body: Puppy[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function uploadPuppy(puppy: Puppy, jwt: string): Promise<Id> {
+export async function uploadPuppy(
+    puppy: Puppy,
+    jwt: string,
+): Promise<ApiResponse<number>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
@@ -60,11 +75,16 @@ export async function uploadPuppy(puppy: Puppy, jwt: string): Promise<Id> {
     };
 
     const res = await fetch(API_PUPPY + "/new", options);
-    const body: Id = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function updatePuppy(puppy: Puppy, jwt: string): Promise<boolean> {
+export async function updatePuppy(
+    puppy: Puppy,
+    jwt: string,
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
@@ -72,10 +92,16 @@ export async function updatePuppy(puppy: Puppy, jwt: string): Promise<boolean> {
     };
 
     const res = await fetch(API_PUPPY + "/update", options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function deletePuppy(id: number, jwt: string): Promise<boolean> {
+export async function deletePuppy(
+    id: number,
+    jwt: string,
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
@@ -83,5 +109,8 @@ export async function deletePuppy(id: number, jwt: string): Promise<boolean> {
     };
 
     const res = await fetch(API_PUPPY + "/delete", options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }

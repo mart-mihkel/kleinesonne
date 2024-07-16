@@ -1,4 +1,4 @@
-import type { Breed, Dog, Family, Gender, Id, Name } from "$lib/types";
+import type { ApiResponse, Breed, Dog, Family, Gender, Name } from "$lib/types";
 
 export const API_DOG = "http://127.0.0.1:3000/dog";
 
@@ -7,18 +7,20 @@ export async function fetchFamily(name: string): Promise<Family> {
     return { name };
 }
 
-export async function fetchDogNames(): Promise<Name[]> {
+export async function fetchDogNames(): Promise<ApiResponse<Name[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
     const res = await fetch(API_DOG + "/names", options);
-    const body: Name[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchDog(id: number): Promise<Dog> {
+export async function fetchDog(id: number): Promise<ApiResponse<Dog>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -26,14 +28,16 @@ export async function fetchDog(id: number): Promise<Dog> {
     };
 
     const res = await fetch(API_DOG + "/one", options);
-    const body: Dog = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export async function fetchAliveDogs(
     breed: Breed,
     gender: Gender,
-): Promise<Dog[]> {
+): Promise<ApiResponse<Dog[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -44,11 +48,15 @@ export async function fetchAliveDogs(
     };
 
     const res = await fetch(API_DOG + "/alive", options);
-    const body: Dog[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchRetiredDogs(breed: Breed): Promise<Dog[]> {
+export async function fetchRetiredDogs(
+    breed: Breed,
+): Promise<ApiResponse<Dog[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -58,11 +66,16 @@ export async function fetchRetiredDogs(breed: Breed): Promise<Dog[]> {
     };
 
     const res = await fetch(API_DOG + "/retired", options);
-    const body: Dog[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function uploadDog(dog: Dog, jwt: string): Promise<Id> {
+export async function uploadDog(
+    dog: Dog,
+    jwt: string,
+): Promise<ApiResponse<number>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
@@ -70,11 +83,16 @@ export async function uploadDog(dog: Dog, jwt: string): Promise<Id> {
     };
 
     const res = await fetch(API_DOG + "/new", options);
-    const body: Id = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function updateDog(dog: Dog, jwt: string): Promise<boolean> {
+export async function updateDog(
+    dog: Dog,
+    jwt: string,
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
@@ -82,10 +100,16 @@ export async function updateDog(dog: Dog, jwt: string): Promise<boolean> {
     };
 
     const res = await fetch(API_DOG + "/update", options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function deleteDog(id: number, jwt: string): Promise<boolean> {
+export async function deleteDog(
+    id: number,
+    jwt: string,
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
@@ -93,5 +117,8 @@ export async function deleteDog(id: number, jwt: string): Promise<boolean> {
     };
 
     const res = await fetch(API_DOG + "/delete", options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }

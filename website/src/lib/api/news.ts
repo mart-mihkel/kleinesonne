@@ -1,19 +1,23 @@
-import type { Article, Id, Name, Title } from "$lib/types";
+import type { Article, Name, Title, ApiResponse } from "$lib/types";
 
 export const API_NEWS = "http://127.0.0.1:3000/news";
 
-export async function fetchTitles(): Promise<Name[]> {
+export async function fetchTitles(): Promise<ApiResponse<Name[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
+    const mapper = (t: Title) => ({ id: t.id, name: t.title });
+
     const res = await fetch(API_NEWS + "/titles", options);
-    const body: Title[] = await res.json();
-    return body.map((t) => ({ id: t.id, name: t.title }));
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data.map(mapper) } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchArticle(id: number): Promise<Article> {
+export async function fetchArticle(id: number): Promise<ApiResponse<Article>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -21,11 +25,16 @@ export async function fetchArticle(id: number): Promise<Article> {
     };
 
     const res = await fetch(API_NEWS + "/one", options);
-    const body: Article = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchNews(from: number, n: number): Promise<Article[]> {
+export async function fetchNews(
+    from: number,
+    n: number,
+): Promise<ApiResponse<Article[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -33,14 +42,16 @@ export async function fetchNews(from: number, n: number): Promise<Article[]> {
     };
 
     const res = await fetch(API_NEWS + "/from", options);
-    const body: Article[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export async function uploadArticle(
     article: Article,
     jwt: string,
-): Promise<Id> {
+): Promise<ApiResponse<number>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
@@ -48,14 +59,16 @@ export async function uploadArticle(
     };
 
     const res = await fetch(API_NEWS + "/new", options);
-    const body: Id = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export async function updateArticle(
     article: Article,
     jwt: string,
-): Promise<boolean> {
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
@@ -63,10 +76,16 @@ export async function updateArticle(
     };
 
     const res = await fetch(API_NEWS + "/update", options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function deleteArticle(id: number, jwt: string): Promise<boolean> {
+export async function deleteArticle(
+    id: number,
+    jwt: string,
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
@@ -74,5 +93,8 @@ export async function deleteArticle(id: number, jwt: string): Promise<boolean> {
     };
 
     const res = await fetch(API_NEWS + "/delete", options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }

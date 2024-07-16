@@ -17,19 +17,19 @@
         {$format("dog.our", options)}
     </h2>
     <div class="flex w-full flex-col pb-4 md:flex-row">
-        <div class="flex flex-col gap-4 md:w-1/3 p-1">
+        <div class="flex flex-col gap-4 p-1 md:w-1/3">
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format(`dog.${Gender.MALE}`)}
             </h3>
             <Dogs promise={data.male} {breed} />
         </div>
-        <div class="flex flex-col gap-4 md:w-1/3 p-1">
+        <div class="flex flex-col gap-4 p-1 md:w-1/3">
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format(`dog.${Gender.FEMALE}`)}
             </h3>
             <Dogs promise={data.female} {breed} />
         </div>
-        <div class="flex flex-col gap-4 md:w-1/3 p-1">
+        <div class="flex flex-col gap-4 p-1 md:w-1/3">
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format("dog.retired")}
             </h3>

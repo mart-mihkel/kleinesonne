@@ -1,19 +1,21 @@
-import { Breed, type Id, type Litter, type Name } from "$lib/types";
+import { Breed, type ApiResponse, type Litter, type Name } from "$lib/types";
 
 export const API_LITTER = "http://127.0.0.1:3000/litter";
 
-export async function fetchLitterNames(): Promise<Name[]> {
+export async function fetchLitterNames(): Promise<ApiResponse<Name[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
     const res = await fetch(API_LITTER + "/names", options);
-    const body: Name[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchLitter(id: number): Promise<Litter> {
+export async function fetchLitter(id: number): Promise<ApiResponse<Litter>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -21,24 +23,28 @@ export async function fetchLitter(id: number): Promise<Litter> {
     };
 
     const res = await fetch(API_LITTER + "/one", options);
-    const body: Litter = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchAvaialbleLitters(): Promise<Litter[]> {
+export async function fetchAvaialbleLitters(): Promise<ApiResponse<Litter[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
     const res = await fetch(API_LITTER + "/available", options);
-    const body: Litter[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export async function fetchAvaialbleLittersByBreed(
     breed: Breed,
-): Promise<Litter[]> {
+): Promise<ApiResponse<Litter[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -46,11 +52,16 @@ export async function fetchAvaialbleLittersByBreed(
     };
 
     const res = await fetch(API_LITTER + "/breed", options);
-    const body: Litter[] = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function uploadLitter(litter: Litter, jwt: string): Promise<Id> {
+export async function uploadLitter(
+    litter: Litter,
+    jwt: string,
+): Promise<ApiResponse<number>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
@@ -58,14 +69,16 @@ export async function uploadLitter(litter: Litter, jwt: string): Promise<Id> {
     };
 
     const res = await fetch(API_LITTER + "/new", options);
-    const body: Id = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export async function updateLitter(
     litter: Litter,
     jwt: string,
-): Promise<boolean> {
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "PUT",
@@ -73,10 +86,16 @@ export async function updateLitter(
     };
 
     const res = await fetch(API_LITTER + "/update", options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function deleteLitter(id: number, jwt: string): Promise<boolean> {
+export async function deleteLitter(
+    id: number,
+    jwt: string,
+): Promise<ApiResponse<never>> {
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "DELETE",
@@ -84,5 +103,8 @@ export async function deleteLitter(id: number, jwt: string): Promise<boolean> {
     };
 
     const res = await fetch(API_LITTER + "/delete", options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }

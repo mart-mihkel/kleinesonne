@@ -1,10 +1,8 @@
+import type { ApiResponse } from "$lib/types";
+
 const API_AUTH = "http://127.0.0.1:3000/auth";
 
-type Token = {
-    token: string;
-};
-
-export async function authenticate(jwt: string): Promise<boolean> {
+export async function authenticate(jwt: string): Promise<ApiResponse<never>> {
     const options = {
         headers: {
             "Content-Type": "application/json",
@@ -14,10 +12,16 @@ export async function authenticate(jwt: string): Promise<boolean> {
     };
 
     const res = await fetch(API_AUTH, options);
-    return res.ok;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "success" } }
+        : { res: { type: "error", error: body.error } };
 }
 
-export async function login(user: string, secret: string): Promise<Token> {
+export async function login(
+    user: string,
+    secret: string,
+): Promise<ApiResponse<string>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -25,8 +29,10 @@ export async function login(user: string, secret: string): Promise<Token> {
     };
 
     const res = await fetch(API_AUTH, options);
-    const body: Token = await res.json();
-    return body;
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "token", token: body.token } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export { API_UPLOADS, uploadImages, deleteImage } from "./uploads";

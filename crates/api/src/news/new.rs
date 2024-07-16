@@ -1,11 +1,10 @@
 use std::sync::Arc;
 
-use axum::{response::IntoResponse, Extension, Json};
+use axum::{Extension, Json};
 use serde::Deserialize;
-use serde_json::json;
 use tokio::sync::Mutex;
 
-use crate::{auth::jwt::Claims, errors::ApiError};
+use crate::{auth::jwt::Claims, errors::ApiError, res::ApiResponse};
 
 #[derive(Deserialize)]
 pub struct NewArticle {
@@ -19,7 +18,7 @@ pub async fn new_article(
     _claims: Claims,
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(article): Json<NewArticle>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<i32>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let id = db::news::insert_news()
@@ -35,5 +34,5 @@ pub async fn new_article(
 
     tx.commit().await?;
 
-    Ok(Json(json!({"id": id})))
+    Ok(ApiResponse::Data(id))
 }

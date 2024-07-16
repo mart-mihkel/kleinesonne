@@ -1,10 +1,11 @@
 use std::sync::Arc;
 
-use axum::{response::IntoResponse, Extension, Json};
+use axum::{Extension, Json};
+use db::news::{AllTitles, Article};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::errors::ApiError;
+use crate::{errors::ApiError, res::ApiResponse};
 
 #[derive(Deserialize)]
 pub struct ById {
@@ -19,29 +20,29 @@ pub struct NewsRead {
 
 pub async fn all_titles(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Vec<AllTitles>>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let titles = db::news::all_titles().bind(&tx).all().await?;
 
-    Ok(Json(titles))
+    Ok(ApiResponse::Data(titles))
 }
 
 pub async fn article_by_id(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ById { id }): Json<ById>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Article>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let article = db::news::article_by_id().bind(&tx, &id).one().await?;
 
-    Ok(Json(article))
+    Ok(ApiResponse::Data(article))
 }
 
 pub async fn n_news_older_than(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(NewsRead { from, n }): Json<NewsRead>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Vec<Article>>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let news = db::news::n_news_older_than()
@@ -49,5 +50,5 @@ pub async fn n_news_older_than(
         .all()
         .await?;
 
-    Ok(Json(news))
+    Ok(ApiResponse::Data(news))
 }

@@ -1,18 +1,16 @@
 use std::sync::Arc;
 
 use axum::{
-    http::StatusCode,
     response::IntoResponse,
     routing::{get, post},
     Extension, Json, Router,
 };
 use jwt::Claims;
 use serde::Deserialize;
-use serde_json::json;
 use sha2::{Digest, Sha512};
 use tokio::sync::Mutex;
 
-use crate::errors::ApiError;
+use crate::{errors::ApiError, res::ApiResponse};
 
 pub mod jwt;
 
@@ -28,8 +26,8 @@ struct LoginForm {
     secret: String,
 }
 
-async fn authenticate(_claims: Claims) -> Result<StatusCode, ApiError> {
-    Ok(StatusCode::OK)
+async fn authenticate(_claims: Claims) -> Result<ApiResponse<String>, ApiError> {
+    Ok(ApiResponse::Success)
 }
 
 async fn login(
@@ -54,6 +52,6 @@ async fn login(
         Err(ApiError::WrongCredentials)
     } else {
         let token = jwt::create_token(user)?;
-        Ok(Json(json!({"token": token})))
+        Ok(ApiResponse::Token(token))
     }
 }

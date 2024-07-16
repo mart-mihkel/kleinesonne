@@ -10,6 +10,7 @@ mod errors;
 mod litter;
 mod news;
 mod puppy;
+mod res;
 mod uploads;
 
 #[tokio::main]
@@ -26,7 +27,7 @@ async fn main() {
         .layer(Extension(client))
         .layer(CorsLayer::permissive());
 
-    let listener = TcpListener::bind("127.0.0.1:3000").await.unwrap();
+    let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
 
     serve(listener, routes).await.unwrap();
 }

@@ -6,7 +6,7 @@ use image::{imageops::FilterType, ImageFormat};
 use serde::Deserialize;
 use tokio::task::JoinSet;
 
-use crate::{auth::jwt::Claims, errors::ApiError};
+use crate::{auth::jwt::Claims, errors::ApiError, res::ApiResponse};
 
 #[derive(Deserialize)]
 pub struct Upload {
@@ -21,7 +21,7 @@ pub async fn upload_image(
     let mut set = JoinSet::new();
 
     for u in uploads {
-        set.spawn_blocking(move || Ok::<(), ApiError>(write_image(u)?));
+        set.spawn_blocking(move || Ok::<ApiResponse<String>, ApiError>(write_image(u)?));
     }
 
     while let Some(res) = set.join_next().await {
@@ -31,7 +31,7 @@ pub async fn upload_image(
     Ok(StatusCode::OK)
 }
 
-fn write_image(Upload { name, b64 }: Upload) -> Result<(), ApiError> {
+fn write_image(Upload { name, b64 }: Upload) -> Result<ApiResponse<String>, ApiError> {
     let dir = std::env::var("UPLOAD_DIR")?;
     let pieces = name.split("/").last();
     let filename = if let Some(last) = pieces { last } else { &name };
@@ -47,5 +47,5 @@ fn write_image(Upload { name, b64 }: Upload) -> Result<(), ApiError> {
         .resize(400, 400, FilterType::CatmullRom)
         .write_to(&mut out, ImageFormat::Avif)?;
 
-    Ok(())
+    Ok(ApiResponse::Success)
 }

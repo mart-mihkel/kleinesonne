@@ -1,10 +1,11 @@
 use std::sync::Arc;
 
-use axum::{response::IntoResponse, Extension, Json};
+use axum::{Extension, Json};
+use db::puppy::{NamesByLitter, Puppy};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::errors::ApiError;
+use crate::{errors::ApiError, res::ApiResponse};
 
 #[derive(Deserialize)]
 pub struct ById {
@@ -19,18 +20,18 @@ pub struct ByLitterId {
 pub async fn puppy_by_id(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ById { id }): Json<ById>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Puppy>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let puppy = db::puppy::puppy_by_id().bind(&tx, &id).one().await?;
 
-    Ok(Json(puppy))
+    Ok(ApiResponse::Data(puppy))
 }
 
 pub async fn names_by_litter(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ByLitterId { litter_id }): Json<ByLitterId>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Vec<NamesByLitter>>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let names = db::puppy::names_by_litter()
@@ -38,13 +39,13 @@ pub async fn names_by_litter(
         .all()
         .await?;
 
-    Ok(Json(names))
+    Ok(ApiResponse::Data(names))
 }
 
 pub async fn puppies_by_litter(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ByLitterId { litter_id }): Json<ByLitterId>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Vec<Puppy>>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let puppies = db::puppy::puppies_by_litter()
@@ -52,13 +53,13 @@ pub async fn puppies_by_litter(
         .all()
         .await?;
 
-    Ok(Json(puppies))
+    Ok(ApiResponse::Data(puppies))
 }
 
 pub async fn available_puppies_by_litter(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ByLitterId { litter_id }): Json<ByLitterId>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Vec<Puppy>>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let puppies = db::puppy::avaliable_puppies_by_litter()
@@ -66,5 +67,5 @@ pub async fn available_puppies_by_litter(
         .all()
         .await?;
 
-    Ok(Json(puppies))
+    Ok(ApiResponse::Data(puppies))
 }

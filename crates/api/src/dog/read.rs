@@ -1,10 +1,11 @@
 use std::sync::Arc;
 
-use axum::{response::IntoResponse, Extension, Json};
+use axum::{Extension, Json};
+use db::dog::{AllNames, Dog};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::errors::ApiError;
+use crate::{errors::ApiError, res::ApiResponse};
 
 #[derive(Deserialize)]
 pub struct ById {
@@ -27,29 +28,29 @@ pub struct ByBreed {
 
 pub async fn all_names(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Vec<AllNames>>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let names = db::dog::all_names().bind(&tx).all().await?;
 
-    Ok(Json(names))
+    Ok(ApiResponse::Data(names))
 }
 
 pub async fn dog_by_id(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ById { id }): Json<ById>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Dog>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let dog = db::dog::dog_by_id().bind(&tx, &id).one().await?;
 
-    Ok(Json(dog))
+    Ok(ApiResponse::Data(dog))
 }
 
 pub async fn alive_dogs_by_breed_and_gender(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ByBreedGender { breed, gender }): Json<ByBreedGender>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Vec<Dog>>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let dogs = db::dog::alive_dogs_by_breed_and_gender()
@@ -57,13 +58,13 @@ pub async fn alive_dogs_by_breed_and_gender(
         .all()
         .await?;
 
-    Ok(Json(dogs))
+    Ok(ApiResponse::Data(dogs))
 }
 
 pub async fn retired_dogs_by_breed(
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(ByBreed { breed }): Json<ByBreed>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<Vec<Dog>>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let dogs = db::dog::retired_dogs_by_breed()
@@ -71,5 +72,5 @@ pub async fn retired_dogs_by_breed(
         .all()
         .await?;
 
-    Ok(Json(dogs))
+    Ok(ApiResponse::Data(dogs))
 }

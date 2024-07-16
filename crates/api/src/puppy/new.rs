@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
-use axum::{response::IntoResponse, Extension, Json};
+use axum::{Extension, Json};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::{auth::jwt::Claims, errors::ApiError};
+use crate::{auth::jwt::Claims, errors::ApiError, res::ApiResponse};
 
 #[derive(Deserialize)]
 pub struct NewPuppy {
@@ -21,7 +21,7 @@ pub async fn new_puppy(
     _claims: Claims,
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(puppy): Json<NewPuppy>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<i32>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     let id = db::puppy::insert_puppy()
@@ -38,5 +38,5 @@ pub async fn new_puppy(
 
     tx.commit().await?;
 
-    Ok(Json(id))
+    Ok(ApiResponse::Data(id))
 }

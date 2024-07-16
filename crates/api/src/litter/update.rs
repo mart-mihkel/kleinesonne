@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
-use axum::{http::StatusCode, response::IntoResponse, Extension, Json};
+use axum::{Extension, Json};
 use serde::Deserialize;
 use tokio::sync::Mutex;
 
-use crate::{auth::jwt::Claims, errors::ApiError};
+use crate::{auth::jwt::Claims, errors::ApiError, res::ApiResponse};
 
 #[derive(Deserialize)]
 pub struct UpdateLitter {
@@ -20,7 +20,7 @@ pub async fn update_litter(
     _claims: Claims,
     Extension(client): Extension<Arc<Mutex<db::Client>>>,
     Json(litter): Json<UpdateLitter>,
-) -> Result<impl IntoResponse, ApiError> {
+) -> Result<ApiResponse<String>, ApiError> {
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     db::litter::update_litter()
@@ -36,5 +36,5 @@ pub async fn update_litter(
 
     tx.commit().await?;
 
-    Ok(StatusCode::OK)
+    Ok(ApiResponse::Success)
 }

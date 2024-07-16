@@ -30,18 +30,33 @@ async fn write_image(Upload { name, b64 }: Upload) -> Result<(), ApiError> {
         .decode(b64)
         .map_err(|_| ApiError::Internal)?;
 
+    let img = image::load_from_memory(&bytes)?;
+    let img_s = image::load_from_memory(&bytes)?;
+
     let pieces = name.split("/").last();
     let filename = if let Some(last) = pieces { last } else { &name };
 
     let path = Path::new(&dir).join(&filename);
-    let mut out = File::create_new(path)?;
-    image::load_from_memory(&bytes)?.write_to(&mut out, ImageFormat::Avif)?;
-
     let path_s = Path::new(&dir).join(format!("sm-{}", &filename));
-    let mut out_s = File::create_new(path_s)?;
-    image::load_from_memory(&bytes)?
-        .resize(600, 600, FilterType::CatmullRom)
-        .write_to(&mut out_s, ImageFormat::Avif)?;
+
+    let handle = tokio::task::spawn_blocking(move || {
+        let mut out = File::create_new(path)?;
+        img.write_to(&mut out, ImageFormat::Avif)?;
+
+        Ok::<(), ApiError>(())
+    });
+
+    let handle_s = tokio::task::spawn_blocking(move || {
+        let mut out = File::create_new(path_s)?;
+        img_s
+            .resize(600, 600, FilterType::Triangle)
+            .write_to(&mut out, ImageFormat::Avif)?;
+
+        Ok::<(), ApiError>(())
+    });
+
+    handle.await??;
+    handle_s.await??;
 
     Ok(())
 }

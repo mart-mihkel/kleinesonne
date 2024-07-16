@@ -11,7 +11,7 @@ pub struct NewLitter {
     name: String,
     #[serde(with = "db::BreedDef")]
     breed: db::Breed,
-    parents_image: String,
+    parents_image: Option<String>,
     images: Vec<String>,
 }
 

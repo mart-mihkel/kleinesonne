@@ -40,6 +40,12 @@ impl From<std::io::Error> for ApiError {
     }
 }
 
+impl From<tokio::task::JoinError> for ApiError {
+    fn from(_value: tokio::task::JoinError) -> Self {
+        ApiError::Internal
+    }
+}
+
 impl From<std::env::VarError> for ApiError {
     fn from(_value: std::env::VarError) -> Self {
         ApiError::Internal

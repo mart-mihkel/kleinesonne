@@ -14,7 +14,7 @@ pub struct NewPuppy {
     gender: db::Gender,
     #[serde(with = "db::AvailabilityDef")]
     availability: db::Availability,
-    image: String,
+    image: Option<String>,
 }
 
 pub async fn new_puppy(

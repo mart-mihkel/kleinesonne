@@ -18,7 +18,7 @@ pub struct NewDog {
     #[serde(with = "db::GenderDef")]
     gender: db::Gender,
     alive: bool,
-    thumbnail: String,
+    thumbnail: Option<String>,
     health: Vec<String>,
     titles: Vec<String>,
     images: Vec<String>,

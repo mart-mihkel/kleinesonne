@@ -17,4 +17,5 @@ pub fn routes() -> Router {
         .route("/puppy/new", put(new::new_puppy))
         .route("/puppy/update", put(update::update_puppy))
         .route("/puppy/delete", delete(delete::delete_puppy))
+        .route("/puppy/delete/image", delete(delete::delete_image))
 }

@@ -60,6 +60,15 @@ SET
 WHERE
 	id = :id;
 
+--! delete_article_image
+UPDATE
+	news
+SET
+	images = array_remove(images, :image)
+WHERE
+	id = :id;
+
+
 --! delete_news
 DELETE FROM
 	news

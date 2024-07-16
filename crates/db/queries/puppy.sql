@@ -7,7 +7,7 @@ FROM
 WHERE
 	litter_id = :litter_id;
 
---! puppy_by_id : Puppy()
+--! puppy_by_id : Puppy(image?)
 SELECT
 	id,
 	litter_id,
@@ -21,7 +21,7 @@ WHERE
 	id = :id;
 
 
---! puppies_by_litter : Puppy()
+--! puppies_by_litter : Puppy(image?)
 SELECT
 	id,
 	litter_id,
@@ -34,7 +34,7 @@ FROM
 WHERE
 	litter_id = :litter_id;
 
---! avaliable_puppies_by_litter : Puppy()
+--! avaliable_puppies_by_litter : Puppy(image?)
 SELECT
 	id,
 	litter_id,
@@ -76,6 +76,15 @@ SET
 	image = :image
 WHERE
 	id = :id;
+
+--! delete_puppy_image
+UPDATE
+	puppies
+SET
+	image = null
+WHERE
+	id = :id;
+
 
 --! delete_puppy
 DELETE FROM

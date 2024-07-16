@@ -5,7 +5,7 @@ SELECT
 FROM
 	litters;
 
---! litter_by_id : Litter()
+--! litter_by_id : Litter(parents_image?)
 SELECT
 	id,
 	name,
@@ -17,7 +17,7 @@ FROM
 WHERE
 	id = :id;
 
---! available_litters : Litter()
+--! available_litters : Litter(parents_image?)
 SELECT
 	id,
 	name,
@@ -27,9 +27,9 @@ SELECT
 FROM
 	litters l
 WHERE
-	(SELECT count(id) FROM puppies WHERE litter_id = l.id and availability = 'Available') > 0;
+	(SELECT count(id) FROM puppies WHERE litter_id = l.id and availability in ('Available', 'Co')) > 0;
 
---! available_litters_by_breed : Litter()
+--! available_litters_by_breed : Litter(parents_image?)
 SELECT
 	id,
 	name,
@@ -41,7 +41,7 @@ FROM
 WHERE
 	breed = :breed
 AND
-	(SELECT count(id) FROM puppies WHERE litter_id = l.id and availability = 'Available') > 0;
+	(SELECT count(id) FROM puppies WHERE litter_id = l.id and availability in ('Available', 'Co')) > 0;
 
 --! insert_litter (parents_image?)
 INSERT INTO
@@ -69,6 +69,23 @@ SET
 	images = array_cat(images, :images)
 WHERE
 	id = :id;
+
+--! delete_litter_parents_image
+UPDATE
+	dogs
+SET
+	thumbnail = null
+WHERE
+	id = :id;
+
+--! delete_litter_image
+UPDATE
+	dogs
+SET
+	images = array_remove(images, :image)
+WHERE
+	id = :id;
+
 
 --! delete_litter
 DELETE FROM

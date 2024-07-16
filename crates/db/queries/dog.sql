@@ -5,7 +5,7 @@ SELECT
 FROM
 	dogs;
 
---! dog_by_id : Dog()
+--! dog_by_id : Dog(thumbnail?)
 SELECT
 	id,
 	name,
@@ -25,7 +25,7 @@ FROM
 WHERE
 	id = :id;
 
---! alive_dogs_by_breed_and_gender: Dog()
+--! alive_dogs_by_breed_and_gender: Dog(thumbnail?)
 SELECT
 	id,
 	name,
@@ -49,7 +49,7 @@ AND
 AND
 	alive = true;
 
---! retired_dogs_by_breed: Dog()
+--! retired_dogs_by_breed: Dog(thumbnail?)
 SELECT
 	id,
 	name,
@@ -119,6 +119,22 @@ SET
 	images = array_cat(images, :images),
 	health = :health,
 	titles = :titles
+WHERE
+	id = :id;
+
+--! delete_dog_thumbnail
+UPDATE
+	dogs
+SET
+	thumbnail = null
+WHERE
+	id = :id;
+
+--! delete_dog_image
+UPDATE
+	dogs
+SET
+	images = array_remove(images, :image)
 WHERE
 	id = :id;
 

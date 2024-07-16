@@ -44,9 +44,17 @@ export const actions: Actions = {
             return fail(400, { error: "Missing credentials" });
         }
 
-        const token = await login(user as string, secret as string);
-        cookies.set("jwt", `Bearer ${token.token}`, { path: "/admin" });
+        const { res } = await login(user as string, secret as string);
 
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
+        }
+
+        if (res.type !== "token") {
+            return fail(500, { error: "Unexpected response" });
+        }
+
+        cookies.set("jwt", `Bearer ${res.token}`, { path: "/admin" });
         return { success: true };
     },
     newsCreate: async ({ request, cookies }) => {
@@ -61,12 +69,14 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const id = await uploadArticle(article, jwt);
-        console.log(id);
+        const { res } = await uploadArticle(article, jwt);
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
+        }
 
-        const imgOk = await uploadImages(images, jwt);
-        if (!imgOk) {
-            return fail(500, { error: "Failed to upload images" });
+        const img = await uploadImages(images, jwt);
+        if (img.res.type === "error") {
+            return fail(500, { error: img.res.error });
         }
 
         return { success: true };
@@ -83,14 +93,14 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const ok = await updateArticle(article, jwt);
-        if (!ok) {
-            return fail(500, { error: "Failed to update article" });
+        const { res } = await updateArticle(article, jwt);
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
         }
 
-        const imgOk = await uploadImages(images, jwt);
-        if (!imgOk) {
-            return fail(500, { error: "Failed to upload images" });
+        const img = await uploadImages(images, jwt);
+        if (img.res.type === "error") {
+            return fail(500, { error: img.res.error });
         }
 
         return { success: true };
@@ -107,12 +117,14 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const id = await uploadDog(dog, jwt);
-        console.log(id);
+        const { res } = await uploadDog(dog, jwt);
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
+        }
 
-        const imgOk = await uploadImages(images, jwt);
-        if (!imgOk) {
-            return fail(500, { error: "Failed to upload images" });
+        const img = await uploadImages(images, jwt);
+        if (img.res.type === "error") {
+            return fail(500, { error: img.res.error });
         }
 
         return { success: true };
@@ -129,14 +141,14 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const ok = await updateDog(dog, jwt);
-        if (!ok) {
-            return fail(500, { error: "Failed to update dog" });
+        const { res } = await updateDog(dog, jwt);
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
         }
 
-        const imgOk = await uploadImages(images, jwt);
-        if (!imgOk) {
-            return fail(500, { error: "Failed to upload images" });
+        const img = await uploadImages(images, jwt);
+        if (img.res.type === "error") {
+            return fail(500, { error: img.res.error });
         }
 
         return { success: true };
@@ -153,12 +165,14 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const id = await uploadLitter(litter, jwt);
-        console.log(id);
+        const { res } = await uploadLitter(litter, jwt);
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
+        }
 
-        const imgOk = await uploadImages(images, jwt);
-        if (!imgOk) {
-            return fail(500, { error: "Failed to upload images" });
+        const img = await uploadImages(images, jwt);
+        if (img.res.type === "error") {
+            return fail(500, { error: img.res.error });
         }
 
         return { success: true };
@@ -175,14 +189,14 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const ok = await updateLitter(litter, jwt);
-        if (!ok) {
-            return fail(500, { error: "Failed to update litter" });
+        const { res } = await updateLitter(litter, jwt);
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
         }
 
-        const imgOk = await uploadImages(images, jwt);
-        if (!imgOk) {
-            return fail(500, { error: "Failed to upload images" });
+        const img = await uploadImages(images, jwt);
+        if (img.res.type === "error") {
+            return fail(500, { error: img.res.error });
         }
 
         return { success: true };
@@ -199,12 +213,14 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const id = await uploadPuppy(puppy, jwt);
-        console.log(id);
+        const { res } = await uploadPuppy(puppy, jwt);
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
+        }
 
-        const imgOk = await uploadImages(images, jwt);
-        if (!imgOk) {
-            return fail(500, { error: "Failed to upload images" });
+        const img = await uploadImages(images, jwt);
+        if (img.res.type === "error") {
+            return fail(500, { error: img.res.error });
         }
 
         return { success: true };
@@ -221,14 +237,14 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const ok = await updatePuppy(puppy, jwt);
-        if (!ok) {
-            return fail(500, { error: "Failed to update puppy" });
+        const { res } = await updatePuppy(puppy, jwt);
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
         }
 
-        const imgOk = await uploadImages(images, jwt);
-        if (!imgOk) {
-            return fail(500, { error: "Failed to upload images" });
+        const img = await uploadImages(images, jwt);
+        if (img.res.type === "error") {
+            return fail(500, { error: img.res.error });
         }
 
         return { success: true };
@@ -236,6 +252,7 @@ export const actions: Actions = {
 };
 
 type Prefix = "news" | "dogs" | "litters" | "";
+
 async function mapImages(
     images: File[],
     prefix: Prefix = "",
@@ -243,7 +260,7 @@ async function mapImages(
     const promises = (images as File[])
         .filter((f) => f.size !== 0)
         .map(async (f) => {
-            const name = `${API_UPLOADS}/${prefix + "-"}${nanoid()}.avif`;
+            const name = `${API_UPLOADS}/${prefix ? prefix + "-" : ""}${nanoid()}.avif`;
             const buf = await f.arrayBuffer();
             const bytes = new Uint8Array(buf);
             const ascii = [...bytes]

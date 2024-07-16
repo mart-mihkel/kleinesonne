@@ -1,13 +1,20 @@
 <script lang="ts">
-    import { type Litter, type Puppy } from "$lib/types";
+    import { Availability, type Litter, type Puppy } from "$lib/types";
     import { Thumbnail, Gallery, Loading, Error, Empty } from "$lib/components";
     import { format } from "svelte-i18n";
     import { fetchPuppies } from "$lib/api";
 
     export let litter: Litter;
+    export let available = false;
 
     const { id, name, images, parents_image } = litter;
     let puppiesPromise: Promise<Puppy[]> = fetchPuppies(id);
+
+    function filtered(puppies: Puppy[]): Puppy[] {
+        return available
+            ? puppies.filter((p) => p.availability !== Availability.UNAVAILABLE)
+            : puppies;
+    }
 </script>
 
 <div class="flex flex-col items-center gap-2 py-4">
@@ -19,7 +26,7 @@
     {:then puppies}
         {#if puppies.length > 0}
             <div class="flex w-full flex-row flex-wrap">
-                {#each puppies as { name, gender, availability, image }}
+                {#each filtered(puppies) as { name, gender, availability, image }}
                     <div class="flex w-1/2 flex-col items-center p-1 lg:w-1/3">
                         <Thumbnail {name} {gender} {availability} src={image} />
                     </div>
@@ -39,8 +46,10 @@
             <Gallery {images} />
         </div>
     {/if}
-    <h3 class="text-center text-2xl font-semibold">
-        {$format("litter.parents")}
-    </h3>
-    <img src={parents_image} alt="" loading="lazy" />
+    {#if parents_image}
+        <h3 class="text-center text-2xl font-semibold">
+            {$format("litter.parents")}
+        </h3>
+        <img src={parents_image} alt="" loading="lazy" />
+    {/if}
 </div>

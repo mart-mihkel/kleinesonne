@@ -31,8 +31,3 @@ export function parseDate(date: string): number {
     const [yyyy, mm, dd] = date.split("-").map(Number);
     return Math.floor(new Date(yyyy, mm - 1, dd).getTime() / 1000);
 }
-
-export function smallImage(path: string): string {
-    const last = path.lastIndexOf("/");
-    return path.slice(0, last) + "/sm-" + path.slice(last + 1);
-}

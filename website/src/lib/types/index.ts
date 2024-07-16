@@ -12,7 +12,7 @@ export type DogPreview = {
     id: string;
     name: string;
     nickname: string;
-    thumbnail: string;
+    thumbnail: string | undefined;
     breed: Breed;
     gender: Gender;
     alive: boolean;
@@ -24,7 +24,7 @@ export type Dog = {
     nickname: string;
     father: string;
     mother: string;
-    thumbnail: string;
+    thumbnail: string | undefined;
     dob: number;
     breed: Breed;
     gender: Gender;
@@ -44,7 +44,7 @@ export type Puppy = {
     id: number;
     litter_id: number;
     name: string;
-    image: string;
+    image: string | undefined;
     gender: Gender;
     availability: Availability;
 };
@@ -52,7 +52,7 @@ export type Puppy = {
 export type Litter = {
     id: number;
     name: string;
-    parents_image: string;
+    parents_image: string | undefined;
     breed: Breed;
     images: string[];
 };
@@ -60,7 +60,7 @@ export type Litter = {
 export type LitterWithPuppies = {
     id: number;
     name: string;
-    parents_image: string;
+    parents_image: string | undefined;
     breed: Breed;
     images: string[];
     puppies: Puppy[];

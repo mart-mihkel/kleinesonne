@@ -1,10 +1,8 @@
 <script lang="ts">
     import { Next, Prev, Close } from "$lib/svg";
-    import { smallImage } from "$lib";
 
     export let images: string[];
     export let alts: string[] = [];
-    export let thumbnails = true;
 
     let count = images.length;
     let show = false;
@@ -23,6 +21,11 @@
         }
 
         show = false;
+    }
+
+    function small(path: string): string {
+        const last = path.lastIndexOf("/");
+        return path.slice(0, last) + "/sm-" + path.slice(last + 1);
     }
 </script>
 
@@ -67,7 +70,7 @@
         >
             <img
                 class="size-full object-cover"
-                src={thumbnails ? smallImage(src) : src}
+                src={small(src)}
                 alt={alts[i]}
                 loading="lazy"
             />

@@ -46,6 +46,8 @@ export const actions: Actions = {
 
         const token = await login(user as string, secret as string);
         cookies.set("jwt", `Bearer ${token.token}`, { path: "/admin" });
+
+        return { success: true };
     },
     newsCreate: async ({ request, cookies }) => {
         const jwt = cookies.get("jwt");
@@ -59,8 +61,15 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        uploadImages(images, jwt);
-        uploadArticle(article, jwt);
+        const id = await uploadArticle(article, jwt);
+        console.log(id);
+
+        const imgOk = await uploadImages(images, jwt);
+        if (!imgOk) {
+            return fail(500, { error: "Failed to upload images" });
+        }
+
+        return { success: true };
     },
     newsUpdate: async ({ request, cookies }) => {
         const jwt = cookies.get("jwt");
@@ -74,8 +83,17 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        uploadImages(images, jwt);
-        updateArticle(article, jwt);
+        const ok = await updateArticle(article, jwt);
+        if (!ok) {
+            return fail(500, { error: "Failed to update article" });
+        }
+
+        const imgOk = await uploadImages(images, jwt);
+        if (!imgOk) {
+            return fail(500, { error: "Failed to upload images" });
+        }
+
+        return { success: true };
     },
     dogCreate: async ({ request, cookies }) => {
         const jwt = cookies.get("jwt");
@@ -89,8 +107,15 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        uploadImages(images, jwt);
-        uploadDog(dog, jwt);
+        const id = await uploadDog(dog, jwt);
+        console.log(id);
+
+        const imgOk = await uploadImages(images, jwt);
+        if (!imgOk) {
+            return fail(500, { error: "Failed to upload images" });
+        }
+
+        return { success: true };
     },
     dogUpdate: async ({ request, cookies }) => {
         const jwt = cookies.get("jwt");
@@ -104,8 +129,17 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        uploadImages(images, jwt);
-        updateDog(dog, jwt);
+        const ok = await updateDog(dog, jwt);
+        if (!ok) {
+            return fail(500, { error: "Failed to update dog" });
+        }
+
+        const imgOk = await uploadImages(images, jwt);
+        if (!imgOk) {
+            return fail(500, { error: "Failed to upload images" });
+        }
+
+        return { success: true };
     },
     litterCreate: async ({ request, cookies }) => {
         const jwt = cookies.get("jwt");
@@ -119,8 +153,15 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        uploadImages(images, jwt);
-        uploadLitter(litter, jwt);
+        const id = await uploadLitter(litter, jwt);
+        console.log(id);
+
+        const imgOk = await uploadImages(images, jwt);
+        if (!imgOk) {
+            return fail(500, { error: "Failed to upload images" });
+        }
+
+        return { success: true };
     },
     litterUpdate: async ({ request, cookies }) => {
         const jwt = cookies.get("jwt");
@@ -134,8 +175,17 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        uploadImages(images, jwt);
-        updateLitter(litter, jwt);
+        const ok = await updateLitter(litter, jwt);
+        if (!ok) {
+            return fail(500, { error: "Failed to update litter" });
+        }
+
+        const imgOk = await uploadImages(images, jwt);
+        if (!imgOk) {
+            return fail(500, { error: "Failed to upload images" });
+        }
+
+        return { success: true };
     },
     puppyCreate: async ({ request, cookies }) => {
         const jwt = cookies.get("jwt");
@@ -149,8 +199,15 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        uploadImages(images, jwt);
-        uploadPuppy(puppy, jwt);
+        const id = await uploadPuppy(puppy, jwt);
+        console.log(id);
+
+        const imgOk = await uploadImages(images, jwt);
+        if (!imgOk) {
+            return fail(500, { error: "Failed to upload images" });
+        }
+
+        return { success: true };
     },
     puppyUpdate: async ({ request, cookies }) => {
         const jwt = cookies.get("jwt");
@@ -164,8 +221,17 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        uploadImages(images, jwt);
-        updatePuppy(puppy, jwt);
+        const ok = await updatePuppy(puppy, jwt);
+        if (!ok) {
+            return fail(500, { error: "Failed to update puppy" });
+        }
+
+        const imgOk = await uploadImages(images, jwt);
+        if (!imgOk) {
+            return fail(500, { error: "Failed to upload images" });
+        }
+
+        return { success: true };
     },
 };
 
@@ -239,9 +305,7 @@ async function formDog(data: FormData): Promise<[Dog | undefined, Image[]]> {
         !breed ||
         !gender ||
         !alive ||
-        !images ||
-        !titles ||
-        !health
+        !images
     ) {
         return [undefined, []];
     }
@@ -256,14 +320,14 @@ async function formDog(data: FormData): Promise<[Dog | undefined, Image[]]> {
             nickname: nickname as string,
             father: father as string,
             mother: mother as string,
-            thumbnail: file[0]?.name ?? "",
+            thumbnail: file[0]?.name,
             dob: parseDate(dob as string),
             breed: breed as Breed,
             gender: gender as Gender,
             alive: alive === "true",
             images: files.map((f) => f.name),
-            titles: (titles as string).split(","),
-            health: (health as string).split(","),
+            titles: titles ? (titles as string).split(",") : [],
+            health: health ? (health as string).split(",") : [],
         },
         file.concat(files),
     ];
@@ -278,7 +342,7 @@ async function formLitter(
     const parents_image = data.get("parents_image");
     const images = data.getAll("images");
 
-    if (!id || !name || !breed || !parents_image || !images) {
+    if (!id || !name || !breed || !images) {
         return [undefined, []];
     }
 
@@ -290,7 +354,7 @@ async function formLitter(
             id: Number(id),
             name: name as string,
             breed: breed as Breed,
-            parents_image: file[0]?.name ?? "",
+            parents_image: file[0]?.name,
             images: files.map((f) => f.name),
         },
         file.concat(files),
@@ -307,7 +371,7 @@ async function formPuppy(
     const availability = data.get("availability");
     const image = data.get("image");
 
-    if (!id || !name || !gender || !availability || !image) {
+    if (!id || !name || !gender || !availability) {
         return [undefined, []];
     }
 
@@ -320,7 +384,7 @@ async function formPuppy(
             name: name as string,
             gender: gender as Gender,
             availability: availability as Availability,
-            image: file[0]?.name ?? "",
+            image: file[0]?.name,
         },
         file,
     ];

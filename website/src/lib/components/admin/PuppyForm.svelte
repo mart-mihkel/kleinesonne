@@ -40,7 +40,7 @@
 
     async function select(e: CustomEvent<number>) {
         const puppy = await fetchPuppy(e.detail);
-        form = { ...puppy, image: [puppy.image] };
+        form = { ...puppy, image: puppy.image ? [puppy.image] : [] };
     }
 
     function del(e: CustomEvent<number>) {

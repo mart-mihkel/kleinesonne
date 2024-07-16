@@ -2,6 +2,7 @@
     import type { PageData } from "./$types";
     import { Gallery, Loading, Error } from "$lib/components";
     import { format } from "svelte-i18n";
+    import def from "$lib/assets/default.avif";
 
     export let data: PageData;
 </script>
@@ -14,7 +15,7 @@
             <div class="md:w-1/2 md:p-2">
                 <img
                     class="size-full object-cover"
-                    src={thumbnail}
+                    src={thumbnail ?? def}
                     alt=""
                     loading="lazy"
                 />

@@ -22,7 +22,7 @@
         {:else}
             {#each litters as litter}
                 <div class="border-t border-black pb-10 dark:border-white">
-                    <Litter {litter} />
+                    <Litter {litter} available={true} />
                 </div>
             {/each}
             <p>{$format("puppies.info")}</p>

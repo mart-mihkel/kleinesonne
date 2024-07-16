@@ -3,9 +3,9 @@
     import { Breed } from "$lib/types";
     import { format } from "svelte-i18n";
 
-    import ausAdult from "$lib/assets/aus-adult.jpg?as=run";
-    import ausPuppy from "$lib/assets/aus-puppy.jpg?as=run";
-    import ausDraw from "$lib/assets/aus-draw.jpg?as=run";
+    import ausAdult from "$lib/assets/aus-adult.avif";
+    import ausPuppy from "$lib/assets/aus-puppy.avif";
+    import ausDraw from "$lib/assets/aus-draw.avif";
     const aus = [ausAdult, ausPuppy, ausDraw];
     const ausAlt = [
         "Adult merle Australian Shepherd",
@@ -13,9 +13,9 @@
         "Standard Australian Shepherd pencil drawing",
     ];
 
-    import entAdult from "$lib/assets/ent-adult.jpg?as=run";
-    import entPuppy from "$lib/assets/ent-puppy.jpg?as=run";
-    import entDraw from "$lib/assets/ent-draw.jpg?as=run";
+    import entAdult from "$lib/assets/ent-adult.avif";
+    import entPuppy from "$lib/assets/ent-puppy.avif";
+    import entDraw from "$lib/assets/ent-draw.avif";
     const ent = [entAdult, entPuppy, entDraw];
     const entAlt = [
         "Adult Entlebuch Cattle Dog",
@@ -23,9 +23,9 @@
         "Standard Entlebuch Cattle Dog pencil drawing",
     ];
 
-    import berAdult from "$lib/assets/ber-adult.jpg?as=run";
-    import berPuppy from "$lib/assets/ber-puppy.jpg?as=run";
-    import berDraw from "$lib/assets/ber-draw.jpg?as=run";
+    import berAdult from "$lib/assets/ber-adult.avif";
+    import berPuppy from "$lib/assets/ber-puppy.avif";
+    import berDraw from "$lib/assets/ber-draw.avif";
     const ber = [berAdult, berPuppy, berDraw];
     const berAlt = [
         "Adult Bernese Mountain Dog",
@@ -58,7 +58,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={aus} alts={ausAlt} thumbnails={false} />
+        <Gallery images={aus} alts={ausAlt} />
         <p class="text-justify">{$format(`intro.${Breed.AUSTRALIAN}`)}</p>
     </div>
     <div class="flex flex-col border-t border-black dark:border-white">
@@ -82,7 +82,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={ent} alts={entAlt} thumbnails={false} />
+        <Gallery images={ent} alts={entAlt} />
         <p class="text-justify">{$format(`intro.${Breed.ENTLEBUCH}`)}</p>
     </div>
     <div class="flex flex-col border-t border-black dark:border-white">
@@ -106,7 +106,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={ber} alts={berAlt} thumbnails={false} />
+        <Gallery images={ber} alts={berAlt} />
         <p class="text-justify">{$format(`intro.${Breed.BERNESE}`)}</p>
     </div>
 </div>

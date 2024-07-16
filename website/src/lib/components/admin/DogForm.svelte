@@ -39,7 +39,7 @@
         const dog = await fetchDog(e.detail);
         form = {
             ...dog,
-            thumbnail: [dog.thumbnail],
+            thumbnail: dog.thumbnail ? [dog.thumbnail] : [],
             dob: formDate(dog.dob),
             titles: dog.titles.join(","),
             health: dog.health.join(","),
@@ -112,7 +112,6 @@
                 class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                 type="text"
                 name="health"
-                required
                 bind:value={form.health}
             />
         </label>

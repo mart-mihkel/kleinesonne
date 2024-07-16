@@ -14,8 +14,6 @@
             {new Date(date * 1000).toDateString()}
         </p>
         <p class="text-justify">{text}</p>
-        {#if images.length > 0}
-            <Gallery {images} />
-        {/if}
+        <Gallery {images} />
     </div>
 {/each}

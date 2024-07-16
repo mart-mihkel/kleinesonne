@@ -1,13 +1,14 @@
 <script lang="ts">
     import { Availability, Gender } from "$lib/types";
     import { format } from "svelte-i18n";
+    import def from "$lib/assets/default.avif";
 
     export let href: string | undefined = undefined;
     export let availability: Availability | undefined = undefined;
     export let gender: Gender | undefined = undefined;
     export let nickname: string | undefined = undefined;
     export let name: string;
-    export let src: string;
+    export let src: string | undefined;
 
     $: options = { values: { gender: $format(`dog.${gender}`) } };
 </script>
@@ -20,7 +21,7 @@
     <img
         class="aspect-square size-full object-cover"
         loading="lazy"
-        {src}
+        src={src ?? def}
         alt=""
     />
     <div

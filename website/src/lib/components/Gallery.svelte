@@ -57,7 +57,10 @@
         class="fixed left-0 top-0 size-full overflow-hidden bg-black bg-opacity-50"
     >
         <div class="flex size-full flex-row items-center justify-center">
-            <button on:click={() => (idx = (idx - 1 + count) % count)}>
+            <button
+                on:click|preventDefault={() =>
+                    (idx = (idx - 1 + count) % count)}
+            >
                 <Prev />
             </button>
             <div class="flex flex-col p-4">
@@ -65,7 +68,7 @@
                 {#if admin}
                     <button
                         class="rounded-md border-2 border-black bg-white px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                        on:click={del}
+                        on:click|preventDefault={del}
                     >
                         Delete
                     </button>
@@ -82,10 +85,13 @@
                     {/each}
                 </div>
             </div>
-            <button on:click={() => (idx = (idx + 1) % count)}>
+            <button on:click|preventDefault={() => (idx = (idx + 1) % count)}>
                 <Next />
             </button>
-            <button class="absolute right-2 top-2" on:click={() => close()}>
+            <button
+                class="absolute right-2 top-2"
+                on:click|preventDefault={() => close()}
+            >
                 <Close />
             </button>
         </div>
@@ -95,7 +101,7 @@
     {#each images as src, i}
         <button
             class="aspect-square w-1/2 p-1 outline-none lg:w-1/3"
-            on:click={() => open(i)}
+            on:click|preventDefault={() => open(i)}
         >
             <img
                 class="size-full object-cover"

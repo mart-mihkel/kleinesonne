@@ -243,7 +243,7 @@ async function mapImages(
     const promises = (images as File[])
         .filter((f) => f.size !== 0)
         .map(async (f) => {
-            const name = `${API_UPLOADS}/${prefix}-${nanoid()}.avif`;
+            const name = `${API_UPLOADS}/${prefix + '-'}${nanoid()}.avif`;
             const buf = await f.arrayBuffer();
             const bytes = new Uint8Array(buf);
             const ascii = [...bytes]

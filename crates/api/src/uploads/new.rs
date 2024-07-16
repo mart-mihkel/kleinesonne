@@ -35,9 +35,7 @@ fn write_image(Upload { name, b64 }: Upload) -> Result<ApiResponse<String>, ApiE
     let dir = std::env::var("UPLOAD_DIR")?;
     let pieces = name.split("/").last();
     let filename = if let Some(last) = pieces { last } else { &name };
-    let bytes = base64::engine::general_purpose::STANDARD
-        .decode(b64)
-        .map_err(|_| ApiError::Internal)?;
+    let bytes = base64::engine::general_purpose::STANDARD.decode(b64)?;
 
     let mut out = File::create_new(Path::new(&dir).join(&filename))?;
     image::load_from_memory(&bytes)?.write_to(&mut out, ImageFormat::Avif)?;

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { Modal } from "$lib/components/admin";
-    import { Loading, Error, Gallery } from "$lib/components";
+    import { Gallery } from "$lib/components";
     import { Breed, Gender, type Name } from "$lib/types";
     import { formDate } from "$lib";
     import {
@@ -10,6 +10,7 @@
         deleteImage,
         fetchDog,
         fetchDogNames,
+        resdata,
     } from "$lib/api";
     import { onMount } from "svelte";
 
@@ -33,16 +34,30 @@
 
     let form = { ...INITIAL_DATA };
     let modal = false;
-    let names: Promise<Name[]>;
+    let promise: Promise<Name[] | undefined> | undefined = undefined;
 
-    onMount(() => (names = fetchDogNames()));
+    onMount(() => {
+        promise = new Promise(async (resolve) => {
+            const res = await fetchDogNames();
+            const data = resdata(res);
+            resolve(data.data);
+        });
+    });
 
     function reset() {
         form = { ...INITIAL_DATA };
     }
 
     async function select(e: CustomEvent<number>) {
-        const dog = await fetchDog(e.detail);
+        const res = await fetchDog(e.detail);
+        const data = resdata(res);
+
+        if (data.error) {
+            alert(`Getting dog failed: ${data.error}`);
+            return;
+        }
+
+        const dog = data.data!;
         form = {
             ...dog,
             thumbnail: dog.thumbnail ? [dog.thumbnail] : [],
@@ -52,16 +67,36 @@
         };
     }
 
-    function del(e: CustomEvent<number>) {
-        deleteDog(e.detail, jwt);
+    async function del(e: CustomEvent<number>) {
+        const { res } = await deleteDog(e.detail, jwt);
+        if (res.type === "error") {
+            alert(`Deleting dog failed: ${res.error}`);
+        }
     }
 
-    function delThumbnail() {
-        deleteImage(form.id, jwt, API_DOG + "/delete/thumbnail");
+    async function delThumbnail() {
+        const { res } = await deleteImage(
+            form.id,
+            jwt,
+            API_DOG + "/delete/thumbnail",
+        );
+
+        if (res.type === "error") {
+            alert(`Deleting thumbnail failed: ${res.error}`);
+        }
     }
 
-    function delImage(e: CustomEvent<string>) {
-        deleteImage(form.id, jwt, API_DOG + "/delete/image", e.detail);
+    async function delImage(e: CustomEvent<string>) {
+        const { res } = await deleteImage(
+            form.id,
+            jwt,
+            API_DOG + "/delete/image",
+            e.detail,
+        );
+
+        if (res.type === "error") {
+            alert(`Deleting image failed: ${res.error}`);
+        }
     }
 </script>
 
@@ -200,47 +235,49 @@
             />
         </label>
         <Gallery bind:images={form.images} admin on:image={delImage} />
-        <div class="flex flex-row justify-center gap-4 p-4">
+        <div class="flex flex-row flex-wrap justify-center gap-4 p-4">
+            {#if promise !== undefined}
+                <button
+                    class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                    on:click|preventDefault={() => (modal = true)}
+                >
+                    {#await promise}
+                        <p>Loading names...</p>
+                    {:then names}
+                        {#if names === undefined}
+                            <p>Server error</p>
+                        {:else}
+                            <p>Select</p>
+                            <Modal
+                                bind:open={modal}
+                                items={names}
+                                on:select={select}
+                                on:delete={del}
+                            />
+                        {/if}
+                    {:catch}
+                        <p>Server error</p>
+                    {/await}
+                </button>
+            {/if}
             <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                on:click|preventDefault={reset}
+            >
+                Reset form
+            </button>
+            <button
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 formaction="?/dogCreate"
-                on:click={() => (names = fetchDogNames())}
             >
                 Create
             </button>
             <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 formaction="?/dogUpdate"
-                on:click={() => (names = fetchDogNames())}
             >
                 Update
             </button>
         </div>
     </form>
-    {#await names}
-        <Loading text="Loading dog names..." />
-    {:then names}
-        <div class="flex flex-row justify-center gap-4 p-4">
-            <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click={() => (modal = true)}
-            >
-                Select
-            </button>
-            <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click={reset}
-            >
-                Reset
-            </button>
-        </div>
-        <Modal
-            bind:open={modal}
-            items={names}
-            on:select={select}
-            on:delete={del}
-        />
-    {:catch}
-        <Error message="Failed to load names, something went wrong" />
-    {/await}
 </div>

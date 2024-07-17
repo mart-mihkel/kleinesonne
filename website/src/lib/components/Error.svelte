@@ -2,7 +2,7 @@
     export let message: string;
 </script>
 
-<div class="flex size-full flex-col items-center justify-center p-8">
+<div class="flex flex-col items-center justify-center p-8">
     <svg
         class="size-20 fill-black dark:fill-white"
         xmlns="http://www.w3.org/2000/svg"

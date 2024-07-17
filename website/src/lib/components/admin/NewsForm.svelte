@@ -2,16 +2,17 @@
     import { enhance } from "$app/forms";
     import type { Name } from "$lib/types";
     import { Modal } from "$lib/components/admin";
-    import { Loading, Error, Gallery } from "$lib/components";
+    import { Gallery } from "$lib/components";
     import {
         deleteImage,
         deleteArticle,
         fetchArticle,
         fetchTitles,
         API_NEWS,
+        resdata,
     } from "$lib/api";
-    import { onMount } from "svelte";
     import { formDate } from "$lib";
+    import { onMount } from "svelte";
 
     export let jwt: string;
 
@@ -25,25 +26,51 @@
 
     let form = { ...INITIAL_DATA };
     let modal = false;
-    let titles: Promise<Name[]>;
+    let promise: Promise<Name[] | undefined> | undefined = undefined;
 
-    onMount(() => (titles = fetchTitles()));
+    onMount(() => {
+        promise = new Promise(async (resolve) => {
+            const res = await fetchTitles();
+            const data = resdata(res);
+            resolve(data.data);
+        });
+    });
 
     function reset() {
         form = { ...INITIAL_DATA };
     }
 
     async function select(e: CustomEvent<number>) {
-        const article = await fetchArticle(e.detail);
+        const res = await fetchArticle(e.detail);
+        const data = resdata(res);
+
+        if (data.error) {
+            alert(`Getting dog failed: ${data.error}`);
+            return;
+        }
+
+        const article = data.data!;
         form = { ...article, date: formDate(article.date) };
     }
 
-    function del(e: CustomEvent<number>) {
-        deleteArticle(e.detail, jwt);
+    async function del(e: CustomEvent<number>) {
+        const { res } = await deleteArticle(e.detail, jwt);
+        if (res.type === "error") {
+            alert(`Deleting article failed: ${res.error}`);
+        }
     }
 
-    function delImage(e: CustomEvent<string>) {
-        deleteImage(form.id, jwt, API_NEWS + "/delete/image", e.detail);
+    async function delImage(e: CustomEvent<string>) {
+        const { res } = await deleteImage(
+            form.id,
+            jwt,
+            API_NEWS + "/delete/image",
+            e.detail,
+        );
+
+        if (res.type === "error") {
+            alert(`Deleting image failed: ${res.error}`);
+        }
     }
 </script>
 
@@ -102,47 +129,49 @@
             />
         </label>
         <Gallery bind:images={form.images} admin on:image={delImage} />
-        <div class="flex flex-row justify-center gap-4 p-4">
+        <div class="flex flex-row flex-wrap justify-center gap-4 p-4">
+            {#if promise !== undefined}
+                <button
+                    class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                    on:click|preventDefault={() => (modal = true)}
+                >
+                    {#await promise}
+                        <p>Loading titles...</p>
+                    {:then titles}
+                        {#if titles === undefined}
+                            <p>Server error</p>
+                        {:else}
+                            <p>Select</p>
+                            <Modal
+                                bind:open={modal}
+                                items={titles}
+                                on:select={select}
+                                on:delete={del}
+                            />
+                        {/if}
+                    {:catch}
+                        <p>Server error</p>
+                    {/await}
+                </button>
+            {/if}
             <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                on:click|preventDefault={reset}
+            >
+                Reset form
+            </button>
+            <button
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 formaction="?/newsCreate"
-                on:click={() => (titles = fetchTitles())}
             >
                 Create
             </button>
             <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 formaction="?/newsUpdate"
-                on:click={() => (titles = fetchTitles())}
             >
                 Update
             </button>
         </div>
     </form>
-    {#await titles}
-        <Loading text="Loading modal data..." />
-    {:then titles}
-        <div class="flex flex-row justify-center gap-4 p-4">
-            <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click={() => (modal = true)}
-            >
-                Select
-            </button>
-            <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click={reset}
-            >
-                Reset
-            </button>
-        </div>
-        <Modal
-            bind:open={modal}
-            items={titles}
-            on:select={select}
-            on:delete={del}
-        />
-    {:catch}
-        <Error message="Failed to load titles, something went wrong" />
-    {/await}
 </div>

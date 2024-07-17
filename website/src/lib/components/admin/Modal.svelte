@@ -8,18 +8,15 @@
 
     let dispatch = createEventDispatcher<ModalDispatch>();
     let filter: string;
-    $: filtered = filter
-        ? items.filter((i) =>
-              i.name.toLowerCase().includes(filter.toLowerCase()),
-          )
-        : items;
+
+    const f = (i: Name) => i.name.toLowerCase().includes(filter.toLowerCase());
+    $: filtered = filter ? items.filter(f) : items;
 
     function pick() {
         if (!active) {
             return;
         }
 
-        open = false;
         dispatch("select", active);
     }
 
@@ -28,24 +25,22 @@
             return;
         }
 
-        items.splice(
-            items.findIndex((i) => i.id === active),
-            1,
-        );
+        const i = items.findIndex((i) => i.id === active);
+
+        items.splice(i, 1);
         items = items;
+
         dispatch("delete", active);
     }
 
-    function close(e?: KeyboardEvent) {
-        if (e && e.key !== "Escape") {
-            return;
+    function close(e: KeyboardEvent) {
+        if (e.key === "Escape") {
+            open = false;
         }
-
-        open = false;
     }
 </script>
 
-<svelte:window on:keydown={(e) => close(e)} />
+<svelte:window on:keydown={close} />
 
 {#if open}
     <div
@@ -69,7 +64,7 @@
                             class="px-4 py-2 text-center font-medium"
                             class:hover:bg-gray-300={active !== id}
                             class:bg-gray-500={active === id}
-                            on:click={() => (active = id)}
+                            on:click|preventDefault={() => (active = id)}
                         >
                             {name}
                         </button>
@@ -77,21 +72,15 @@
                 </div>
                 <button
                     class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                    on:click={pick}
+                    on:click|preventDefault={pick}
                 >
                     Select
                 </button>
                 <button
                     class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                    on:click={del}
+                    on:click|preventDefault={del}
                 >
                     Delete
-                </button>
-                <button
-                    class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300"
-                    on:click={() => close()}
-                >
-                    Cancel
                 </button>
             </div>
         </div>

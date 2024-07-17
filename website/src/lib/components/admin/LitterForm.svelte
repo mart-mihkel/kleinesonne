@@ -1,7 +1,7 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { Modal } from "$lib/components/admin";
-    import { Loading, Error, Gallery } from "$lib/components";
+    import { Gallery } from "$lib/components";
     import { Breed, type Name } from "$lib/types";
     import {
         API_LITTER,
@@ -9,6 +9,7 @@
         deleteLitter,
         fetchLitter,
         fetchLitterNames,
+        resdata,
     } from "$lib/api";
     import { onMount } from "svelte";
 
@@ -24,32 +25,66 @@
 
     let form = { ...INITIAL_DATA };
     let modal = false;
-    let names: Promise<Name[]>;
+    let promise: Promise<Name[] | undefined> | undefined = undefined;
 
-    onMount(() => (names = fetchLitterNames()));
+    onMount(() => {
+        promise = new Promise(async (resolve) => {
+            const res = await fetchLitterNames();
+            const data = resdata(res);
+            resolve(data.data);
+        });
+    });
 
     function reset() {
         form = { ...INITIAL_DATA };
     }
 
     async function select(e: CustomEvent<number>) {
-        const litter = await fetchLitter(e.detail);
+        const res = await fetchLitter(e.detail);
+        const data = resdata(res);
+
+        if (data.error) {
+            alert(`Getting litter failed: ${data.error}`);
+            return;
+        }
+
+        const litter = data.data!;
         form = {
             ...litter,
             parents_image: litter.parents_image ? [litter.parents_image] : [],
         };
     }
 
-    function del(e: CustomEvent<number>) {
-        deleteLitter(e.detail, jwt);
+    async function del(e: CustomEvent<number>) {
+        const { res } = await deleteLitter(e.detail, jwt);
+        if (res.type === "error") {
+            alert(`Deleting litter failed: ${res.error}`);
+        }
     }
 
-    function delParents() {
-        deleteImage(form.id, jwt, API_LITTER + "/delete/parents");
+    async function delParents() {
+        const { res } = await deleteImage(
+            form.id,
+            jwt,
+            API_LITTER + "/delete/parents",
+        );
+
+        if (res.type === "error") {
+            alert(`Deleting parents image failed: ${res.error}`);
+        }
     }
 
-    function delImage(e: CustomEvent<string>) {
-        deleteImage(form.id, jwt, API_LITTER + "/delete/image", e.detail);
+    async function delImage(e: CustomEvent<string>) {
+        const { res } = await deleteImage(
+            form.id,
+            jwt,
+            API_LITTER + "/delete/image",
+            e.detail,
+        );
+
+        if (res.type === "error") {
+            alert(`Deleting image failed: ${res.error}`);
+        }
     }
 </script>
 
@@ -106,47 +141,49 @@
             />
         </label>
         <Gallery bind:images={form.images} admin on:image={delImage} />
-        <div class="flex flex-row justify-center gap-4 p-4">
+        <div class="flex flex-row flex-wrap justify-center gap-4 p-4">
+            {#if promise !== undefined}
+                <button
+                    class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                    on:click|preventDefault={() => (modal = true)}
+                >
+                    {#await promise}
+                        <p>Loading names...</p>
+                    {:then titles}
+                        {#if titles === undefined}
+                            <p>Server error</p>
+                        {:else}
+                            <p>Select</p>
+                            <Modal
+                                items={titles}
+                                bind:open={modal}
+                                on:select={select}
+                                on:delete={del}
+                            />
+                        {/if}
+                    {:catch}
+                        <p>Server error</p>
+                    {/await}
+                </button>
+            {/if}
             <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                on:click|preventDefault={reset}
+            >
+                Reset form
+            </button>
+            <button
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 formaction="?/litterCreate"
-                on:click={() => (names = fetchLitterNames())}
             >
                 Create
             </button>
             <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 formaction="?/litterUpdate"
-                on:click={() => (names = fetchLitterNames())}
             >
                 Update
             </button>
         </div>
     </form>
-    {#await names}
-        <Loading text="Loading modal data..." />
-    {:then titles}
-        <div class="flex flex-row justify-center gap-4 p-4">
-            <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click={() => (modal = true)}
-            >
-                Select
-            </button>
-            <button
-                class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click={reset}
-            >
-                Reset
-            </button>
-        </div>
-        <Modal
-            bind:open={modal}
-            items={titles}
-            on:select={select}
-            on:delete={del}
-        />
-    {:catch}
-        <Error message="Failed to load litters, something went wrong" />
-    {/await}
 </div>

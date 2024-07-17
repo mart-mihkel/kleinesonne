@@ -29,9 +29,15 @@ import { API_UPLOADS } from "$lib/api/uploads";
 import { nanoid } from "nanoid";
 
 export const load: PageServerLoad = async ({ cookies }) => {
+    const error = { jwt: undefined };
     const jwt = cookies.get("jwt");
-    const authenticated = jwt !== undefined ? await authenticate(jwt) : false;
-    return { jwt: authenticated ? jwt : undefined };
+
+    if (jwt === undefined) {
+        return error;
+    }
+
+    const { res } = await authenticate(jwt);
+    return res.type === "success" ? { jwt } : error;
 };
 
 export const actions: Actions = {

@@ -19,11 +19,13 @@
         idx = i;
     }
 
-    function close(e?: KeyboardEvent) {
-        if (e && e.key !== "Escape") {
-            return;
+    function closeKey(e: KeyboardEvent) {
+        if (e.key === "Escape") {
+            show = false;
         }
+    }
 
+    function close() {
         show = false;
     }
 
@@ -50,7 +52,7 @@
     }
 </script>
 
-<svelte:window on:keydown={(e) => close(e)} />
+<svelte:window on:keydown={(e) => closeKey(e)} />
 
 {#if show}
     <div
@@ -63,17 +65,17 @@
             >
                 <Prev />
             </button>
-            <div class="flex flex-col p-4">
+            <div class="flex flex-col items-center gap-4 p-4">
                 <img src={active} {alt} loading="lazy" />
                 {#if admin}
                     <button
-                        class="rounded-md border-2 border-black bg-white px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+                        class="h-12 w-48 rounded-md border-2 border-black bg-white px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                         on:click|preventDefault={del}
                     >
                         Delete
                     </button>
                 {/if}
-                <div class="flex flex-row justify-center gap-3 p-4">
+                <div class="flex flex-row justify-center gap-3">
                     {#each [...Array(images.length).keys()] as i}
                         <button
                             on:click={() => open(i)}
@@ -90,7 +92,7 @@
             </button>
             <button
                 class="absolute right-2 top-2"
-                on:click|preventDefault={() => close()}
+                on:click|preventDefault={close}
             >
                 <Close />
             </button>

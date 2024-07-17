@@ -60,7 +60,7 @@
         "available_breed": "Available {breed} puppies",
         "available_gender": "{gender} available",
         "available_gender_co": "{gender} available for co-ownership",
-        "info": "The puppies will leave for their new homes with a puppy pack which includes food, snakcs and toys. Their health has been checked by a veterinarian, and they have been vaccinated and dewormed. The puppies are microchipped, FCI registered and have a European passport.",
+        "info": "The puppies will leave for their new homes with a puppy pack which includes food, snakcs and toys. Their health has been checked by a veterinarian, they are vaccinated and dewormed. The puppies are microchipped, FCI registered and have a European passport.",
         "loading": "Loading available puppies...",
         "loading_breed": "Loading available {breed} puppies...",
         "empty": "There are no puppies available right now",

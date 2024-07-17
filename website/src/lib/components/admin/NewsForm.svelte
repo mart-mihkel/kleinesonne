@@ -28,13 +28,13 @@
     let modal = false;
     let promise: Promise<Name[] | undefined> | undefined = undefined;
 
-    onMount(() => {
-        promise = new Promise(async (resolve) => {
-            const res = await fetchTitles();
-            const data = resdata(res);
-            resolve(data.data);
-        });
-    });
+    onMount(() => (promise = loadTitles()));
+
+    async function loadTitles(): Promise<Name[] | undefined> {
+        const res = await fetchTitles();
+        const data = resdata(res);
+        return data.data;
+    }
 
     function reset() {
         form = { ...INITIAL_DATA };

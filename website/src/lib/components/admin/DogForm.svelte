@@ -36,13 +36,13 @@
     let modal = false;
     let promise: Promise<Name[] | undefined> | undefined = undefined;
 
-    onMount(() => {
-        promise = new Promise(async (resolve) => {
-            const res = await fetchDogNames();
-            const data = resdata(res);
-            resolve(data.data);
-        });
-    });
+    onMount(() => (promise = loadNames()));
+
+    async function loadNames(): Promise<Name[] | undefined> {
+        const res = await fetchDogNames();
+        const data = resdata(res);
+        return data.data;
+    }
 
     function reset() {
         form = { ...INITIAL_DATA };

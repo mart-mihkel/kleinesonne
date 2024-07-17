@@ -34,19 +34,19 @@
     let litterp: Promise<Name[] | undefined> | undefined = undefined;
     let namep: Promise<Name[] | undefined> | undefined = undefined;
 
-    onMount(() => {
-        litterp = new Promise(async (resolve) => {
-            const res = await fetchLitterNames();
-            const data = resdata(res);
-            resolve(data.data);
-        });
+    onMount(() => (litterp = loadLitters()));
 
-        namep = new Promise(async (resolve) => {
-            const res = await fetchPuppyNames(form.litter_id);
-            const data = resdata(res);
-            resolve(data.data);
-        });
-    });
+    async function loadLitters(): Promise<Name[] | undefined> {
+        const res = await fetchLitterNames();
+        const data = resdata(res);
+        return data.data;
+    }
+
+    async function loadNames(id: number): Promise<Name[] | undefined> {
+        const res = await fetchPuppyNames(id);
+        const data = resdata(res);
+        return data.data;
+    }
 
     function reset() {
         form = { ...INITIAL_DATA };
@@ -72,13 +72,10 @@
         }
     }
 
-    async function selectLitter(e: CustomEvent<number>) {
-        form.litter_id = e.detail;
-        namep = new Promise(async (resolve) => {
-            const res = await fetchPuppyNames(form.litter_id);
-            const data = resdata(res);
-            resolve(data.data);
-        });
+    function selectLitter(e: CustomEvent<number>) {
+        const id = e.detail;
+        form.litter_id = id;
+        namep = loadNames(id);
     }
 
     async function delLitter(e: CustomEvent<number>) {
@@ -196,7 +193,7 @@
                     <p>Loading puppies...</p>
                 {:then names}
                     {#if names === undefined}
-                        <p>Loading puppies...</p>
+                        <p>No litter selected</p>
                     {:else}
                         <p>Select puppy</p>
                         <Modal

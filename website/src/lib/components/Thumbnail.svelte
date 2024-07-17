@@ -22,7 +22,7 @@
         class="aspect-square size-full object-cover"
         loading="lazy"
         src={src ?? def}
-        alt=""
+        alt="Dog thumbnail"
     />
     <div
         class="flex w-full flex-col gap-2 bg-gray-200 px-2 pb-2 dark:bg-gray-700"

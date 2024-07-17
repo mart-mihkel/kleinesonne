@@ -2,6 +2,7 @@
     import { Gallery, Error } from "$lib/components";
     import type { Dog } from "$lib/types";
     import { format } from "svelte-i18n";
+    import def from "$lib/assets/default.avif";
 
     export let dog: Dog | undefined;
 </script>
@@ -13,8 +14,8 @@
         <div class="md:w-1/2 md:p-2">
             <img
                 class="size-full object-cover"
-                src={dog.thumbnail}
-                alt=""
+                src={dog.thumbnail ?? def}
+                alt="Dog thumbnail"
                 loading="lazy"
             />
         </div>

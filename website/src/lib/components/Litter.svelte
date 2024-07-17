@@ -3,17 +3,22 @@
     import { Thumbnail, Gallery, Loading, Error, Empty } from "$lib/components";
     import { format } from "svelte-i18n";
     import { fetchPuppies, resdata } from "$lib/api";
+    import { onMount } from "svelte";
 
     export let litter: Litter | undefined;
     export let available = false;
 
-    let promise: Promise<Puppy[] | undefined> | undefined = litter
-        ? new Promise(async (resolve) => {
-              const res = await fetchPuppies(litter.id);
-              const data = resdata(res);
-              resolve(data.data);
-          })
-        : undefined;
+    let promise: Promise<Puppy[] | undefined> | undefined = undefined;
+
+    onMount(() => (promise = litter ? loadPuppies(litter.id) : undefined));
+
+    async function loadPuppies(
+        litter_id: number,
+    ): Promise<Puppy[] | undefined> {
+        const res = await fetchPuppies(litter_id);
+        const data = resdata(res);
+        return data.data;
+    }
 
     function filtered(puppies: Puppy[]): Puppy[] {
         return available

@@ -66,7 +66,11 @@
                 <Prev />
             </button>
             <div class="flex flex-col items-center gap-4 p-4">
-                <img src={active} {alt} loading="lazy" />
+                <img
+                    src={active}
+                    alt={alt ?? "Gallery full image"}
+                    loading="lazy"
+                />
                 {#if admin}
                     <button
                         class="h-12 w-48 rounded-md border-2 border-black bg-white px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
@@ -108,7 +112,7 @@
             <img
                 class="size-full object-cover"
                 src={small(src)}
-                alt={alts[i]}
+                alt={alts[i] ?? "Gallery preview"}
                 loading="lazy"
             />
         </button>

@@ -1,4 +1,4 @@
 declare module "$lib/assets/*" {
-    var meta;
+    let meta;
     export default meta;
 }

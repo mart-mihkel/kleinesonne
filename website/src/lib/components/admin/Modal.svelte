@@ -17,6 +17,7 @@
             return;
         }
 
+        open = false;
         dispatch("select", active);
     }
 
@@ -33,14 +34,18 @@
         dispatch("delete", active);
     }
 
-    function close(e: KeyboardEvent) {
+    function close() {
+        open = false;
+    }
+
+    function closeKey(e: KeyboardEvent) {
         if (e.key === "Escape") {
             open = false;
         }
     }
 </script>
 
-<svelte:window on:keydown={close} />
+<svelte:window on:keydown={closeKey} />
 
 {#if open}
     <div
@@ -81,6 +86,12 @@
                     on:click|preventDefault={del}
                 >
                     Delete
+                </button>
+                <button
+                    class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300"
+                    on:click|stopPropagation={close}
+                >
+                    Cancel
                 </button>
             </div>
         </div>

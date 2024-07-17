@@ -4,7 +4,7 @@
     import { createEventDispatcher } from "svelte";
 
     export let images: string[];
-    export let alts: string[] = [];
+    export let alts: string[] | undefined = undefined;
     export let admin = false;
 
     let dispatch = createEventDispatcher<ModalDispatch>();
@@ -12,7 +12,7 @@
     let show = false;
     let idx = 0;
     $: active = images[idx];
-    $: alt = alts[idx];
+    $: alt = alts ? alts[idx] : "Gallery image";
 
     function open(i: number) {
         show = true;
@@ -27,6 +27,14 @@
 
     function close() {
         show = false;
+    }
+
+    function next() {
+        idx = (idx + 1) % count;
+    }
+
+    function prev() {
+        idx = (idx - 1 + count) % count;
     }
 
     function small(path: string): string {
@@ -44,8 +52,10 @@
         images.splice(idx, 1);
         images = images;
 
-        alts.splice(idx, 1);
-        alts = alts;
+        if (alts !== undefined) {
+            alts.splice(idx, 1);
+            alts = alts;
+        }
 
         count = count - 1;
         idx = idx % count;
@@ -59,18 +69,11 @@
         class="fixed left-0 top-0 size-full overflow-hidden bg-black bg-opacity-50"
     >
         <div class="flex size-full flex-row items-center justify-center">
-            <button
-                on:click|preventDefault={() =>
-                    (idx = (idx - 1 + count) % count)}
-            >
+            <button on:click|preventDefault={prev}>
                 <Prev />
             </button>
             <div class="flex flex-col items-center gap-4 p-4">
-                <img
-                    src={active}
-                    alt={alt ?? "Gallery full image"}
-                    loading="lazy"
-                />
+                <img src={active} {alt} loading="lazy" />
                 {#if admin}
                     <button
                         class="h-12 w-48 rounded-md border-2 border-black bg-white px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
@@ -82,7 +85,7 @@
                 <div class="flex flex-row justify-center gap-3">
                     {#each [...Array(images.length).keys()] as i}
                         <button
-                            on:click={() => open(i)}
+                            on:click|preventDefault={() => open(i)}
                             class="size-3 rounded-full transition-all duration-300"
                             class:bg-white={i === idx}
                             class:bg-gray-300={i !== idx}
@@ -91,7 +94,7 @@
                     {/each}
                 </div>
             </div>
-            <button on:click|preventDefault={() => (idx = (idx + 1) % count)}>
+            <button on:click|preventDefault={next}>
                 <Next />
             </button>
             <button
@@ -112,7 +115,7 @@
             <img
                 class="size-full object-cover"
                 src={small(src)}
-                alt={alts[i] ?? "Gallery preview"}
+                alt={alts ? alts[i] : "Gallery preview"}
                 loading="lazy"
             />
         </button>

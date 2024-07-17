@@ -96,6 +96,7 @@
     </h3>
     <form
         method="POST"
+        id="litterform"
         class="flex flex-col"
         enctype="multipart/form-data"
         use:enhance
@@ -140,50 +141,54 @@
                 multiple={true}
             />
         </label>
-        <Gallery bind:images={form.images} admin on:image={delImage} />
-        <div class="flex flex-row flex-wrap justify-center gap-4 p-4">
-            {#if promise !== undefined}
-                <button
-                    class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                    on:click|preventDefault={() => (modal = true)}
-                >
-                    {#await promise}
-                        <p>Loading names...</p>
-                    {:then titles}
-                        {#if titles === undefined}
-                            <p>Server error</p>
-                        {:else}
-                            <p>Select</p>
-                            <Modal
-                                items={titles}
-                                bind:open={modal}
-                                on:select={select}
-                                on:delete={del}
-                            />
-                        {/if}
-                    {:catch}
-                        <p>Server error</p>
-                    {/await}
-                </button>
-            {/if}
-            <button
-                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                on:click|preventDefault={reset}
-            >
-                Reset form
-            </button>
-            <button
-                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                formaction="?/litterCreate"
-            >
-                Create
-            </button>
-            <button
-                class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-                formaction="?/litterUpdate"
-            >
-                Update
-            </button>
-        </div>
     </form>
+    <Gallery bind:images={form.images} admin on:image={delImage} />
+    <div class="flex flex-row flex-wrap justify-center gap-4 p-4">
+        <button
+            class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+            on:click|preventDefault={() => (modal = true)}
+        >
+            {#if promise === undefined}
+                <p>Loading names...</p>
+            {:else}
+                {#await promise}
+                    <p>Loading names...</p>
+                {:then titles}
+                    {#if titles === undefined}
+                        <p>Server error</p>
+                    {:else}
+                        <p>Select</p>
+                        <Modal
+                            items={titles}
+                            bind:open={modal}
+                            on:select={select}
+                            on:delete={del}
+                        />
+                    {/if}
+                {:catch}
+                    <p>Server error</p>
+                {/await}
+            {/if}
+        </button>
+        <button
+            class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+            on:click|preventDefault={reset}
+        >
+            Reset form
+        </button>
+        <button
+            class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+            form="litterform"
+            formaction="?/litterCreate"
+        >
+            Create
+        </button>
+        <button
+            class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
+            form="litterform"
+            formaction="?/litterUpdate"
+        >
+            Update
+        </button>
+    </div>
 </div>

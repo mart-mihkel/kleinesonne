@@ -14,14 +14,16 @@ pub struct Upload {
     b64: String,
 }
 
+#[tracing::instrument(skip_all)]
 pub async fn upload_image(
     _claims: Claims,
     Json(uploads): Json<Vec<Upload>>,
 ) -> Result<ApiResponse<String>, ApiError> {
     let mut set = JoinSet::new();
 
+    tracing::info!("Spawn image write tasks for {} images", &uploads.len());
     for u in uploads {
-        set.spawn_blocking(move || Ok::<ApiResponse<String>, ApiError>(write_image(u)?));
+        set.spawn(async { Ok::<ApiResponse<String>, ApiError>(write_image(u)?) });
     }
 
     while let Some(res) = set.join_next().await {
@@ -31,7 +33,7 @@ pub async fn upload_image(
     Ok(ApiResponse::Success)
 }
 
-#[tracing::instrument]
+#[tracing::instrument(skip_all)]
 fn write_image(Upload { name, b64 }: Upload) -> Result<ApiResponse<String>, ApiError> {
     let dir = std::env::var("UPLOAD_DIR")?;
     let pieces = name.split("/").last();

@@ -3,6 +3,7 @@ use std::sync::Arc;
 use axum::{serve, Extension, Router};
 use tokio::{net::TcpListener, sync::Mutex};
 use tower_http::cors::CorsLayer;
+use tracing_subscriber::fmt::format::FmtSpan;
 
 mod auth;
 mod dog;
@@ -15,7 +16,9 @@ mod uploads;
 
 #[tokio::main]
 async fn main() {
-    tracing_subscriber::fmt().init();
+    tracing_subscriber::fmt()
+        .with_span_events(FmtSpan::CLOSE)
+        .init();
     tracing::info!("Api started");
 
     let client = Arc::new(Mutex::new(db::connect().await.unwrap()));

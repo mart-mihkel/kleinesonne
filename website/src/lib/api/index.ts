@@ -1,4 +1,18 @@
-import type { ApiResponse } from "$lib/types";
+import type { ApiResponse, ResponseData } from "$lib/types";
+
+export const UNEXPECTED_ERROR = { error: "Unexpected server response" };
+
+export function resdata<D>({ res }: ApiResponse<D>): ResponseData<D> {
+    if (res.type === "error") {
+        return { error: res.error };
+    }
+
+    if (res.type !== "data") {
+        return UNEXPECTED_ERROR;
+    }
+
+    return { data: res.data };
+}
 
 const API_AUTH = "http://127.0.0.1:3000/auth";
 

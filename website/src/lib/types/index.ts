@@ -103,6 +103,8 @@ export type ApiResponse<D> = {
         | { type: "data"; data: D };
 };
 
+export type ResponseData<D> = { error?: string; data?: D };
+
 export enum Gender {
     MALE = "Male",
     FEMALE = "Female",

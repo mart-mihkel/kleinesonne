@@ -1,12 +1,13 @@
-import { fetchAliveDogs, fetchRetiredDogs } from "$lib/api";
+import { fetchAliveDogs, fetchRetiredDogs, resdata } from "$lib/api";
 import { Breed, Gender } from "$lib/types";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ params }) => {
     const breed = params.breed as Breed;
-    return {
-        male: fetchAliveDogs(breed, Gender.MALE),
-        female: fetchAliveDogs(breed, Gender.FEMALE),
-        retired: fetchRetiredDogs(breed),
-    };
+
+    const male = await fetchAliveDogs(breed, Gender.MALE);
+    const female = await fetchAliveDogs(breed, Gender.FEMALE);
+    const retired = await fetchRetiredDogs(breed);
+
+    return [resdata(male), resdata(female), resdata(retired)];
 };

@@ -12,6 +12,7 @@ import {
     uploadLitter,
     uploadPuppy,
     uploadImages,
+    UNEXPECTED_ERROR,
 } from "$lib/api";
 import { parseDate } from "$lib";
 import {
@@ -51,7 +52,7 @@ export const actions: Actions = {
         }
 
         if (res.type !== "token") {
-            return fail(500, { error: "Unexpected response" });
+            return fail(500, UNEXPECTED_ERROR);
         }
 
         cookies.set("jwt", `Bearer ${res.token}`, { path: "/admin" });

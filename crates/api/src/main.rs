@@ -15,6 +15,9 @@ mod uploads;
 
 #[tokio::main]
 async fn main() {
+    tracing_subscriber::fmt().init();
+    tracing::info!("Api started");
+
     let client = Arc::new(Mutex::new(db::connect().await.unwrap()));
 
     let routes = Router::new()
@@ -27,7 +30,10 @@ async fn main() {
         .layer(Extension(client))
         .layer(CorsLayer::permissive());
 
-    let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let addr = "0.0.0.0:3000";
+    let listener = TcpListener::bind(&addr).await.unwrap();
+
+    tracing::info!("Listening on {}", &addr);
 
     serve(listener, routes).await.unwrap();
 }

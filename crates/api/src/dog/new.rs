@@ -52,5 +52,7 @@ pub async fn new_dog(
 
     tx.commit().await?;
 
+    tracing::info!("Create new dog, id = {}", &id);
+
     Ok(ApiResponse::Data(id))
 }

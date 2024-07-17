@@ -27,6 +27,8 @@ pub async fn delete_article(
     db::news::delete_news().bind(&tx, &id).await?;
     tx.commit().await?;
 
+    tracing::info!("Delete article, id = {}", &id);
+
     Ok(ApiResponse::Success)
 }
 
@@ -42,6 +44,8 @@ pub async fn delete_image(
         .await?;
 
     tx.commit().await?;
+
+    tracing::info!("Delete article image, id = {}", &id);
 
     Ok(ApiResponse::Success)
 }

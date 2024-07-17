@@ -8,33 +8,22 @@ use serde_json::json;
 
 #[derive(Serialize)]
 pub enum ApiError {
-    Internal(String),
     NotFound(String),
-    DatabaseError(String),
-    InvalidToken,
-    WrongCredentials,
-    MissingCredentials,
-    TokenCreation,
+    Internal(String),
+    Database(String),
+    Authentication(String),
 }
 
 impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         let (code, message) = match self {
-            ApiError::Internal(cause) => (StatusCode::INTERNAL_SERVER_ERROR, cause),
-            ApiError::NotFound(cause) => (StatusCode::NOT_FOUND, cause),
-            ApiError::DatabaseError(cause) => (StatusCode::INTERNAL_SERVER_ERROR, cause),
-            ApiError::InvalidToken => (StatusCode::BAD_REQUEST, "Invalid token".to_string()),
-            ApiError::WrongCredentials => {
-                (StatusCode::UNAUTHORIZED, "Wrong credentials".to_string())
-            }
-            ApiError::MissingCredentials => {
-                (StatusCode::BAD_REQUEST, "Missing credentials".to_string())
-            }
-            ApiError::TokenCreation => (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                "Token creation error".to_string(),
-            ),
+            ApiError::NotFound(msg) => (StatusCode::NOT_FOUND, msg),
+            ApiError::Internal(msg) => (StatusCode::INTERNAL_SERVER_ERROR, msg),
+            ApiError::Database(msg) => (StatusCode::INTERNAL_SERVER_ERROR, msg),
+            ApiError::Authentication(msg) => (StatusCode::UNAUTHORIZED, msg),
         };
+
+        tracing::error!("status = {}, error = {}", code, message);
 
         (code, Json(json!({"error": message}))).into_response()
     }
@@ -54,7 +43,7 @@ impl From<tokio::task::JoinError> for ApiError {
 
 impl From<tokio_postgres::error::Error> for ApiError {
     fn from(value: tokio_postgres::error::Error) -> Self {
-        ApiError::DatabaseError(value.to_string())
+        ApiError::Database(value.to_string())
     }
 }
 
@@ -73,5 +62,17 @@ impl From<image::ImageError> for ApiError {
 impl From<base64::DecodeError> for ApiError {
     fn from(value: base64::DecodeError) -> Self {
         ApiError::Internal(value.to_string())
+    }
+}
+
+impl From<axum_extra::typed_header::TypedHeaderRejection> for ApiError {
+    fn from(value: axum_extra::typed_header::TypedHeaderRejection) -> Self {
+        ApiError::Authentication(value.to_string())
+    }
+}
+
+impl From<jsonwebtoken::errors::Error> for ApiError {
+    fn from(value: jsonwebtoken::errors::Error) -> Self {
+        ApiError::Authentication(value.to_string())
     }
 }

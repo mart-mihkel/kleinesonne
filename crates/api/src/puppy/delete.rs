@@ -19,7 +19,9 @@ pub async fn delete_puppy(
     let mut client = client.lock().await;
     let tx = client.transaction().await?;
     db::puppy::delete_puppy().bind(&tx, &id).await?;
-    tx.commit().await.map_err(|_| ApiError::DatabaseError)?;
+    tx.commit().await?;
+
+    tracing::info!("Delete puppy, id = {}", &id);
 
     Ok(ApiResponse::Success)
 }
@@ -33,6 +35,8 @@ pub async fn delete_image(
     let tx = client.transaction().await?;
     db::puppy::delete_puppy_image().bind(&tx, &id).await?;
     tx.commit().await?;
+
+    tracing::info!("Delete puppy image, id = {}", &id);
 
     Ok(ApiResponse::Success)
 }

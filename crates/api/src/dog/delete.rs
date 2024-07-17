@@ -27,6 +27,8 @@ pub async fn delete_dog(
     db::dog::delete_dog().bind(&tx, &id).await?;
     tx.commit().await?;
 
+    tracing::info!("Deleted dog, id = {}", &id);
+
     Ok(ApiResponse::Success)
 }
 
@@ -40,6 +42,8 @@ pub async fn delete_thumbnail(
     db::dog::delete_dog_thumbnail().bind(&tx, &id).await?;
     tx.commit().await?;
 
+    tracing::info!("Deleted dog thumbnail, id = {}", &id);
+
     Ok(ApiResponse::Success)
 }
 
@@ -52,6 +56,8 @@ pub async fn delete_image(
     let tx = client.transaction().await?;
     db::dog::delete_dog_image().bind(&tx, &image, &id).await?;
     tx.commit().await?;
+
+    tracing::info!("Deleted dog image, id = {}", &id);
 
     Ok(ApiResponse::Success)
 }

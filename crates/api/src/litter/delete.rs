@@ -27,6 +27,8 @@ pub async fn delete_litter(
     db::litter::delete_litter().bind(&tx, &id).await?;
     tx.commit().await?;
 
+    tracing::info!("Delete litter, id = {}", &id);
+
     Ok(ApiResponse::Success)
 }
 
@@ -43,6 +45,8 @@ pub async fn delete_parents_image(
 
     tx.commit().await?;
 
+    tracing::info!("Delete litter parents image, id = {}", &id);
+
     Ok(ApiResponse::Success)
 }
 
@@ -58,6 +62,8 @@ pub async fn delete_image(
         .await?;
 
     tx.commit().await?;
+
+    tracing::info!("Delete litter image, id = {}", &id);
 
     Ok(ApiResponse::Success)
 }

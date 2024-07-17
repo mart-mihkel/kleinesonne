@@ -35,5 +35,7 @@ pub async fn new_litter(
 
     tx.commit().await?;
 
+    tracing::info!("Create litter, id = {}", &id);
+
     Ok(ApiResponse::Data(id))
 }

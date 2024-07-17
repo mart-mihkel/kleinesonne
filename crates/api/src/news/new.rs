@@ -34,5 +34,7 @@ pub async fn new_article(
 
     tx.commit().await?;
 
+    tracing::info!("Create article, id = {}", &id);
+
     Ok(ApiResponse::Data(id))
 }

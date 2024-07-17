@@ -36,5 +36,7 @@ pub async fn update_litter(
 
     tx.commit().await?;
 
+    tracing::info!("Update litter, id = {}", &litter.id);
+
     Ok(ApiResponse::Success)
 }

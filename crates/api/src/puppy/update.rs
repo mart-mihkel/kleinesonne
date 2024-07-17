@@ -39,5 +39,7 @@ pub async fn update_puppy(
 
     tx.commit().await?;
 
+    tracing::info!("Update puppy, id = {}", &puppy.id);
+
     Ok(ApiResponse::Success)
 }

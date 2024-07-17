@@ -35,7 +35,7 @@ async fn login(
     Json(LoginForm { user, secret }): Json<LoginForm>,
 ) -> Result<impl IntoResponse, ApiError> {
     if user.len() == 0 || secret.len() == 0 {
-        return Err(ApiError::MissingCredentials);
+        return Err(ApiError::Authentication("Missing credentials".to_string()));
     }
 
     let mut client = client.lock().await;
@@ -49,9 +49,12 @@ async fn login(
     let hash = format!("{:x}", hasher.finalize());
 
     if hash != admin.hash {
-        Err(ApiError::WrongCredentials)
+        Err(ApiError::Authentication("Invalid credentials".to_string()))
     } else {
         let token = jwt::create_token(user)?;
+
+        tracing::info!("Granted jwt to {}", &admin.name);
+
         Ok(ApiResponse::Token(token))
     }
 }

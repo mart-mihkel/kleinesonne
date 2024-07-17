@@ -29,17 +29,17 @@ where
     async fn from_request_parts(parts: &mut Parts, _state: &S) -> Result<Self, Self::Rejection> {
         let TypedHeader(Authorization(bearer)) = parts
             .extract::<TypedHeader<Authorization<Bearer>>>()
-            .await
-            .map_err(|_| ApiError::InvalidToken)?;
+            .await?;
 
-        let secret = std::env::var("JWT_SECRET").map_err(|_| ApiError::Internal)?;
+        let secret = std::env::var("JWT_SECRET")?;
         let key = DecodingKey::from_secret(secret.as_bytes());
-        let token_data = decode::<Claims>(bearer.token(), &key, &Validation::default())
-            .map_err(|_| ApiError::InvalidToken)?;
+        let token_data = decode::<Claims>(bearer.token(), &key, &Validation::default())?;
 
         if token_data.claims.exp < secs_from_now(0) {
-            return Err(ApiError::InvalidToken);
+            return Err(ApiError::Authentication("Expired token".to_string()));
         }
+
+        tracing::info!("Validated claims for {}", &token_data.claims.sub);
 
         Ok(token_data.claims)
     }
@@ -51,7 +51,7 @@ pub fn create_token(sub: String) -> Result<String, ApiError> {
 
     let secret = std::env::var("JWT_SECRET")?;
     let key = EncodingKey::from_secret(secret.as_bytes());
-    let token = encode(&Header::default(), &claims, &key).map_err(|_| ApiError::TokenCreation)?;
+    let token = encode(&Header::default(), &claims, &key)?;
 
     Ok(token)
 }

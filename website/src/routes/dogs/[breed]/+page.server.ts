@@ -9,5 +9,5 @@ export const load: PageServerLoad = async ({ params }) => {
     const female = await fetchAliveDogs(breed, Gender.FEMALE);
     const retired = await fetchRetiredDogs(breed);
 
-    return [resdata(male), resdata(female), resdata(retired)];
+    return { data: [resdata(male), resdata(female), resdata(retired)] };
 };

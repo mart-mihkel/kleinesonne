@@ -6,11 +6,15 @@
         Empty,
         LitterList,
     } from "$lib/components";
-    import { type Litter } from "$lib/types";
+    import { type Litter, type ApiResponse } from "$lib/types";
     import { format } from "svelte-i18n";
-    import { fetchLitter } from "$lib/api";
+    import { fetchLitter, resdata } from "$lib/api";
+    import type { PageServerData } from "./$types";
 
-    let litter: Promise<Litter> | undefined = undefined;
+    export let data: PageServerData;
+
+    let names = data.data!;
+    let litter: Promise<ApiResponse<Litter>> | undefined = undefined;
 
     function select(e: CustomEvent<number>) {
         litter = fetchLitter(e.detail);
@@ -22,18 +26,14 @@
     <div
         class="relative flex flex-col border-t border-black md:w-1/4 dark:border-white"
     >
-        <LitterList on:select={select} />
+        <LitterList {names} on:select={select} />
     </div>
     <div class="border-t border-black md:w-3/4 dark:border-white">
         {#if litter !== undefined}
             {#await litter}
                 <Loading text={$format("litter.display.loading")} />
             {:then litter}
-                {#if litter}
-                    <LitterDisplay {litter} />
-                {:else}
-                    <Empty />
-                {/if}
+                <LitterDisplay litter={resdata(litter).data} />
             {:catch}
                 <Error message={$format("litter.display.error")} />
             {/await}

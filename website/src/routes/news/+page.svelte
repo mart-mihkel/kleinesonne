@@ -1,20 +1,23 @@
 <script lang="ts">
     import { Loading, Empty, Error, News } from "$lib/components";
-    import type { Article } from "$lib/types";
+    import type { ApiResponse, Article } from "$lib/types";
     import type { PageData } from "./$types";
     import { format } from "svelte-i18n";
     import { onMount } from "svelte";
-    import { fetchNews } from "$lib/api";
+    import { fetchNews, resdata } from "$lib/api";
 
     export let data: PageData;
 
-    let promise = data.news;
-    let old: Article[] = [];
-    let oldest = Math.floor(new Date().getTime() / 1000);
-    let end = false;
-    let bottom: Element;
+    // TODO: resdata error handling
+    let old = data.data!;
+    let oldest =
+        old.length > 0
+            ? old[old.length - 1].date
+            : Math.floor(new Date().getTime() / 1000);
 
-    promise.then(update);
+    let promise: Promise<ApiResponse<Article[]>> | undefined = undefined;
+    let bottom: Element;
+    let end = false;
 
     onMount(() => {
         const opts = { threshold: 1.0 };
@@ -31,7 +34,12 @@
             return;
         }
 
-        update(await fetchNews(oldest, 5));
+        promise = fetchNews(oldest, 5);
+
+        const res = await promise;
+        const data = resdata(res);
+
+        update(data.data!);
     }
 
     function update(news: Article[]) {

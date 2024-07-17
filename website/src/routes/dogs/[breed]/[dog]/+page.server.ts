@@ -6,5 +6,5 @@ export const load: PageServerLoad = async ({ params }) => {
     const id = params.dog;
     const res = await fetchDog(Number(id));
     const family = await fetchFamily(id);
-    return [resdata(res), family];
+    return { dog: resdata(res), family: resdata(family) };
 };

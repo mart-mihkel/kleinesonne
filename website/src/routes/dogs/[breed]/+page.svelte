@@ -7,6 +7,7 @@
 
     export let data: PageData;
 
+    $: [male, female, retired] = data.data;
     $: breed = $page.params.breed as Breed;
     $: translated = $format(`nav.dog.${breed}`);
     $: options = { values: { breed: translated } };
@@ -21,19 +22,19 @@
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format(`dog.${Gender.MALE}`)}
             </h3>
-            <Dogs promise={data.male} {breed} />
+            <Dogs dogs={male.data} {breed} />
         </div>
         <div class="flex flex-col gap-4 p-1 md:w-1/3">
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format(`dog.${Gender.FEMALE}`)}
             </h3>
-            <Dogs promise={data.female} {breed} />
+            <Dogs dogs={female.data} {breed} />
         </div>
         <div class="flex flex-col gap-4 p-1 md:w-1/3">
             <h3 class="p-2 text-center text-2xl font-semibold">
                 {$format("dog.retired")}
             </h3>
-            <Dogs promise={data.retired} {breed} />
+            <Dogs dogs={retired.data} {breed} />
         </div>
     </div>
 </div>

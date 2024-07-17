@@ -11,6 +11,8 @@ import Empty from "./Empty.svelte";
 import ThemeToggle from "./ThemeToggle.svelte";
 import Locale from "./Locale.svelte";
 import Dogs from "./Dogs.svelte";
+import Dog from "./Dog.svelte";
+import FamilyTree from "./FamilyTree.svelte";
 import LitterList from "./LitterList.svelte";
 import News from "./News.svelte";
 
@@ -28,6 +30,8 @@ export {
     ThemeToggle,
     Locale,
     Dogs,
+    Dog,
+    FamilyTree,
     LitterList,
     News,
 };

@@ -8,16 +8,6 @@ export type Login = {
     secret: string;
 };
 
-export type DogPreview = {
-    id: string;
-    name: string;
-    nickname: string;
-    thumbnail: string | undefined;
-    breed: Breed;
-    gender: Gender;
-    alive: boolean;
-};
-
 export type Dog = {
     id: number;
     name: string;

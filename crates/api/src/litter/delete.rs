@@ -63,7 +63,7 @@ pub async fn delete_image(
 
     tx.commit().await?;
 
-    tracing::info!("Delete litter image, id = {}", &id);
+    tracing::info!("Delete litter image '{}', id = {}", &image, &id);
 
     Ok(ApiResponse::Success)
 }

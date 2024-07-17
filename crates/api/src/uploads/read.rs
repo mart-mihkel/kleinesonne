@@ -8,9 +8,8 @@ pub async fn read_image(Path(name): Path<String>) -> Result<Body, ApiError> {
     let path = std::path::Path::new(&dir).join(&name);
 
     if !path.exists() {
-        return Err(ApiError::NotFound(
-            "Requested image does not exist".to_string(),
-        ));
+        let msg = format!("Requested image '{}' does not exist", &name);
+        return Err(ApiError::NotFound(msg));
     }
 
     let file = tokio::fs::File::open(path).await?;

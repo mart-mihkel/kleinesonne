@@ -42,7 +42,7 @@ pub async fn delete_thumbnail(
     db::dog::delete_dog_thumbnail().bind(&tx, &id).await?;
     tx.commit().await?;
 
-    tracing::info!("Deleted dog thumbnail, id = {}", &id);
+    tracing::info!("Deleted dog thumbnail id = {}", &id);
 
     Ok(ApiResponse::Success)
 }
@@ -57,7 +57,7 @@ pub async fn delete_image(
     db::dog::delete_dog_image().bind(&tx, &image, &id).await?;
     tx.commit().await?;
 
-    tracing::info!("Deleted dog image, id = {}", &id);
+    tracing::info!("Deleted dog image '{}', id = {}", &image, &id);
 
     Ok(ApiResponse::Success)
 }

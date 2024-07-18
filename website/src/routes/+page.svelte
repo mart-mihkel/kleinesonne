@@ -17,7 +17,7 @@
         >
             <enhanced:img
                 class="size-full object-cover"
-                src="/static/aus-puppy.jpg"
+                src="/static/aus-puppy.avif"
                 sizes="min(960, 50vw)"
                 alt="7 week old Australian Shepherd puppies"
                 fetchpriority="high"
@@ -40,7 +40,7 @@
         >
             <enhanced:img
                 class="size-full object-cover"
-                src="/static/ent-puppy.jpg"
+                src="/static/ent-puppy.avif"
                 sizes="min(960, 50vw)"
                 alt="Entlebuch Cattle Dog puppy"
                 fetchpriority="high"
@@ -63,7 +63,7 @@
         >
             <enhanced:img
                 class="size-full object-cover"
-                src="/static/ber-puppy.jpg"
+                src="/static/ber-puppy.avif"
                 sizes="min-width(960px, 50vw)"
                 alt="Month old Bernese Mountain Dog puppies"
                 fetchpriority="high"

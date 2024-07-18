@@ -28,9 +28,9 @@ RUN npm run build
 FROM base AS production
 
 COPY --from=install /tmp/prod/node_modules node_modules
+COPY --from=dev /usr/src/app/package.json package.json
 COPY --from=dev /usr/src/app/build build
 
-
-
+USER node
 EXPOSE 3000/tcp
-ENTRYPOINT [ "node", "build" ]
+ENTRYPOINT [ "node", "build", "--trace-warnings" ]

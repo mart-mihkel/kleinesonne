@@ -14,7 +14,7 @@ export function resdata<D>({ res }: ApiResponse<D>): ResponseData<D> {
     return { data: res.data };
 }
 
-const API_AUTH = "http://127.0.0.1:3000/auth";
+const API_AUTH = "http://api:3000/auth";
 
 export async function authenticate(jwt: string): Promise<ApiResponse<never>> {
     const options = {

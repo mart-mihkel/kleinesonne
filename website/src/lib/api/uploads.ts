@@ -1,7 +1,7 @@
 import { type Image } from "$lib/types";
 import type { ApiResponse } from "$lib/types";
 
-export const API_UPLOADS = "http://127.0.0.1:3000/uploads";
+export const API_UPLOADS = "http://api:3000/uploads";
 
 export async function uploadImages(
     images: Image[],

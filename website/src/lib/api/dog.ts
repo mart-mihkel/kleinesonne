@@ -1,6 +1,6 @@
 import type { ApiResponse, Breed, Dog, Family, Gender, Name } from "$lib/types";
 
-export const API_DOG = "http://127.0.0.1:3000/dog";
+export const API_DOG = "http://api:3000/dog";
 
 export async function fetchFamily(name: string): Promise<ApiResponse<Family>> {
     // TODO: graphdb

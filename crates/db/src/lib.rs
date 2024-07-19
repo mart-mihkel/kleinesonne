@@ -27,12 +27,12 @@ pub async fn connect() -> Result<Client, tokio_postgres::Error> {
 }
 
 fn config() -> Config {
-    let host = env::var("DB_HOST").expect("Env variable DB_HOST is undefined");
-    let user = env::var("DB_USER").expect("Env variable DB_USER is undefined");
-    let password = env::var("DB_PASSWORD").expect("Env variable DB_PASSWORD is undefined");
+    let user = env::var("POSTGRES_USER").expect("POSTGRES_USER undefined");
+    let password = env::var("POSTGRES_PASSWORD").expect("POSTGRES_PASSWORD undefined");
 
     let mut conf = Config::new();
-    conf.host(host.as_str())
+    conf.host("db")
+        .dbname(user.as_str())
         .user(user.as_str())
         .password(password.as_str());
 

@@ -7,6 +7,10 @@ export async function uploadImages(
     images: Image[],
     jwt: string,
 ): Promise<ApiResponse<never>> {
+    if (images.length === 0) {
+        return { res: { type: "success" } };
+    }
+
     const options = {
         headers: { "Content-Type": "application/json", Authorization: jwt },
         method: "POST",

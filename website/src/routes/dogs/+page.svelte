@@ -3,43 +3,52 @@
     import { Breed } from "$lib/types";
     import { format } from "svelte-i18n";
 
-    import ausAdult from "$lib/assets/aus-adult.avif";
-    import ausPuppy from "$lib/assets/aus-puppy.avif";
-    import ausDraw from "$lib/assets/aus-draw.avif";
-    const aus = [ausAdult, ausPuppy, ausDraw];
-    const ausAlt = [
-        "Adult merle Australian Shepherd",
-        "7 week old Australian Shepherd puppies",
-        "Standard Australian Shepherd pencil drawing",
-    ];
+    import aadult from "$lib/assets/aus-adult.avif";
+    import apuppy from "$lib/assets/aus-puppy.avif";
+    import adraw from "$lib/assets/aus-draw.avif";
+    const australian = {
+        title: $format(`nav.dog.${Breed.AUSTRALIAN}`),
+        src: [aadult, apuppy, adraw],
+        alt: [
+            "Adult merle Australian Shepherd",
+            "7 week old Australian Shepherd puppies",
+            "Standard Australian Shepherd pencil drawing",
+        ],
+    };
 
-    import entAdult from "$lib/assets/ent-adult.avif";
-    import entPuppy from "$lib/assets/ent-puppy.avif";
-    import entDraw from "$lib/assets/ent-draw.avif";
-    const ent = [entAdult, entPuppy, entDraw];
-    const entAlt = [
-        "Adult Entlebuch Cattle Dog",
-        "Entlebuch Cattle Dog puppy",
-        "Standard Entlebuch Cattle Dog pencil drawing",
-    ];
+    import eadult from "$lib/assets/ent-adult.avif";
+    import epuppy from "$lib/assets/ent-puppy.avif";
+    import edraw from "$lib/assets/ent-draw.avif";
+    const entlebuch = {
+        title: $format(`nav.dog.${Breed.ENTLEBUCH}`),
+        src: [eadult, epuppy, edraw],
+        alt: [
+            "Adult Entlebuch Cattle Dog",
+            "Entlebuch Cattle Dog puppy",
+            "Standard Entlebuch Cattle Dog pencil drawing",
+        ],
+    };
 
-    import berAdult from "$lib/assets/ber-adult.avif";
-    import berPuppy from "$lib/assets/ber-puppy.avif";
-    import berDraw from "$lib/assets/ber-draw.avif";
-    const ber = [berAdult, berPuppy, berDraw];
-    const berAlt = [
-        "Adult Bernese Mountain Dog",
-        "Month old Bernese Mountain Dog puppies",
-        "Standard Bernsese Mountain Dog pencil drawing",
-    ];
+    import badult from "$lib/assets/ber-adult.avif";
+    import bpuppy from "$lib/assets/ber-puppy.avif";
+    import bdraw from "$lib/assets/ber-draw.avif";
+    const bernese = {
+        title: $format(`nav.dog.${Breed.BERNESE}`),
+        src: [badult, bpuppy, bdraw],
+        alt: [
+            "Adult Bernese Mountain Dog",
+            "Month old Bernese Mountain Dog puppies",
+            "Standard Bernsese Mountain Dog pencil drawing",
+        ],
+    };
 
     const fci = $format("intro.fci");
 </script>
 
 <div class="flex flex-col gap-8 pb-4 md:px-[5%] lg:px-[25%]">
-    <div class="flex flex-col">
+    <section id={australian.title} class="flex flex-col">
         <h2 class="p-4 text-center text-4xl font-bold">
-            {$format(`nav.dog.${Breed.AUSTRALIAN}`)}
+            {australian.title}
         </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
@@ -58,12 +67,15 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={aus} alts={ausAlt} />
+        <Gallery images={australian.src} alts={australian.alt} smalls={false} />
         <p class="text-justify">{$format(`intro.${Breed.AUSTRALIAN}`)}</p>
-    </div>
-    <div class="flex flex-col border-t border-black dark:border-white">
+    </section>
+    <section
+        id={entlebuch.title}
+        class="flex flex-col border-t border-black dark:border-white"
+    >
         <h2 class="p-4 text-center text-4xl font-bold">
-            {$format(`nav.dog.${Breed.ENTLEBUCH}`)}
+            {entlebuch.title}
         </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
@@ -82,12 +94,15 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={ent} alts={entAlt} />
+        <Gallery images={entlebuch.src} alts={entlebuch.alt} smalls={false} />
         <p class="text-justify">{$format(`intro.${Breed.ENTLEBUCH}`)}</p>
-    </div>
-    <div class="flex flex-col border-t border-black dark:border-white">
+    </section>
+    <section
+        id={bernese.title}
+        class="flex flex-col border-t border-black dark:border-white"
+    >
         <h2 class="p-4 text-center text-4xl font-bold">
-            {$format(`nav.dog.${Breed.BERNESE}`)}
+            {bernese.title}
         </h2>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
@@ -106,7 +121,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={ber} alts={berAlt} />
+        <Gallery images={bernese.src} alts={bernese.alt} smalls={false} />
         <p class="text-justify">{$format(`intro.${Breed.BERNESE}`)}</p>
-    </div>
+    </section>
 </div>

@@ -5,6 +5,7 @@
 
     export let images: string[];
     export let alts: string[] | undefined = undefined;
+    export let smalls = true;
     export let admin = false;
 
     let dispatch = createEventDispatcher<ModalDispatch>();
@@ -114,7 +115,7 @@
         >
             <img
                 class="size-full object-cover"
-                src={small(src)}
+                src={smalls ? small(src) : src}
                 alt={alts ? alts[i] : "Gallery preview"}
                 loading="lazy"
             />

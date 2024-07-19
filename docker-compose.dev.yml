@@ -1,34 +1,48 @@
 services:
-  # proxy:
-  #   image: nginx
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   volumes:
-  #     - proxy:/etc/nginx/templates
-
   website:
+    image: node:22
     container_name: website
-    build:
-      context: website
-      target: dev
+    user: node
+    working_dir: /usr/src/app
     command: npm run dev -- --host
+    volumes:
+      - ./website:/usr/src/app
     ports:
       - 5173:5173
-  #   depends_on:
-  #     - api
-  #     - db
-  #
-  # api:
-  #   image: rust:alpine
-  #   ports:
-  #     - 3000:3000
-  #   volumes:
-  #     - crates:/usr/src/api
-  #   depends_on:
-  #     - db
-  #
-  # db:
-  #   image: postgres:alpine
-  #   ports:
-  #     - 5432:5432
+    depends_on:
+      - api
+
+  api:
+    image: rust:1.79
+    container_name: api
+    working_dir: /usr/src/app
+    command: cargo run api
+    environment:
+      NO_BUILD_SCRIPT: true
+      UPLOAD_DIR: /usr/src/app/uploads
+      JWT_SECRET: dev
+      POSTGRES_USER: sonne
+      POSTGRES_PASSWORD: sonne
+    volumes:
+      - uploads-dev:/usr/src/app/uploads
+      - ./crates:/usr/src/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      POSTGRES_USER: sonne
+      POSTGRES_PASSWORD: sonne
+    volumes:
+      - db-data-dev:/var/lib/postgresql/data
+      - ./db/psql_dev_dump.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5000:5432
+
+volumes:
+  db-data-dev:
+  uploads-dev:

@@ -1,36 +1,25 @@
-FROM node:22-alpine AS base
+FROM node:22-alpine AS install
 WORKDIR /usr/src/app
 
-
-
-FROM base AS install
-
-RUN mkdir -p /tmp/dev
-COPY package*.json /tmp/dev/
-RUN cd /tmp/dev && npm ci --frozen-lockfile --verbose
+COPY . .
+RUN npm install -g vite --verbose
+RUN npm install -g @rollup/plugin-commonjs --verbose
+RUN npm install --verbose --frozen-lockfile
+RUN npm run build
 
 RUN mkdir -p /tmp/prod
 COPY package*.json /tmp/prod/
-RUN cd /tmp/prod && npm ci --frozen-lockfile --production --verbose
+RUN cd /tmp/prod && npm install --production --verbose --frozen-lockfile
 
 
 
-FROM base AS dev
+FROM install AS prod
+WORKDIR /usr/src/app
 
-COPY --from=install /tmp/dev/node_modules node_modules
-COPY . .
-
-ENV NODE_ENV=production
-RUN npm run build
-
-
-
-FROM base AS production
-
+COPY --from=install /usr/src/app/build build
+COPY --from=install /usr/src/app/package.json package.json 
 COPY --from=install /tmp/prod/node_modules node_modules
-COPY --from=dev /usr/src/app/package.json package.json
-COPY --from=dev /usr/src/app/build build
 
 USER node
 EXPOSE 3000/tcp
-ENTRYPOINT [ "node", "build", "--trace-warnings" ]
+ENTRYPOINT [ "node", "build" ]

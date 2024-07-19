@@ -1,4 +1,9 @@
 fn main() -> Result<(), cornucopia::Error> {
+    if let Ok(_) = std::env::var("NO_BUILD_SCRIPT") {
+        println!("Skipping db crate build script!");
+        return Ok(());
+    }
+
     let queries_path = "queries";
     let schema_file = "../../db/psql_dev_dump.sql";
     let destination = "src/cornucopia.rs";

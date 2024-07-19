@@ -1,0 +1,55 @@
+services:
+  website:
+    container_name: website
+    build:
+      context: website
+      target: prod
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+
+  api:
+    container_name: api
+    build:
+      context: crates
+      target: pord
+    secrets:
+      - jwt-secret
+      - db-password
+    volumes:
+      - uploads:/usr/src/app/uploads
+    environment:
+      UPLOAD_DIR: /usr/src/app/uploads
+      JWT_SECRET: /run/secrets/jwt-secret
+      POSTGRES_USER: sonne
+      POSTGRES_PASSWORD: /run/secrets/db-password
+    ports:
+      - 4000:3000
+    command: cargo run api
+    depends_on:
+      - db
+
+  db:
+    image: postgres:alpine
+    container_name: db
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./db/psql_dump.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: sonne
+      POSTGRES_PASSWORD: /run/secrets/db-password
+    ports:
+      - 5000:5432
+
+volumes:
+  db-data:
+  uploads:
+
+secrets:
+  db-password:
+    file: secrets/db-password
+  jwt-secret:
+    file: secrets/jwt-secret

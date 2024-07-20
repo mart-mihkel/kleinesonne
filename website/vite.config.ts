@@ -1,15 +1,13 @@
-import { sveltekit } from "@sveltejs/kit/vite";
 import { enhancedImages } from "@sveltejs/enhanced-img";
 import { defineConfig } from "vite";
-
-const DEV_API = "http://localhost:3000";
+import { sveltekit } from "@sveltejs/kit/vite";
 
 export default defineConfig({
     plugins: [enhancedImages(), sveltekit()],
     server: {
         proxy: {
             "/api": {
-                target: DEV_API,
+                target: "http://api:3000",
                 rewrite: (path) => path.replace(/^\/api/, ""),
             },
         },

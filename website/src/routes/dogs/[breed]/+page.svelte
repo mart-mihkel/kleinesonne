@@ -1,9 +1,9 @@
 <script lang="ts">
+    import type { PageData } from "./$types";
     import { Dogs } from "$lib/components";
     import { page } from "$app/stores";
     import { format } from "svelte-i18n";
-    import type { PageData } from "./$types";
-    import { Breed, Gender } from "$lib/types";
+    import { Breed, Gender } from "$lib/enums";
 
     export let data: PageData;
 

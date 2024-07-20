@@ -1,6 +1,6 @@
 <script lang="ts">
+    import { Breed } from "$lib/enums";
     import { Gallery } from "$lib/components";
-    import { Breed } from "$lib/types";
     import { format } from "svelte-i18n";
 
     import aadult from "$lib/assets/aus-adult.avif";

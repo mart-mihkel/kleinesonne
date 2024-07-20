@@ -1,6 +1,6 @@
 <script>
     import { Arrow } from "$lib/svg";
-    import { Breed } from "$lib/types";
+    import { Breed } from "$lib/enums";
     import { format } from "svelte-i18n";
 </script>
 

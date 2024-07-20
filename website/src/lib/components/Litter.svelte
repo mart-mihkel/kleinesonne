@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { Availability, type Litter, type Puppy } from "$lib/types";
-    import { Thumbnail, Gallery, Loading, Error, Empty } from "$lib/components";
     import { format } from "svelte-i18n";
-    import { fetchPuppies, resdata } from "$lib/api";
     import { onMount } from "svelte";
+    import { Thumbnail, Gallery, Loading, Error, Empty } from "$lib/components";
+    import { fetchPuppies, resdata } from "$lib/api";
+    import { Availability } from "$lib/enums";
+    import type { Litter, Puppy } from "$lib/types";
 
     export let litter: Litter | undefined;
     export let available = false;

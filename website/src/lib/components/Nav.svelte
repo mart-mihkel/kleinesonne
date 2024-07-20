@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { Breed } from "$lib/types";
-    import { Dropdown } from "$lib/components";
     import { format } from "svelte-i18n";
     import { slide } from "svelte/transition";
+    import { Breed } from "$lib/enums";
+    import { Dropdown } from "$lib/components";
 
     let extended = true;
 

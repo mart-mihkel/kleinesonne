@@ -1,4 +1,5 @@
-import { Breed, type LongBreed } from "$lib/types";
+import type { LongBreed } from "$lib/types";
+import { Breed } from "$lib/enums";
 
 export function longBreed(breed: Breed): LongBreed {
     switch (breed) {

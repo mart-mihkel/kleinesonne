@@ -1,3 +1,5 @@
+import type { Availability, Breed, Gender } from "$lib/enums";
+
 export type LongBreed =
     | "Australian Shepherd"
     | "Bernese Mountain Dog"
@@ -85,6 +87,8 @@ export type Image = {
     b64: string;
 };
 
+export type SsrFetch = (input: string, init: RequestInit) => Promise<Response>;
+
 export type ApiResponse<D> = {
     res:
         | { type: "success" }
@@ -94,20 +98,3 @@ export type ApiResponse<D> = {
 };
 
 export type ResponseData<D> = { error?: string; data?: D };
-
-export enum Gender {
-    MALE = "Male",
-    FEMALE = "Female",
-}
-
-export enum Breed {
-    AUSTRALIAN = "Australian",
-    BERNESE = "Bernese",
-    ENTLEBUCH = "Entlebuch",
-}
-
-export enum Availability {
-    AVAILABLE = "Available",
-    UNAVAILABLE = "Unavailable",
-    CO_OWNERSHIP = "Co",
-}

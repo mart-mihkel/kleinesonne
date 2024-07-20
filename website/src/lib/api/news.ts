@@ -1,6 +1,7 @@
 import type { Article, Name, Title, ApiResponse, SsrFetch } from "$lib/types";
 
 export const API_NEWS = "/api/news";
+const SSR_NEWS = "http://api:3000/news";
 
 export async function fetchTitles(): Promise<ApiResponse<Name[]>> {
     const options = {
@@ -43,7 +44,7 @@ export async function fetchNews(
     };
 
     const res = ssr
-        ? await ssr(API_NEWS + "/from", options)
+        ? await ssr(SSR_NEWS + "/from", options)
         : await fetch(API_NEWS + "/from", options);
 
     const body = await res.json();
@@ -63,7 +64,7 @@ export async function uploadArticle(
         body: JSON.stringify(article),
     };
 
-    const res = await fetch(API_NEWS + "/new", options);
+    const res = await fetch(SSR_NEWS + "/new", options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -81,7 +82,7 @@ export async function updateArticle(
         body: JSON.stringify(article),
     };
 
-    const res = await fetch(API_NEWS + "/update", options);
+    const res = await fetch(SSR_NEWS + "/update", options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "success" } }

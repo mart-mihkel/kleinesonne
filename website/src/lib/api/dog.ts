@@ -2,6 +2,7 @@ import { Gender, Breed } from "$lib/enums";
 import type { ApiResponse, Dog, Family, Name, SsrFetch } from "$lib/types";
 
 export const API_DOG = "/api/dog";
+const SSR_DOG = "http://api:3000/dog";
 
 export async function fetchFamily(
     ssr: SsrFetch,
@@ -36,7 +37,7 @@ export async function fetchDog(
     };
 
     const res = ssr
-        ? await ssr(API_DOG + "/one", options)
+        ? await ssr(SSR_DOG + "/one", options)
         : await fetch(API_DOG + "/one", options);
 
     const body = await res.json();
@@ -60,7 +61,7 @@ export async function fetchAliveDogs(
     };
 
     const res = ssr
-        ? await ssr(API_DOG + "/alive", options)
+        ? await ssr(SSR_DOG + "/alive", options)
         : await fetch(API_DOG + "/alive", options);
 
     const body = await res.json();
@@ -82,7 +83,7 @@ export async function fetchRetiredDogs(
     };
 
     const res = ssr
-        ? await ssr(API_DOG + "/retired", options)
+        ? await ssr(SSR_DOG + "/retired", options)
         : await fetch(API_DOG + "/retired", options);
 
     const body = await res.json();
@@ -102,7 +103,7 @@ export async function uploadDog(
         body: JSON.stringify(dog),
     };
 
-    const res = await fetch(API_DOG + "/new", options);
+    const res = await fetch(SSR_DOG + "/new", options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -120,7 +121,7 @@ export async function updateDog(
         body: JSON.stringify(dog),
     };
 
-    const res = await fetch(API_DOG + "/update", options);
+    const res = await fetch(SSR_DOG + "/update", options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "success" } }

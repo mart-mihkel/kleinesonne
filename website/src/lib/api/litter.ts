@@ -2,6 +2,7 @@ import type { Breed } from "$lib/enums";
 import type { ApiResponse, Litter, Name, SsrFetch } from "$lib/types";
 
 export const API_LITTER = "/api/litter";
+const SSR_LITTER = "http://api:3000/litter";
 
 export async function fetchLitterNames(
     ssr?: SsrFetch,
@@ -12,7 +13,7 @@ export async function fetchLitterNames(
     };
 
     const res = ssr
-        ? await ssr(API_LITTER + "/names", options)
+        ? await ssr(SSR_LITTER + "/names", options)
         : await fetch(API_LITTER + "/names", options);
 
     const body = await res.json();
@@ -44,7 +45,7 @@ export async function fetchAvaialbleLitters(
     };
 
     const res = ssr
-        ? await ssr(API_LITTER + "/available", options)
+        ? await ssr(SSR_LITTER + "/available", options)
         : await fetch(API_LITTER + "/available", options);
 
     const body = await res.json();
@@ -64,7 +65,7 @@ export async function fetchAvaialbleLittersByBreed(
     };
 
     const res = ssr
-        ? await ssr(API_LITTER + "/breed", options)
+        ? await ssr(SSR_LITTER + "/breed", options)
         : await fetch(API_LITTER + "/breed", options);
 
     const body = await res.json();
@@ -84,7 +85,7 @@ export async function uploadLitter(
         body: JSON.stringify(litter),
     };
 
-    const res = await fetch(API_LITTER + "/new", options);
+    const res = await fetch(SSR_LITTER + "/new", options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -102,7 +103,7 @@ export async function updateLitter(
         body: JSON.stringify(litter),
     };
 
-    const res = await fetch(API_LITTER + "/update", options);
+    const res = await fetch(SSR_LITTER + "/update", options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "success" } }

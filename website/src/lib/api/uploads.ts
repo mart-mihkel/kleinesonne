@@ -2,6 +2,7 @@ import type { Image, SsrFetch } from "$lib/types";
 import type { ApiResponse } from "$lib/types";
 
 export const API_UPLOADS = "/api/uploads";
+const SSR_UPLOADS = "http://api:3000/uploads";
 
 export async function uploadImages(
     fetch: SsrFetch,
@@ -18,7 +19,7 @@ export async function uploadImages(
         body: JSON.stringify(images),
     };
 
-    const res = await fetch(API_UPLOADS, options);
+    const res = await fetch(SSR_UPLOADS, options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "success" } }

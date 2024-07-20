@@ -1,6 +1,6 @@
 import type { ApiResponse, SsrFetch } from "$lib/types";
 
-export const API_AUTH = "/api/auth";
+const SSR_AUTH = "http://api:3000/auth";
 
 export async function authenticate(
     fetch: SsrFetch,
@@ -14,7 +14,7 @@ export async function authenticate(
         method: "GET",
     };
 
-    const res = await fetch(API_AUTH, options);
+    const res = await fetch(SSR_AUTH, options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "success" } }
@@ -32,7 +32,7 @@ export async function login(
         body: JSON.stringify({ user, secret }),
     };
 
-    const res = await fetch(API_AUTH, options);
+    const res = await fetch(SSR_AUTH, options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "token", token: body.token } }

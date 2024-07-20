@@ -14,7 +14,7 @@ export function resdata<D>({ res }: ApiResponse<D>): ResponseData<D> {
     return { data: res.data };
 }
 
-export { API_AUTH, authenticate, login } from "./auth";
+export { authenticate, login } from "./auth";
 
 export { API_UPLOADS, uploadImages, deleteImage } from "./uploads";
 

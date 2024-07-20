@@ -1,6 +1,7 @@
 import type { ApiResponse, Name, Puppy, SsrFetch } from "$lib/types";
 
 export const API_PUPPY = "/api/puppy";
+const SSR_PUPPY = "http://api:3000/puppy";
 
 export async function fetchPuppyNames(
     litter_id: number,
@@ -75,7 +76,7 @@ export async function uploadPuppy(
         body: JSON.stringify(puppy),
     };
 
-    const res = await fetch(API_PUPPY + "/new", options);
+    const res = await fetch(SSR_PUPPY + "/new", options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -93,7 +94,7 @@ export async function updatePuppy(
         body: JSON.stringify(puppy),
     };
 
-    const res = await fetch(API_PUPPY + "/update", options);
+    const res = await fetch(SSR_PUPPY + "/update", options);
     const body = await res.json();
     return res.ok
         ? { res: { type: "success" } }

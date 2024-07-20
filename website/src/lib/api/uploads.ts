@@ -1,9 +1,10 @@
-import { type Image } from "$lib/types";
+import type { Image, SsrFetch } from "$lib/types";
 import type { ApiResponse } from "$lib/types";
 
-export const API_UPLOADS = "http://api:3000/uploads";
+export const API_UPLOADS = "/api/uploads";
 
 export async function uploadImages(
+    fetch: SsrFetch,
     images: Image[],
     jwt: string,
 ): Promise<ApiResponse<never>> {

@@ -91,7 +91,7 @@
                     class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300"
                     on:click|stopPropagation={close}
                 >
-                    Cancel
+                    Close
                 </button>
             </div>
         </div>

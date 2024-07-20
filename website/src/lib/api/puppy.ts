@@ -1,6 +1,6 @@
-import { type ApiResponse, type Name, type Puppy } from "$lib/types";
+import type { ApiResponse, Name, Puppy, SsrFetch } from "$lib/types";
 
-export const API_PUPPY = "http://api:3000/puppy";
+export const API_PUPPY = "/api/puppy";
 
 export async function fetchPuppyNames(
     litter_id: number,
@@ -65,6 +65,7 @@ export async function fetchAvailablePuppies(
 }
 
 export async function uploadPuppy(
+    fetch: SsrFetch,
     puppy: Puppy,
     jwt: string,
 ): Promise<ApiResponse<number>> {
@@ -82,6 +83,7 @@ export async function uploadPuppy(
 }
 
 export async function updatePuppy(
+    fetch: SsrFetch,
     puppy: Puppy,
     jwt: string,
 ): Promise<ApiResponse<never>> {

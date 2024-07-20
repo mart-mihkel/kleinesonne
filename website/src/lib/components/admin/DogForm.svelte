@@ -1,9 +1,11 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
+    import { onMount } from "svelte";
+    import { formDate } from "$lib";
+    import type { Name } from "$lib/types";
+    import { Breed, Gender } from "$lib/enums";
     import { Modal } from "$lib/components/admin";
     import { Gallery } from "$lib/components";
-    import { Breed, Gender, type Name } from "$lib/types";
-    import { formDate } from "$lib";
     import {
         API_DOG,
         deleteDog,
@@ -12,7 +14,6 @@
         fetchDogNames,
         resdata,
     } from "$lib/api";
-    import { onMount } from "svelte";
 
     export let jwt: string;
 

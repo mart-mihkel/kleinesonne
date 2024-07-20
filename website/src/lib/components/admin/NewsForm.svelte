@@ -1,5 +1,7 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
+    import { onMount } from "svelte";
+    import { formDate } from "$lib";
     import type { Name } from "$lib/types";
     import { Modal } from "$lib/components/admin";
     import { Gallery } from "$lib/components";
@@ -11,8 +13,6 @@
         API_NEWS,
         resdata,
     } from "$lib/api";
-    import { formDate } from "$lib";
-    import { onMount } from "svelte";
 
     export let jwt: string;
 

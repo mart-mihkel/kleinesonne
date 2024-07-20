@@ -1,5 +1,6 @@
 import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
+import { formArticle, formDog, formLitter, formPuppy } from "$lib/forms";
 import {
     authenticate,
     login,
@@ -14,21 +15,8 @@ import {
     uploadImages,
     UNEXPECTED_ERROR,
 } from "$lib/api";
-import { parseDate } from "$lib";
-import {
-    Availability,
-    Breed,
-    Gender,
-    type Article,
-    type Dog,
-    type Image,
-    type Litter,
-    type Puppy,
-} from "$lib/types";
-import { API_UPLOADS } from "$lib/api/uploads";
-import { nanoid } from "nanoid";
 
-export const load: PageServerLoad = async ({ cookies }) => {
+export const load: PageServerLoad = async ({ fetch, cookies }) => {
     const error = { jwt: undefined };
     const jwt = cookies.get("jwt");
 
@@ -36,12 +24,12 @@ export const load: PageServerLoad = async ({ cookies }) => {
         return error;
     }
 
-    const { res } = await authenticate(jwt);
+    const { res } = await authenticate(fetch, jwt);
     return res.type === "success" ? { jwt } : error;
 };
 
 export const actions: Actions = {
-    login: async ({ request, cookies }) => {
+    login: async ({ fetch, request, cookies }) => {
         const data = await request.formData();
 
         const user = data.get("user");
@@ -51,7 +39,7 @@ export const actions: Actions = {
             return fail(400, { error: "Missing credentials" });
         }
 
-        const { res } = await login(user as string, secret as string);
+        const { res } = await login(fetch, user as string, secret as string);
 
         if (res.type === "error") {
             return fail(500, { error: res.error });
@@ -64,7 +52,7 @@ export const actions: Actions = {
         cookies.set("jwt", `Bearer ${res.token}`, { path: "/admin" });
         return { success: true };
     },
-    newsCreate: async ({ request, cookies }) => {
+    newsCreate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {
             return fail(401, { error: "Unauthorized" });
@@ -76,19 +64,19 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const { res } = await uploadArticle(article, jwt);
+        const { res } = await uploadArticle(fetch, article, jwt);
         if (res.type === "error") {
             return fail(500, { error: res.error });
         }
 
-        const img = await uploadImages(images, jwt);
+        const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
         }
 
         return { success: true };
     },
-    newsUpdate: async ({ request, cookies }) => {
+    newsUpdate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {
             return fail(401, { error: "Unauthorized" });
@@ -100,19 +88,19 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const { res } = await updateArticle(article, jwt);
+        const { res } = await updateArticle(fetch, article, jwt);
         if (res.type === "error") {
             return fail(500, { error: res.error });
         }
 
-        const img = await uploadImages(images, jwt);
+        const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
         }
 
         return { success: true };
     },
-    dogCreate: async ({ request, cookies }) => {
+    dogCreate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {
             return fail(401, { error: "Unauthorized" });
@@ -124,19 +112,19 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const { res } = await uploadDog(dog, jwt);
+        const { res } = await uploadDog(fetch, dog, jwt);
         if (res.type === "error") {
             return fail(500, { error: res.error });
         }
 
-        const img = await uploadImages(images, jwt);
+        const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
         }
 
         return { success: true };
     },
-    dogUpdate: async ({ request, cookies }) => {
+    dogUpdate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {
             return fail(401, { error: "Unauthorized" });
@@ -148,19 +136,19 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const { res } = await updateDog(dog, jwt);
+        const { res } = await updateDog(fetch, dog, jwt);
         if (res.type === "error") {
             return fail(500, { error: res.error });
         }
 
-        const img = await uploadImages(images, jwt);
+        const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
         }
 
         return { success: true };
     },
-    litterCreate: async ({ request, cookies }) => {
+    litterCreate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {
             return fail(401, { error: "Unauthorized" });
@@ -172,19 +160,19 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const { res } = await uploadLitter(litter, jwt);
+        const { res } = await uploadLitter(fetch, litter, jwt);
         if (res.type === "error") {
             return fail(500, { error: res.error });
         }
 
-        const img = await uploadImages(images, jwt);
+        const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
         }
 
         return { success: true };
     },
-    litterUpdate: async ({ request, cookies }) => {
+    litterUpdate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {
             return fail(401, { error: "Unauthorized" });
@@ -196,19 +184,19 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const { res } = await updateLitter(litter, jwt);
+        const { res } = await updateLitter(fetch, litter, jwt);
         if (res.type === "error") {
             return fail(500, { error: res.error });
         }
 
-        const img = await uploadImages(images, jwt);
+        const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
         }
 
         return { success: true };
     },
-    puppyCreate: async ({ request, cookies }) => {
+    puppyCreate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {
             return fail(401, { error: "Unauthorized" });
@@ -220,19 +208,19 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const { res } = await uploadPuppy(puppy, jwt);
+        const { res } = await uploadPuppy(fetch, puppy, jwt);
         if (res.type === "error") {
             return fail(500, { error: res.error });
         }
 
-        const img = await uploadImages(images, jwt);
+        const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
         }
 
         return { success: true };
     },
-    puppyUpdate: async ({ request, cookies }) => {
+    puppyUpdate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {
             return fail(401, { error: "Unauthorized" });
@@ -244,12 +232,12 @@ export const actions: Actions = {
             return fail(400, { error: "Incomplete form" });
         }
 
-        const { res } = await updatePuppy(puppy, jwt);
+        const { res } = await updatePuppy(fetch, puppy, jwt);
         if (res.type === "error") {
             return fail(500, { error: res.error });
         }
 
-        const img = await uploadImages(images, jwt);
+        const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
         }
@@ -257,163 +245,3 @@ export const actions: Actions = {
         return { success: true };
     },
 };
-
-type Prefix = "news" | "dogs" | "litters" | "";
-
-async function mapImages(
-    images: File[],
-    prefix: Prefix = "",
-): Promise<Image[]> {
-    const promises = (images as File[])
-        .filter((f) => f.size !== 0)
-        .map(async (f) => {
-            const name = `${API_UPLOADS}/${prefix ? prefix + "-" : ""}${nanoid()}.avif`;
-            const buf = await f.arrayBuffer();
-            const bytes = new Uint8Array(buf);
-            const ascii = [...bytes]
-                .map((b) => String.fromCharCode(b))
-                .join("");
-            const b64 = btoa(ascii);
-            return { name, b64 };
-        });
-
-    return Promise.all(promises);
-}
-
-async function formArticle(
-    data: FormData,
-): Promise<[Article | undefined, Image[]]> {
-    const id = data.get("id");
-    const title = data.get("title");
-    const date = data.get("date");
-    const text = data.get("text");
-    const images = data.getAll("images");
-
-    if (!id || !title || !date || !text || !images) {
-        return [undefined, []];
-    }
-
-    const files = await mapImages(images as File[], "news");
-
-    return [
-        {
-            id: Number(id),
-            title: title as string,
-            date: parseDate(date as string),
-            text: text as string,
-            images: files.map((f) => f.name),
-        },
-        files,
-    ];
-}
-
-async function formDog(data: FormData): Promise<[Dog | undefined, Image[]]> {
-    const id = data.get("id");
-    const name = data.get("name");
-    const nickname = data.get("nickname");
-    const father = data.get("father");
-    const mother = data.get("mother");
-    const thumbnail = data.get("thumbnail");
-    const dob = data.get("dob");
-    const breed = data.get("breed");
-    const gender = data.get("gender");
-    const alive = data.get("alive");
-    const images = data.getAll("images");
-    const titles = data.get("titles");
-    const health = data.get("health");
-
-    if (
-        !id ||
-        !name ||
-        !nickname ||
-        !father ||
-        !mother ||
-        !thumbnail ||
-        !dob ||
-        !breed ||
-        !gender ||
-        !alive ||
-        !images
-    ) {
-        return [undefined, []];
-    }
-
-    const file = await mapImages([thumbnail as File]);
-    const files = await mapImages(images as File[], "dogs");
-
-    return [
-        {
-            id: Number(id),
-            name: name as string,
-            nickname: nickname as string,
-            father: father as string,
-            mother: mother as string,
-            thumbnail: file[0]?.name,
-            dob: parseDate(dob as string),
-            breed: breed as Breed,
-            gender: gender as Gender,
-            alive: alive === "true",
-            images: files.map((f) => f.name),
-            titles: titles ? (titles as string).split(",") : [],
-            health: health ? (health as string).split(",") : [],
-        },
-        file.concat(files),
-    ];
-}
-
-async function formLitter(
-    data: FormData,
-): Promise<[Litter | undefined, Image[]]> {
-    const id = data.get("id");
-    const name = data.get("name");
-    const breed = data.get("breed");
-    const parents_image = data.get("parents_image");
-    const images = data.getAll("images");
-
-    if (!id || !name || !breed || !images) {
-        return [undefined, []];
-    }
-
-    const file = await mapImages([parents_image as File]);
-    const files = await mapImages(images as File[], "litters");
-
-    return [
-        {
-            id: Number(id),
-            name: name as string,
-            breed: breed as Breed,
-            parents_image: file[0]?.name,
-            images: files.map((f) => f.name),
-        },
-        file.concat(files),
-    ];
-}
-
-async function formPuppy(
-    data: FormData,
-): Promise<[Puppy | undefined, Image[]]> {
-    const id = data.get("id");
-    const litter_id = data.get("litter_id");
-    const name = data.get("name");
-    const gender = data.get("gender");
-    const availability = data.get("availability");
-    const image = data.get("image");
-
-    if (!id || !name || !gender || !availability) {
-        return [undefined, []];
-    }
-
-    const file = await mapImages([image as File]);
-
-    return [
-        {
-            id: Number(id),
-            litter_id: Number(litter_id),
-            name: name as string,
-            gender: gender as Gender,
-            availability: availability as Availability,
-            image: file[0]?.name,
-        },
-        file,
-    ];
-}

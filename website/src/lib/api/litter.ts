@@ -1,14 +1,20 @@
-import { Breed, type ApiResponse, type Litter, type Name } from "$lib/types";
+import type { Breed } from "$lib/enums";
+import type { ApiResponse, Litter, Name, SsrFetch } from "$lib/types";
 
-export const API_LITTER = "http://api:3000/litter";
+export const API_LITTER = "/api/litter";
 
-export async function fetchLitterNames(): Promise<ApiResponse<Name[]>> {
+export async function fetchLitterNames(
+    ssr?: SsrFetch,
+): Promise<ApiResponse<Name[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
-    const res = await fetch(API_LITTER + "/names", options);
+    const res = ssr
+        ? await ssr(API_LITTER + "/names", options)
+        : await fetch(API_LITTER + "/names", options);
+
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -29,13 +35,18 @@ export async function fetchLitter(id: number): Promise<ApiResponse<Litter>> {
         : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchAvaialbleLitters(): Promise<ApiResponse<Litter[]>> {
+export async function fetchAvaialbleLitters(
+    ssr?: SsrFetch,
+): Promise<ApiResponse<Litter[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "GET",
     };
 
-    const res = await fetch(API_LITTER + "/available", options);
+    const res = ssr
+        ? await ssr(API_LITTER + "/available", options)
+        : await fetch(API_LITTER + "/available", options);
+
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -44,6 +55,7 @@ export async function fetchAvaialbleLitters(): Promise<ApiResponse<Litter[]>> {
 
 export async function fetchAvaialbleLittersByBreed(
     breed: Breed,
+    ssr?: SsrFetch,
 ): Promise<ApiResponse<Litter[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
@@ -51,7 +63,10 @@ export async function fetchAvaialbleLittersByBreed(
         body: JSON.stringify({ breed }),
     };
 
-    const res = await fetch(API_LITTER + "/breed", options);
+    const res = ssr
+        ? await ssr(API_LITTER + "/breed", options)
+        : await fetch(API_LITTER + "/breed", options);
+
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -59,6 +74,7 @@ export async function fetchAvaialbleLittersByBreed(
 }
 
 export async function uploadLitter(
+    fetch: SsrFetch,
     litter: Litter,
     jwt: string,
 ): Promise<ApiResponse<number>> {
@@ -76,6 +92,7 @@ export async function uploadLitter(
 }
 
 export async function updateLitter(
+    fetch: SsrFetch,
     litter: Litter,
     jwt: string,
 ): Promise<ApiResponse<never>> {

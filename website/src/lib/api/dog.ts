@@ -1,10 +1,14 @@
-import type { ApiResponse, Breed, Dog, Family, Gender, Name } from "$lib/types";
+import { Gender, Breed } from "$lib/enums";
+import type { ApiResponse, Dog, Family, Name, SsrFetch } from "$lib/types";
 
-export const API_DOG = "http://api:3000/dog";
+export const API_DOG = "/api/dog";
 
-export async function fetchFamily(name: string): Promise<ApiResponse<Family>> {
+export async function fetchFamily(
+    ssr: SsrFetch,
+    name: string,
+): Promise<ApiResponse<Family>> {
     // TODO: graphdb
-    console.log("fetch family", name);
+    console.log("fetch family ", ssr, name);
     return { res: { type: "success" } };
 }
 
@@ -21,14 +25,20 @@ export async function fetchDogNames(): Promise<ApiResponse<Name[]>> {
         : { res: { type: "error", error: body.error } };
 }
 
-export async function fetchDog(id: number): Promise<ApiResponse<Dog>> {
+export async function fetchDog(
+    id: number,
+    ssr?: SsrFetch,
+): Promise<ApiResponse<Dog>> {
     const options = {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({ id }),
     };
 
-    const res = await fetch(API_DOG + "/one", options);
+    const res = ssr
+        ? await ssr(API_DOG + "/one", options)
+        : await fetch(API_DOG + "/one", options);
+
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -38,6 +48,7 @@ export async function fetchDog(id: number): Promise<ApiResponse<Dog>> {
 export async function fetchAliveDogs(
     breed: Breed,
     gender: Gender,
+    ssr?: SsrFetch,
 ): Promise<ApiResponse<Dog[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
@@ -48,7 +59,10 @@ export async function fetchAliveDogs(
         }),
     };
 
-    const res = await fetch(API_DOG + "/alive", options);
+    const res = ssr
+        ? await ssr(API_DOG + "/alive", options)
+        : await fetch(API_DOG + "/alive", options);
+
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -57,6 +71,7 @@ export async function fetchAliveDogs(
 
 export async function fetchRetiredDogs(
     breed: Breed,
+    ssr?: SsrFetch,
 ): Promise<ApiResponse<Dog[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
@@ -66,7 +81,10 @@ export async function fetchRetiredDogs(
         }),
     };
 
-    const res = await fetch(API_DOG + "/retired", options);
+    const res = ssr
+        ? await ssr(API_DOG + "/retired", options)
+        : await fetch(API_DOG + "/retired", options);
+
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -74,6 +92,7 @@ export async function fetchRetiredDogs(
 }
 
 export async function uploadDog(
+    fetch: SsrFetch,
     dog: Dog,
     jwt: string,
 ): Promise<ApiResponse<number>> {
@@ -91,6 +110,7 @@ export async function uploadDog(
 }
 
 export async function updateDog(
+    fetch: SsrFetch,
     dog: Dog,
     jwt: string,
 ): Promise<ApiResponse<never>> {

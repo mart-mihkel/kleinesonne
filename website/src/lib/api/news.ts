@@ -1,6 +1,6 @@
-import type { Article, Name, Title, ApiResponse } from "$lib/types";
+import type { Article, Name, Title, ApiResponse, SsrFetch } from "$lib/types";
 
-export const API_NEWS = "http://api:3000/news";
+export const API_NEWS = "/api/news";
 
 export async function fetchTitles(): Promise<ApiResponse<Name[]>> {
     const options = {
@@ -34,6 +34,7 @@ export async function fetchArticle(id: number): Promise<ApiResponse<Article>> {
 export async function fetchNews(
     from: number,
     n: number,
+    ssr?: SsrFetch,
 ): Promise<ApiResponse<Article[]>> {
     const options = {
         headers: { "Content-Type": "application/json" },
@@ -41,7 +42,10 @@ export async function fetchNews(
         body: JSON.stringify({ from, n }),
     };
 
-    const res = await fetch(API_NEWS + "/from", options);
+    const res = ssr
+        ? await ssr(API_NEWS + "/from", options)
+        : await fetch(API_NEWS + "/from", options);
+
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
@@ -49,6 +53,7 @@ export async function fetchNews(
 }
 
 export async function uploadArticle(
+    fetch: SsrFetch,
     article: Article,
     jwt: string,
 ): Promise<ApiResponse<number>> {
@@ -66,6 +71,7 @@ export async function uploadArticle(
 }
 
 export async function updateArticle(
+    fetch: SsrFetch,
     article: Article,
     jwt: string,
 ): Promise<ApiResponse<never>> {

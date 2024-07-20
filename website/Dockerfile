@@ -1,25 +1,28 @@
-FROM node:22-alpine AS install
+FROM node:22-alpine AS build
 WORKDIR /usr/src/app
 
 COPY . .
 RUN npm install -g vite --verbose
 RUN npm install -g @rollup/plugin-commonjs --verbose
 RUN npm install --verbose --frozen-lockfile
+
+COPY package*.json /tmp/
+RUN cd /tmp && npm install --production --verbose --frozen-lockfile
+
+ENV NODE_ENV=production
+ENV ORIGIN=https://localhost:443
+ENV PORT=5173
 RUN npm run build
 
-RUN mkdir -p /tmp/prod
-COPY package*.json /tmp/prod/
-RUN cd /tmp/prod && npm install --production --verbose --frozen-lockfile
 
 
 
-FROM install AS prod
-WORKDIR /usr/src/app
+FROM build AS prod
 
-COPY --from=install /usr/src/app/build build
-COPY --from=install /usr/src/app/package.json package.json 
-COPY --from=install /tmp/prod/node_modules node_modules
+COPY --from=build /usr/src/app/package.json package.json 
+COPY --from=build /tmp/node_modules node_modules
+COPY --from=build /usr/src/app/build build
 
 USER node
-EXPOSE 3000/tcp
-ENTRYPOINT [ "node", "build" ]
+EXPOSE 5173
+ENTRYPOINT node build

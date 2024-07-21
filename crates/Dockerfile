@@ -3,7 +3,14 @@ WORKDIR /usr/src/app
 
 COPY . .
 RUN apk add musl-dev
+RUN cargo build
 RUN cargo build --release --package api --bin api
+
+
+
+FROM build AS dev
+
+ENTRYPOINT cargo run api
 
 
 

@@ -16,7 +16,7 @@ use crate::errors::ApiError;
 #[derive(Serialize, Deserialize)]
 pub struct Claims {
     sub: String,
-    exp: u128,
+    exp: u64,
 }
 
 #[axum::async_trait]
@@ -57,12 +57,11 @@ pub fn create_token(sub: String) -> Result<String, ApiError> {
     Ok(token)
 }
 
-fn secs_from_now(secs: u64) -> Result<u128, ApiError> {
-    let now = SystemTime::now()
+pub fn secs_from_now(secs: u64) -> Result<u64, ApiError> {
+    let then = SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
-        .map_err(|_| ApiError::Internal("Time went backwards".to_string()))?;
+        .map_err(|_| ApiError::Internal("Time went backwards".to_string()))?
+        + Duration::from_secs(secs);
 
-    let then = now + Duration::from_secs(secs);
-
-    Ok(then.as_millis())
+    Ok(then.as_secs())
 }

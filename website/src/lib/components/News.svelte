@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { marked } from "marked";
     import type { Article } from "$lib/types";
     import { Gallery } from "$lib/components";
 
@@ -11,9 +12,9 @@
     >
         <h3 class="pt-2 text-center text-2xl font-semibold">{title}</h3>
         <p class="pb-2 text-lg font-medium">
-            {new Date(date * 1000).toDateString()}
+            {new Date(date).toDateString()}
         </p>
-        <p class="text-justify">{text}</p>
+        <div>{@html marked(text)}</div>
         <Gallery {images} />
     </div>
 {/each}

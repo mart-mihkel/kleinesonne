@@ -44,18 +44,10 @@ export type Puppy = {
 export type Litter = {
     id: number;
     name: string;
+    dob: number;
     parents_image: string | undefined;
     breed: Breed;
     images: string[];
-};
-
-export type LitterWithPuppies = {
-    id: number;
-    name: string;
-    parents_image: string | undefined;
-    breed: Breed;
-    images: string[];
-    puppies: Puppy[];
 };
 
 export type Article = {
@@ -75,11 +67,6 @@ export type ModalDispatch = {
 export type Name = {
     id: number;
     name: string;
-};
-
-export type Title = {
-    id: number;
-    title: string;
 };
 
 export type Image = {

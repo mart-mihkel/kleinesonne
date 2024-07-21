@@ -12,8 +12,8 @@ export function longBreed(breed: Breed): LongBreed {
     }
 }
 
-export function formDate(secs: number): string {
-    const date = new Date(secs * 1000);
+export function formDate(millis: number): string {
+    const date = new Date(millis);
     const m = date.getMonth() + 1;
     const d = date.getDate();
 
@@ -30,5 +30,5 @@ export function formDate(secs: number): string {
 
 export function parseDate(date: string): number {
     const [yyyy, mm, dd] = date.split("-").map(Number);
-    return Math.floor(new Date(yyyy, mm - 1, dd).getTime() / 1000);
+    return new Date(yyyy, mm - 1, dd).getTime();
 }

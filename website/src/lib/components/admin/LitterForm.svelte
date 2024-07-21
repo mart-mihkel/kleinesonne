@@ -1,6 +1,7 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { onMount } from "svelte";
+    import { formDate } from "$lib";
     import type { Name } from "$lib/types";
     import { Breed } from "$lib/enums";
     import { Modal } from "$lib/components/admin";
@@ -19,6 +20,7 @@
     const INITIAL_DATA = {
         id: -1,
         name: "",
+        dob: "",
         breed: Breed.AUSTRALIAN,
         parents_image: <string[]>[],
         images: <string[]>[],
@@ -52,6 +54,7 @@
         const litter = data.data!;
         form = {
             ...litter,
+            dob: formDate(litter.dob),
             parents_image: litter.parents_image ? [litter.parents_image] : [],
         };
     }
@@ -113,6 +116,16 @@
                 name="name"
                 required
                 bind:value={form.name}
+            />
+        </label>
+        <label class="flex flex-row items-center p-2">
+            <p class="w-1/3 font-semibold">Date of birth</p>
+            <input
+                class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
+                type="date"
+                name="dob"
+                required
+                bind:value={form.dob}
             />
         </label>
         <label class="flex flex-row items-center p-2">

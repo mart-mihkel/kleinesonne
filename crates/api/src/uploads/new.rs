@@ -21,7 +21,7 @@ pub async fn upload_image(
 ) -> Result<ApiResponse<String>, ApiError> {
     let mut set = JoinSet::new();
 
-    tracing::info!("Spawn image write tasks for {} images", &uploads.len());
+    tracing::info!("Spawn image write tasks for images, n = {}", &uploads.len());
     for u in uploads {
         set.spawn(async { Ok::<ApiResponse<String>, ApiError>(write_image(u)?) });
     }
@@ -48,8 +48,8 @@ fn write_image(Upload { name, b64 }: Upload) -> Result<ApiResponse<String>, ApiE
 
     let mut out = File::create_new(Path::new(&dir).join(&filename_s))?;
     image::load_from_memory(&bytes)?
-        .resize(400, 400, FilterType::CatmullRom)
-        .write_to(&mut out, ImageFormat::Avif)?;
+        .resize(600, 600, FilterType::Lanczos3)
+        .write_to(&mut out, ImageFormat::WebP)?;
 
     tracing::info!("Wrote uploaded image '{}' to disk", &filename_s);
 

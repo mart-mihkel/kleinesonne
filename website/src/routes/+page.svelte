@@ -4,7 +4,10 @@
     import { format } from "svelte-i18n";
 </script>
 
-<a href="/puppies" class="flex justify-center p-4 text-4xl font-bold">
+<a
+    href="/puppies"
+    class="flex justify-center text-nowrap p-4 text-4xl font-bold"
+>
     {$format("about.puppies")}
 </a>
 <div class="flex flex-col md:h-[600px] md:flex-row">
@@ -17,9 +20,9 @@
         >
             <enhanced:img
                 class="size-full object-cover"
-                src="/static/aus-puppy.avif"
-                sizes="min(960, 50vw)"
-                alt="7 week old Australian Shepherd puppies"
+                sizes="(min-width:1900px) 600px,(min-widht:800px) 600px, (min-width:450px) 300px"
+                src="/static/aus.webp"
+                alt=""
                 fetchpriority="high"
                 loading="eager"
             />
@@ -40,9 +43,9 @@
         >
             <enhanced:img
                 class="size-full object-cover"
-                src="/static/ent-puppy.avif"
-                sizes="min(960, 50vw)"
-                alt="Entlebuch Cattle Dog puppy"
+                sizes="(min-width:1900px) 600px,(min-widht:800px) 600px, (min-width:450px) 300px"
+                src="/static/ent.webp"
+                alt=""
                 fetchpriority="high"
                 loading="eager"
             />
@@ -63,9 +66,9 @@
         >
             <enhanced:img
                 class="size-full object-cover"
-                src="/static/ber-puppy.avif"
-                sizes="min-width(960px, 50vw)"
-                alt="Month old Bernese Mountain Dog puppies"
+                sizes="(min-width:1900px) 600px,(min-widht:800px) 600px, (min-width:450px) 300px"
+                src="/static/ber.webp"
+                alt=""
                 fetchpriority="high"
                 loading="eager"
             />

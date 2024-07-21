@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Availability, Gender } from "$lib/enums";
     import { format } from "svelte-i18n";
-    import def from "$lib/assets/default.avif";
+    import def from "$lib/assets/default.webp";
 
     export let href: string | undefined = undefined;
     export let availability: Availability | undefined = undefined;

@@ -35,6 +35,9 @@
         <a href="/litters/{litter.name}" class="text-2xl font-semibold">
             {$format("litter.litter", { values: { name: litter.name } })}
         </a>
+        <p class="pb-2 text-lg font-medium">
+            {new Date(litter.dob).toDateString()}
+        </p>
         {#await promise}
             <Loading text={$format("litter.display.loading")} />
         {:then puppies}

@@ -9,6 +9,7 @@ FROM
 SELECT
 	id,
 	name,
+	dob,
 	breed,
 	parents_image,
 	images
@@ -21,6 +22,7 @@ WHERE
 SELECT
 	id,
 	name,
+	dob,
 	breed,
 	parents_image,
 	images
@@ -33,6 +35,7 @@ WHERE
 SELECT
 	id,
 	name,
+	dob,
 	breed,
 	parents_image,
 	images
@@ -47,12 +50,14 @@ AND
 INSERT INTO
 	litters(
 		name,
+		dob,
 		breed,
 		parents_image,
 		images
 	)
 VALUES(
 	:name,
+	:dob,
 	:breed,
 	:parents_image,
 	:images)
@@ -64,6 +69,7 @@ UPDATE
 	litters
 SET
 	name = :name,
+	dob = :dob,
 	breed = :breed,
 	parents_image = :parents_image,
 	images = array_cat(images, :images)

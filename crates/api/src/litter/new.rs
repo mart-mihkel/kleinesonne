@@ -9,6 +9,7 @@ use crate::{auth::jwt::Claims, errors::ApiError, res::ApiResponse};
 #[derive(Deserialize)]
 pub struct NewLitter {
     name: String,
+    dob: i64,
     #[serde(with = "db::BreedDef")]
     breed: db::Breed,
     parents_image: Option<String>,
@@ -26,6 +27,7 @@ pub async fn new_litter(
         .bind(
             &tx,
             &litter.name,
+            &litter.dob,
             &litter.breed,
             &litter.parents_image,
             &litter.images,

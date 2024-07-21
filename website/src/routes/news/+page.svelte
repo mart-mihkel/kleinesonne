@@ -8,15 +8,13 @@
 
     export let data: PageData;
 
-    // TODO: resdata error handling
-    let old = data.data!;
+    let old = data.data;
     let oldest =
-        old.length > 0
-            ? old[old.length - 1].date
-            : Math.floor(new Date().getTime() / 1000);
+        old && old.length > 0 ? old[old.length - 1].date : new Date().getTime();
 
     let promise: Promise<ApiResponse<Article[]>> | undefined = undefined;
     let bottom: Element;
+    let error = false;
     let end = false;
 
     onMount(() => {
@@ -39,30 +37,41 @@
         const res = await promise;
         const data = resdata(res);
 
-        update(data.data!);
+        update(data.data);
     }
 
-    function update(news: Article[]) {
+    function update(news: Article[] | undefined) {
+        if (news === undefined) {
+            error = true;
+            return;
+        }
+
         if (news.length === 0) {
             end = true;
             return;
         }
 
-        old = [...old, ...news];
+        old = old === undefined ? [...news] : [...old, ...news];
         oldest = news[news.length - 1].date;
     }
 </script>
 
 <div class="flex flex-col md:px-[5%] lg:px-[25%]">
     <h2 class="p-4 text-center text-4xl font-bold">{$format("nav.news")}</h2>
-    <News bind:news={old} />
-    {#await promise}
-        <Loading text={$format("news.loading")} />
-    {:catch}
+    {#if old === undefined}
         <Error message={$format("news.error")} />
-    {/await}
-    {#if end}
-        <Empty text={$format("news.empty")} />
+    {:else}
+        <News bind:news={old} />
+        {#await promise}
+            <Loading text={$format("news.loading")} />
+        {:catch}
+            <Error message={$format("news.error")} />
+        {/await}
+        {#if error}
+            <Error message={$format("news.error")} />
+        {:else if end}
+            <Empty text={$format("news.empty")} />
+        {/if}
+        <div bind:this={bottom}></div>
     {/if}
-    <div bind:this={bottom}></div>
 </div>

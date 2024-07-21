@@ -28,6 +28,7 @@ CREATE TABLE dogs(
 CREATE TABLE litters(
 	id		serial 	PRIMARY KEY,
 	parents_image	text,
+	dob		bigint	not null,
 	name		text 	not null,
 	breed		breed 	not null,
 	images		text[] 	not null default '{}'

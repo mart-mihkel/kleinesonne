@@ -3,43 +3,31 @@
     import { Gallery } from "$lib/components";
     import { format } from "svelte-i18n";
 
-    import aadult from "$lib/assets/aus-adult.avif";
-    import apuppy from "$lib/assets/aus-puppy.avif";
-    import adraw from "$lib/assets/aus-draw.avif";
+    import aadult from "$lib/assets/aus-adult.webp";
+    import apuppy from "$lib/assets/aus-puppy.webp";
+    import adraw from "$lib/assets/aus-draw.webp";
     const australian = {
         title: $format(`nav.dog.${Breed.AUSTRALIAN}`),
         src: [aadult, apuppy, adraw],
-        alt: [
-            "Adult merle Australian Shepherd",
-            "7 week old Australian Shepherd puppies",
-            "Standard Australian Shepherd pencil drawing",
-        ],
+        opts: { values: { breed: $format(`nav.dog.${Breed.AUSTRALIAN}`) } },
     };
 
-    import eadult from "$lib/assets/ent-adult.avif";
-    import epuppy from "$lib/assets/ent-puppy.avif";
-    import edraw from "$lib/assets/ent-draw.avif";
+    import eadult from "$lib/assets/ent-adult.webp";
+    import epuppy from "$lib/assets/ent-puppy.webp";
+    import edraw from "$lib/assets/ent-draw.webp";
     const entlebuch = {
         title: $format(`nav.dog.${Breed.ENTLEBUCH}`),
         src: [eadult, epuppy, edraw],
-        alt: [
-            "Adult Entlebuch Cattle Dog",
-            "Entlebuch Cattle Dog puppy",
-            "Standard Entlebuch Cattle Dog pencil drawing",
-        ],
+        opts: { values: { breed: $format(`nav.dog.${Breed.ENTLEBUCH}`) } },
     };
 
-    import badult from "$lib/assets/ber-adult.avif";
-    import bpuppy from "$lib/assets/ber-puppy.avif";
-    import bdraw from "$lib/assets/ber-draw.avif";
+    import badult from "$lib/assets/ber-adult.webp";
+    import bpuppy from "$lib/assets/ber-puppy.webp";
+    import bdraw from "$lib/assets/ber-draw.webp";
     const bernese = {
         title: $format(`nav.dog.${Breed.BERNESE}`),
         src: [badult, bpuppy, bdraw],
-        alt: [
-            "Adult Bernese Mountain Dog",
-            "Month old Bernese Mountain Dog puppies",
-            "Standard Bernsese Mountain Dog pencil drawing",
-        ],
+        opts: { values: { breed: $format(`nav.dog.${Breed.BERNESE}`) } },
     };
 
     const fci = $format("intro.fci");
@@ -55,9 +43,7 @@
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.AUSTRALIAN}"
             >
-                {$format("dog.our", {
-                    values: { breed: $format(`nav.dog.${Breed.AUSTRALIAN}`) },
-                })}
+                {$format("dog.our", australian.opts)}
             </a>
             <a
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
@@ -67,7 +53,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={australian.src} alts={australian.alt} smalls={false} />
+        <Gallery images={australian.src} full />
         <p class="text-justify">{$format(`intro.${Breed.AUSTRALIAN}`)}</p>
     </section>
     <section
@@ -82,9 +68,7 @@
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.ENTLEBUCH}"
             >
-                {$format("dog.our", {
-                    values: { breed: $format(`nav.dog.${Breed.ENTLEBUCH}`) },
-                })}
+                {$format("dog.our", entlebuch.opts)}
             </a>
             <a
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
@@ -94,7 +78,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={entlebuch.src} alts={entlebuch.alt} smalls={false} />
+        <Gallery images={entlebuch.src} full />
         <p class="text-justify">{$format(`intro.${Breed.ENTLEBUCH}`)}</p>
     </section>
     <section
@@ -109,9 +93,7 @@
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
                 href="/dogs/{Breed.BERNESE}"
             >
-                {$format("dog.our", {
-                    values: { breed: $format(`nav.dog.${Breed.BERNESE}`) },
-                })}
+                {$format("dog.our", bernese.opts)}
             </a>
             <a
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
@@ -121,7 +103,7 @@
                 {fci}
             </a>
         </div>
-        <Gallery images={bernese.src} alts={bernese.alt} smalls={false} />
+        <Gallery images={bernese.src} full />
         <p class="text-justify">{$format(`intro.${Breed.BERNESE}`)}</p>
     </section>
 </div>

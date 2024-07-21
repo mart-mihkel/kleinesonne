@@ -4,8 +4,7 @@
     import { createEventDispatcher } from "svelte";
 
     export let images: string[];
-    export let alts: string[] | undefined = undefined;
-    export let smalls = true;
+    export let full = false;
     export let admin = false;
 
     let dispatch = createEventDispatcher<ModalDispatch>();
@@ -13,7 +12,6 @@
     let show = false;
     let idx = 0;
     $: active = images[idx];
-    $: alt = alts ? alts[idx] : "Gallery image";
 
     function open(i: number) {
         show = true;
@@ -53,11 +51,6 @@
         images.splice(idx, 1);
         images = images;
 
-        if (alts !== undefined) {
-            alts.splice(idx, 1);
-            alts = alts;
-        }
-
         count = count - 1;
         idx = idx % count;
     }
@@ -74,7 +67,7 @@
                 <Prev />
             </button>
             <div class="flex flex-col items-center gap-4 p-4">
-                <img src={active} {alt} loading="lazy" />
+                <img src={active} alt="" loading="lazy" />
                 {#if admin}
                     <button
                         class="h-12 w-48 rounded-md border-2 border-black bg-white px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
@@ -115,8 +108,8 @@
         >
             <img
                 class="size-full object-cover"
-                src={smalls ? small(src) : src}
-                alt={alts ? alts[i] : "Gallery preview"}
+                src={full ? src : small(src)}
+                alt=""
                 loading="lazy"
             />
         </button>

@@ -10,6 +10,7 @@ use crate::{auth::jwt::Claims, errors::ApiError, res::ApiResponse};
 pub struct UpdateLitter {
     id: i32,
     name: String,
+    dob: i64,
     #[serde(with = "db::BreedDef")]
     breed: db::Breed,
     parents_image: Option<String>,
@@ -27,6 +28,7 @@ pub async fn update_litter(
         .bind(
             &tx,
             &litter.name,
+            &litter.dob,
             &litter.breed,
             &litter.parents_image,
             &litter.images,

@@ -114,11 +114,12 @@ export async function formLitter(
 ): Promise<[Litter | undefined, Image[]]> {
     const id = data.get("id");
     const name = data.get("name");
+    const dob = data.get("dob");
     const breed = data.get("breed");
     const parents_image = data.get("parents_image");
     const images = data.getAll("images");
 
-    if (!id || !name || !breed || !images) {
+    if (!id || !name || !dob || !breed || !images) {
         return [undefined, []];
     }
 
@@ -129,6 +130,7 @@ export async function formLitter(
         {
             id: Number(id),
             name: name as string,
+            dob: parseDate(dob as string),
             breed: breed as Breed,
             parents_image: file[0]?.name,
             images: files.map((f) => f.name),

@@ -113,7 +113,7 @@
         <label class="flex flex-row items-center p-2">
             <p class="w-1/3 font-semibold">Text</p>
             <input
-                class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
+                class="h-[300px] w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                 type="text"
                 name="text"
                 required

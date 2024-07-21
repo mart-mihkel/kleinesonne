@@ -1,4 +1,4 @@
-import type { Article, Name, Title, ApiResponse, SsrFetch } from "$lib/types";
+import type { Article, Name, ApiResponse, SsrFetch } from "$lib/types";
 
 export const API_NEWS = "/api/news";
 const SSR_NEWS = "http://api:3000/news";
@@ -9,7 +9,8 @@ export async function fetchTitles(): Promise<ApiResponse<Name[]>> {
         method: "GET",
     };
 
-    const mapper = (t: Title) => ({ id: t.id, name: t.title });
+    type Title = { id: number; title: string };
+    const mapper = (t: Title): Name => ({ id: t.id, name: t.title });
 
     const res = await fetch(API_NEWS + "/titles", options);
     const body = await res.json();

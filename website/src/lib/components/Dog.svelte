@@ -2,7 +2,7 @@
     import { Gallery, Error } from "$lib/components";
     import type { Dog } from "$lib/types";
     import { format } from "svelte-i18n";
-    import def from "$lib/assets/default.avif";
+    import def from "$lib/assets/default.webp";
 
     export let dog: Dog | undefined;
 </script>
@@ -42,7 +42,7 @@
                     <tr class="border-t border-black dark:border-white">
                         <td class="font-medium">{$format("dog.dob")}:</td>
                         <td class="font-medium">
-                            {new Date(dog.dob * 1000).toDateString()}
+                            {new Date(dog.dob).toDateString()}
                         </td>
                     </tr>
                     <tr class="border-t border-black dark:border-white">

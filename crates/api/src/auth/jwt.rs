@@ -12,11 +12,11 @@ use crate::errors::ApiError;
 
 /// JWT claims
 ///
-/// Automatically validated when used as a handelr parameter
+/// Automatically validated when used as a handler parameter
 #[derive(Serialize, Deserialize)]
 pub struct Claims {
     sub: String,
-    exp: u64,
+    exp: u128,
 }
 
 #[axum::async_trait]
@@ -35,7 +35,8 @@ where
         let key = DecodingKey::from_secret(secret.as_bytes());
         let token_data = decode::<Claims>(bearer.token(), &key, &Validation::default())?;
 
-        if token_data.claims.exp < secs_from_now(0) {
+        let now = secs_from_now(0)?;
+        if token_data.claims.exp < now {
             return Err(ApiError::Authentication("Expired token".to_string()));
         }
 
@@ -46,7 +47,7 @@ where
 }
 
 pub fn create_token(sub: String) -> Result<String, ApiError> {
-    let exp = secs_from_now(3600);
+    let exp = secs_from_now(3600)?;
     let claims = Claims { sub, exp };
 
     let secret = std::env::var("JWT_SECRET")?;
@@ -56,10 +57,12 @@ pub fn create_token(sub: String) -> Result<String, ApiError> {
     Ok(token)
 }
 
-fn secs_from_now(secs: u64) -> u64 {
+fn secs_from_now(secs: u64) -> Result<u128, ApiError> {
     let now = SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
-        .expect("Time went backwards");
+        .map_err(|_| ApiError::Internal("Time went backwards".to_string()))?;
 
-    (now + Duration::from_secs(secs)).as_secs()
+    let then = now + Duration::from_secs(secs);
+
+    Ok(then.as_millis())
 }

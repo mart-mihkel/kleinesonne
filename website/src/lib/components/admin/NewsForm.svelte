@@ -87,6 +87,7 @@
         enctype="multipart/form-data"
         use:enhance
     >
+        <button type="submit" disabled style="display: none" />
         <label class="hidden">
             <input type="hidden" name="id" bind:value={form.id} />
         </label>
@@ -112,9 +113,8 @@
         </label>
         <label class="flex flex-row items-center p-2">
             <p class="w-1/3 font-semibold">Text</p>
-            <input
-                class="h-[300px] w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
-                type="text"
+            <textarea
+                class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                 name="text"
                 required
                 bind:value={form.text}

@@ -7,5 +7,17 @@ import Next from "./Next.svelte";
 import Prev from "./Prev.svelte";
 import Close from "./Close.svelte";
 import Arrow from "./Arrow.svelte";
+import Permalink from "./Permalink.svelte";
 
-export { Call, Mail, MapPin, Person, Facebook, Next, Prev, Close, Arrow };
+export {
+    Call,
+    Mail,
+    MapPin,
+    Person,
+    Facebook,
+    Next,
+    Prev,
+    Close,
+    Arrow,
+    Permalink,
+};

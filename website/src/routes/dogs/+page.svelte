@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Breed } from "$lib/enums";
+    import { Permalink } from "$lib/svg";
     import { Gallery } from "$lib/components";
     import { format } from "svelte-i18n";
 
@@ -35,9 +36,14 @@
 
 <div class="flex flex-col gap-8 pb-4 md:px-[5%] lg:px-[25%]">
     <section id={australian.title} class="flex flex-col">
-        <h2 class="p-4 text-center text-4xl font-bold">
-            {australian.title}
-        </h2>
+        <div class="flex flex-row items-center justify-center gap-2">
+            <h2 class="p-4 text-center text-4xl font-bold">
+                {australian.title}
+            </h2>
+            <a href="#{australian.title}" class="">
+                <Permalink />
+            </a>
+        </div>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
@@ -60,9 +66,14 @@
         id={entlebuch.title}
         class="flex flex-col border-t border-black dark:border-white"
     >
-        <h2 class="p-4 text-center text-4xl font-bold">
-            {entlebuch.title}
-        </h2>
+        <div class="flex flex-row items-center justify-center gap-2">
+            <h2 class="p-4 text-center text-4xl font-bold">
+                {entlebuch.title}
+            </h2>
+            <a href="#{entlebuch.title}" class="">
+                <Permalink />
+            </a>
+        </div>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
@@ -85,9 +96,14 @@
         id={bernese.title}
         class="flex flex-col border-t border-black dark:border-white"
     >
-        <h2 class="p-4 text-center text-4xl font-bold">
-            {bernese.title}
-        </h2>
+        <div class="flex flex-row items-center justify-center gap-2">
+            <h2 class="p-4 text-center text-4xl font-bold">
+                {bernese.title}
+            </h2>
+            <a href="#{bernese.title}" class="">
+                <Permalink />
+            </a>
+        </div>
         <div class="flex flex-row justify-center gap-16 p-4">
             <a
                 class="rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"

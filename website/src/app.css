@@ -18,3 +18,31 @@ body {
 ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-gray-400 opacity-50 transition-colors duration-300 hover:bg-gray-300;
 }
+
+.markdown>h1 {
+    @apply text-8xl font-bold;
+}
+
+.markdown>h2 {
+    @apply text-6xl font-bold;
+}
+
+.markdown>h3 {
+    @apply text-4xl font-semibold;
+}
+
+.markdown>h4 {
+    @apply text-2xl font-semibold;
+}
+
+.markdown>ul {
+    @apply list-disc pl-8;
+}
+
+.markdown>ol {
+    @apply list-decimal pl-8;
+}
+
+.markdown>blockquote {
+    @apply p-4 text-justify;
+}

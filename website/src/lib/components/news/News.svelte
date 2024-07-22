@@ -14,7 +14,7 @@
         <p class="pb-2 text-lg font-semibold">
             {new Date(date).toDateString()}
         </p>
-        <div class="w-full text-start">{@html marked(text)}</div>
+        <div class="markdown w-full text-start">{@html marked(text)}</div>
         <Gallery {images} />
     </article>
 {/each}

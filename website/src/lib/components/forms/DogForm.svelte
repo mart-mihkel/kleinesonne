@@ -1,19 +1,14 @@
 <script lang="ts">
+    import Gallery from "../Gallery.svelte";
+    import Modal from "../Modal.svelte";
+    import type { Name } from "$lib/types";
+    import { Breed, Gender } from "$lib/enums";
     import { enhance } from "$app/forms";
     import { onMount } from "svelte";
     import { formDate } from "$lib";
-    import type { Name } from "$lib/types";
-    import { Breed, Gender } from "$lib/enums";
-    import { Modal } from "$lib/components/admin";
-    import { Gallery } from "$lib/components";
-    import {
-        API_DOG,
-        deleteDog,
-        deleteImage,
-        fetchDog,
-        fetchDogNames,
-        resdata,
-    } from "$lib/api";
+    import { resdata } from "$lib/api";
+    import { deleteImage } from "$lib/api/uploads";
+    import { API_DOG, deleteDog, fetchDog, fetchDogNames } from "$lib/api/dog";
 
     export let jwt: string;
 

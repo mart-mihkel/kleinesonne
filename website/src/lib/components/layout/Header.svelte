@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { ThemeToggle, Locale } from "$lib/components";
-    import { Facebook } from "$lib/svg";
+    import Facebook from "$lib/svg/Facebook.svelte";
+    import Locale from "./Locale.svelte";
+    import ThemeToggle from "./ThemeToggle.svelte";
 </script>
 
 <header

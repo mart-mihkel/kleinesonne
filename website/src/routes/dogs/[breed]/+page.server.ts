@@ -1,4 +1,5 @@
-import { fetchAliveDogs, fetchRetiredDogs, resdata } from "$lib/api";
+import { resdata } from "$lib/api";
+import { fetchAliveDogs, fetchRetiredDogs } from "$lib/api/dog";
 import { Breed, Gender } from "$lib/enums";
 import type { PageServerLoad } from "./$types";
 

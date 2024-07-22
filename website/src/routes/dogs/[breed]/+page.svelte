@@ -1,6 +1,6 @@
 <script lang="ts">
+    import Dogs from "$lib/components/dog/Dogs.svelte";
     import type { PageData } from "./$types";
-    import { Dogs } from "$lib/components";
     import { page } from "$app/stores";
     import { format } from "svelte-i18n";
     import { Breed, Gender } from "$lib/enums";

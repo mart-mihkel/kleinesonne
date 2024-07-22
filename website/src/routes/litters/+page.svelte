@@ -1,15 +1,14 @@
 <script lang="ts">
-    import {
-        Litter as LitterDisplay,
-        Loading,
-        Error,
-        Empty,
-        LitterList,
-    } from "$lib/components";
-    import { type Litter, type ApiResponse } from "$lib/types";
-    import { format } from "svelte-i18n";
-    import { fetchLitter, resdata } from "$lib/api";
+    import LitterDisplay from "$lib/components/litter/LitterDisplay.svelte";
+    import LitterList from "$lib/components/litter/LitterList.svelte";
+    import Loading from "$lib/components/notice/Loading.svelte";
+    import Empty from "$lib/components/notice/Empty.svelte";
+    import Error from "$lib/components/notice/Error.svelte";
     import type { PageServerData } from "./$types";
+    import type { ApiResponse, Litter } from "$lib/types";
+    import { format } from "svelte-i18n";
+    import { fetchLitter } from "$lib/api/litter";
+    import { resdata } from "$lib/api";
 
     export let data: PageServerData;
 

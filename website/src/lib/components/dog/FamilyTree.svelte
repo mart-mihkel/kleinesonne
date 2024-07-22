@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Error } from "$lib/components";
+    import Error from "$lib/components/notice/Error.svelte";
     import type { Family } from "$lib/types";
     import { format } from "svelte-i18n";
 

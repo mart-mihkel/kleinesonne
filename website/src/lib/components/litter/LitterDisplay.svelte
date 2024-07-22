@@ -1,10 +1,15 @@
 <script lang="ts">
+    import Gallery from "../Gallery.svelte";
+    import Thumbnail from "../Thumbnail.svelte";
+    import Loading from "../notice/Loading.svelte";
+    import Empty from "../notice/Empty.svelte";
+    import Error from "../notice/Error.svelte";
+    import type { Litter, Puppy } from "$lib/types";
+    import { Availability } from "$lib/enums";
     import { format } from "svelte-i18n";
     import { onMount } from "svelte";
-    import { Thumbnail, Gallery, Loading, Error, Empty } from "$lib/components";
-    import { fetchPuppies, resdata } from "$lib/api";
-    import { Availability } from "$lib/enums";
-    import type { Litter, Puppy } from "$lib/types";
+    import { resdata } from "$lib/api";
+    import { fetchPuppies } from "$lib/api/puppy";
 
     export let litter: Litter | undefined;
     export let available = false;

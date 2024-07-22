@@ -1,26 +1,28 @@
 <script lang="ts">
+    import Gallery from "../Gallery.svelte";
+    import Modal from "../Modal.svelte";
+    import type { Name } from "$lib/types";
+    import { Breed } from "$lib/enums";
     import { enhance } from "$app/forms";
     import { onMount } from "svelte";
     import { formDate } from "$lib";
-    import type { Name } from "$lib/types";
-    import { Modal } from "$lib/components/admin";
-    import { Gallery } from "$lib/components";
+    import { resdata } from "$lib/api";
+    import { deleteImage } from "$lib/api/uploads";
     import {
-        deleteImage,
-        deleteArticle,
-        fetchArticle,
-        fetchTitles,
-        API_NEWS,
-        resdata,
-    } from "$lib/api";
+        fetchLitterNames,
+        fetchLitter,
+        deleteLitter,
+        API_LITTER,
+    } from "$lib/api/litter";
 
     export let jwt: string;
 
     const INITIAL_DATA = {
         id: -1,
-        title: "",
-        date: "",
-        text: "",
+        name: "",
+        dob: "",
+        breed: Breed.AUSTRALIAN,
+        parents_image: <string[]>[],
         images: <string[]>[],
     };
 
@@ -28,10 +30,10 @@
     let modal = false;
     let promise: Promise<Name[] | undefined> | undefined = undefined;
 
-    onMount(() => (promise = loadTitles()));
+    onMount(() => (promise = loadNames()));
 
-    async function loadTitles(): Promise<Name[] | undefined> {
-        const res = await fetchTitles();
+    async function loadNames(): Promise<Name[] | undefined> {
+        const res = await fetchLitterNames();
         const data = resdata(res);
         return data.data;
     }
@@ -41,22 +43,38 @@
     }
 
     async function select(e: CustomEvent<number>) {
-        const res = await fetchArticle(e.detail);
+        const res = await fetchLitter(e.detail);
         const data = resdata(res);
 
         if (data.error) {
-            alert(`Getting dog failed: ${data.error}`);
+            alert(`Getting litter failed: ${data.error}`);
             return;
         }
 
-        const article = data.data!;
-        form = { ...article, date: formDate(article.date) };
+        const litter = data.data!;
+        form = {
+            ...litter,
+            dob: formDate(litter.dob),
+            parents_image: litter.parents_image ? [litter.parents_image] : [],
+        };
     }
 
     async function del(e: CustomEvent<number>) {
-        const { res } = await deleteArticle(e.detail, jwt);
+        const { res } = await deleteLitter(e.detail, jwt);
         if (res.type === "error") {
-            alert(`Deleting article failed: ${res.error}`);
+            alert(`Deleting litter failed: ${res.error}`);
+        }
+    }
+
+    async function delParents() {
+        const { res } = await deleteImage(
+            form.id,
+            jwt,
+            API_LITTER + "/delete/parents",
+        );
+
+        if (res.type === "error") {
+            alert(`Deleting parents image failed: ${res.error}`);
         }
     }
 
@@ -64,7 +82,7 @@
         const { res } = await deleteImage(
             form.id,
             jwt,
-            API_NEWS + "/delete/image",
+            API_LITTER + "/delete/image",
             e.detail,
         );
 
@@ -78,48 +96,56 @@
     <h3
         class="border-t border-black p-4 text-center text-2xl font-semibold dark:border-white"
     >
-        News
+        Litters
     </h3>
     <form
         method="POST"
-        id="newsform"
+        id="litterform"
         class="flex flex-col"
         enctype="multipart/form-data"
         use:enhance
     >
-        <button type="submit" disabled style="display: none" />
         <label class="hidden">
             <input type="hidden" name="id" bind:value={form.id} />
         </label>
         <label class="flex flex-row items-center p-2">
-            <p class="w-1/3 font-semibold">Title:</p>
+            <p class="w-1/3 font-semibold">Litter name</p>
             <input
                 class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                 type="text"
-                name="title"
+                name="name"
                 required
-                bind:value={form.title}
+                bind:value={form.name}
             />
         </label>
         <label class="flex flex-row items-center p-2">
-            <p class="w-1/3 font-semibold">Date</p>
+            <p class="w-1/3 font-semibold">Date of birth</p>
             <input
                 class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
                 type="date"
-                name="date"
+                name="dob"
                 required
-                bind:value={form.date}
+                bind:value={form.dob}
             />
         </label>
         <label class="flex flex-row items-center p-2">
-            <p class="w-1/3 font-semibold">Text</p>
-            <textarea
+            <p class="w-1/3 font-semibold">Breed</p>
+            <select
                 class="w-2/3 rounded border-2 border-gray-500 bg-white p-2 focus:border-black focus:bg-gray-200 focus:outline-none dark:text-black"
-                name="text"
+                name="breed"
                 required
-                bind:value={form.text}
-            />
+                bind:value={form.breed}
+            >
+                <option value={Breed.AUSTRALIAN}>{Breed.AUSTRALIAN}</option>
+                <option value={Breed.ENTLEBUCH}>{Breed.ENTLEBUCH}</option>
+                <option value={Breed.BERNESE}>{Breed.BERNESE}</option>
+            </select>
         </label>
+        <label class="flex flex-row items-center p-2">
+            <p class="w-1/3 font-semibold">Parents</p>
+            <input class="w-2/3 p-2" type="file" name="parents_image" />
+        </label>
+        <Gallery bind:images={form.parents_image} admin on:image={delParents} />
         <label class="flex flex-row items-center p-2">
             <p class="w-1/3 font-semibold">Images</p>
             <input
@@ -137,18 +163,18 @@
             on:click|preventDefault={() => (modal = true)}
         >
             {#if promise === undefined}
-                <p>Loading titles...</p>
+                <p>Loading names...</p>
             {:else}
                 {#await promise}
-                    <p>Loading titles...</p>
+                    <p>Loading names...</p>
                 {:then titles}
                     {#if titles === undefined}
                         <p>Server error</p>
                     {:else}
                         <p>Select</p>
                         <Modal
-                            bind:open={modal}
                             items={titles}
+                            bind:open={modal}
                             on:select={select}
                             on:delete={del}
                         />
@@ -166,15 +192,15 @@
         </button>
         <button
             class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-            form="newsform"
-            formaction="?/newsCreate"
+            form="litterform"
+            formaction="?/litterCreate"
         >
             Create
         </button>
         <button
             class="h-12 w-48 rounded-md border-2 border-black px-4 py-2 text-center font-bold transition-colors duration-300 ease-out hover:bg-gray-300 dark:border-white dark:hover:bg-gray-500"
-            form="newsform"
-            formaction="?/newsUpdate"
+            form="litterform"
+            formaction="?/litterUpdate"
         >
             Update
         </button>

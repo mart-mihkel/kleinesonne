@@ -1,8 +1,10 @@
 <script lang="ts">
-    import { format } from "svelte-i18n";
-    import { Empty, Error, Thumbnail } from "$lib/components";
-    import { Breed } from "$lib/enums";
+    import Thumbnail from "../Thumbnail.svelte";
+    import Empty from "../notice/Empty.svelte";
+    import Error from "../notice/Error.svelte";
     import type { Dog } from "$lib/types";
+    import { Breed } from "$lib/enums";
+    import { format } from "svelte-i18n";
 
     export let dogs: Dog[] | undefined;
     export let breed: Breed;

@@ -1,5 +1,5 @@
 <script>
-    import { Arrow } from "$lib/svg";
+    import Arrow from "$lib/svg/Arrow.svelte";
     import { Breed } from "$lib/enums";
     import { format } from "svelte-i18n";
 </script>

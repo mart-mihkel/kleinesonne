@@ -1,30 +1,31 @@
 <script lang="ts">
+    import Permalink from "$lib/svg/Permalink.svelte";
+    import Gallery from "$lib/components/Gallery.svelte";
     import { Breed } from "$lib/enums";
-    import { Permalink } from "$lib/svg";
-    import { Gallery } from "$lib/components";
     import { format } from "svelte-i18n";
 
     import aadult from "$lib/assets/aus-adult.webp";
     import apuppy from "$lib/assets/aus-puppy.webp";
     import adraw from "$lib/assets/aus-draw.webp";
+    import eadult from "$lib/assets/ent-adult.webp";
+    import epuppy from "$lib/assets/ent-puppy.webp";
+    import edraw from "$lib/assets/ent-draw.webp";
+    import badult from "$lib/assets/ber-adult.webp";
+    import bpuppy from "$lib/assets/ber-puppy.webp";
+    import bdraw from "$lib/assets/ber-draw.webp";
+
     const australian = {
         title: $format(`nav.dog.${Breed.AUSTRALIAN}`),
         src: [aadult, apuppy, adraw],
         opts: { values: { breed: $format(`nav.dog.${Breed.AUSTRALIAN}`) } },
     };
 
-    import eadult from "$lib/assets/ent-adult.webp";
-    import epuppy from "$lib/assets/ent-puppy.webp";
-    import edraw from "$lib/assets/ent-draw.webp";
     const entlebuch = {
         title: $format(`nav.dog.${Breed.ENTLEBUCH}`),
         src: [eadult, epuppy, edraw],
         opts: { values: { breed: $format(`nav.dog.${Breed.ENTLEBUCH}`) } },
     };
 
-    import badult from "$lib/assets/ber-adult.webp";
-    import bpuppy from "$lib/assets/ber-puppy.webp";
-    import bdraw from "$lib/assets/ber-draw.webp";
     const bernese = {
         title: $format(`nav.dog.${Breed.BERNESE}`),
         src: [badult, bpuppy, bdraw],

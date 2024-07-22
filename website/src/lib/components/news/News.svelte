@@ -1,7 +1,7 @@
 <script lang="ts">
     import { marked } from "marked";
     import type { Article } from "$lib/types";
-    import { Gallery } from "$lib/components";
+    import Gallery from "../Gallery.svelte";
 
     export let news: Article[];
 </script>

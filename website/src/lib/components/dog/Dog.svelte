@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { Gallery, Error } from "$lib/components";
+    import Gallery from "../Gallery.svelte";
+    import Error from "../notice/Error.svelte";
     import type { Dog } from "$lib/types";
     import { format } from "svelte-i18n";
     import def from "$lib/assets/default.webp";

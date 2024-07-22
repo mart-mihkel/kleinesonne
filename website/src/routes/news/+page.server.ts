@@ -1,4 +1,5 @@
-import { fetchNews, resdata } from "$lib/api";
+import { resdata } from "$lib/api";
+import { fetchNews } from "$lib/api/news";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ fetch }) => {

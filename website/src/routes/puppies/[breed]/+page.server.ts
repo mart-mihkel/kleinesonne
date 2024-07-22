@@ -1,4 +1,5 @@
-import { fetchAvaialbleLittersByBreed, resdata } from "$lib/api";
+import { resdata } from "$lib/api";
+import { fetchAvaialbleLittersByBreed } from "$lib/api/litter";
 import { Breed } from "$lib/enums";
 import type { PageServerLoad } from "./$types";
 

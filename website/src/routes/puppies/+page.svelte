@@ -1,6 +1,8 @@
 <script lang="ts">
+    import LitterDisplay from "$lib/components/litter/LitterDisplay.svelte";
+    import Empty from "$lib/components/notice/Empty.svelte";
+    import Error from "$lib/components/notice/Error.svelte";
     import type { PageData } from "./$types";
-    import { Litter, Error, Empty } from "$lib/components";
     import { format } from "svelte-i18n";
 
     export let data: PageData;
@@ -19,7 +21,7 @@
     {:else}
         {#each litters as litter}
             <div class="border-t border-black pb-10 dark:border-white">
-                <Litter {litter} available={true} />
+                <LitterDisplay {litter} available={true} />
             </div>
         {/each}
         <p>

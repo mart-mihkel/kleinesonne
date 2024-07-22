@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { Error, Empty } from "$lib/components";
     import type { ModalDispatch, Name } from "$lib/types";
-    import { slide } from "svelte/transition";
     import { createEventDispatcher } from "svelte";
+    import { slide } from "svelte/transition";
     import { format } from "svelte-i18n";
+    import Empty from "../notice/Empty.svelte";
+    import Error from "../notice/Error.svelte";
 
     export let names: Name[] | undefined;
 

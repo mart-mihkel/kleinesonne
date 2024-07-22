@@ -2,7 +2,7 @@
     import { format } from "svelte-i18n";
     import { slide } from "svelte/transition";
     import { Breed } from "$lib/enums";
-    import { Dropdown } from "$lib/components";
+    import Dropdown from "./Dropdown.svelte";
 
     let extended = true;
 

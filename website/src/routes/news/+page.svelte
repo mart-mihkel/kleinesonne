@@ -1,10 +1,14 @@
 <script lang="ts">
-    import { Loading, Empty, Error, News } from "$lib/components";
+    import Loading from "$lib/components/notice/Loading.svelte";
+    import Empty from "$lib/components/notice/Empty.svelte";
+    import Error from "$lib/components/notice/Error.svelte";
+    import News from "$lib/components/news/News.svelte";
     import type { ApiResponse, Article } from "$lib/types";
     import type { PageData } from "./$types";
     import { format } from "svelte-i18n";
     import { onMount } from "svelte";
-    import { fetchNews, resdata } from "$lib/api";
+    import { fetchNews } from "$lib/api/news";
+    import { resdata } from "$lib/api";
 
     export let data: PageData;
 

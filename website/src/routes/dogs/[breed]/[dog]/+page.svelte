@@ -1,6 +1,7 @@
 <script lang="ts">
+    import Dog from "$lib/components/dog/Dog.svelte";
+    import FamilyTree from "$lib/components/dog/FamilyTree.svelte";
     import type { PageData } from "./$types";
-    import { Dog, FamilyTree } from "$lib/components";
 
     export let data: PageData;
 

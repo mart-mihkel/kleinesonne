@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Error } from "$lib/components";
+    import Error from "$lib/components/notice/Error.svelte";
     import { page } from "$app/stores";
 </script>
 

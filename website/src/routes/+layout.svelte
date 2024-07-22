@@ -1,6 +1,8 @@
 <script lang="ts">
+    import Footer from "$lib/components/layout/Footer.svelte";
+    import Header from "$lib/components/layout/Header.svelte";
+    import Nav from "$lib/components/layout/Nav.svelte";
     import "../app.css";
-    import { Header, Nav, Footer } from "$lib/components";
 </script>
 
 <svelte:head>

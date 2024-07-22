@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { Call, Mail, MapPin, Facebook } from "$lib/svg";
+    import Call from "$lib/svg/Call.svelte";
+    import Facebook from "$lib/svg/Facebook.svelte";
+    import Mail from "$lib/svg/Mail.svelte";
+    import MapPin from "$lib/svg/MapPin.svelte";
 </script>
 
 <footer

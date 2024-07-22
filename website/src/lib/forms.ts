@@ -1,8 +1,8 @@
 import { nanoid } from "nanoid";
 import { parseDate } from "$lib";
-import { API_UPLOADS } from "$lib/api";
 import { Availability, Breed, Gender } from "$lib/enums";
-import type { Article, Dog, Image, Litter, Puppy } from "$lib/types";
+import type { Article, Dog, Family, Image, Litter, Puppy } from "$lib/types";
+import { API_UPLOADS } from "./api/uploads";
 
 type ImagePrefix = "news" | "dogs" | "litters" | "";
 
@@ -107,6 +107,22 @@ export async function formDog(
         },
         file.concat(files),
     ];
+}
+
+export async function formFamily(data: FormData): Promise<Family | undefined> {
+    const name = data.get("name");
+    const father = data.get("father");
+    const mother = data.get("mother");
+
+    if (!name) {
+        return undefined;
+    }
+
+    return {
+        name: name as string,
+        father: father ? { name: father as string } : undefined,
+        mother: mother ? { name: mother as string } : undefined,
+    };
 }
 
 export async function formLitter(

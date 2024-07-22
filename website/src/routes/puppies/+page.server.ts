@@ -1,4 +1,5 @@
-import { fetchAvaialbleLitters, resdata } from "$lib/api";
+import { resdata } from "$lib/api";
+import { fetchAvaialbleLitters } from "$lib/api/litter";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ fetch }) => {

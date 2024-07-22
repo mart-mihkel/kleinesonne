@@ -1,5 +1,7 @@
 <script lang="ts">
-    import { Next, Prev, Close } from "$lib/svg";
+    import Close from "$lib/svg/Close.svelte";
+    import Next from "$lib/svg/Next.svelte";
+    import Prev from "$lib/svg/Prev.svelte";
     import type { ModalDispatch } from "$lib/types";
     import { createEventDispatcher } from "svelte";
 

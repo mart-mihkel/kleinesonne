@@ -42,7 +42,7 @@ fn write_image(Upload { name, b64 }: Upload) -> Result<ApiResponse<String>, ApiE
     let bytes = base64::engine::general_purpose::STANDARD.decode(b64)?;
 
     let mut out = File::create_new(Path::new(&dir).join(&filename))?;
-    image::load_from_memory(&bytes)?.write_to(&mut out, ImageFormat::Avif)?;
+    image::load_from_memory(&bytes)?.write_to(&mut out, ImageFormat::WebP)?;
 
     tracing::info!("Wrote uploaded image '{}' to disk", &filename);
 

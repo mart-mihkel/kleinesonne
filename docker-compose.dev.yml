@@ -3,7 +3,7 @@ services:
     image: nginx:1-alpine
     container_name: reverse-proxy
     volumes:
-      - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./proxy/nginx.dev.conf:/etc/nginx/conf.d/default.conf
       - ./proxy/self-signed.cert:/etc/nginx/certs/kleinesonne.cert
       - ./proxy/self-signed.key:/etc/nginx/certs/kleinesonne.key
     ports:
@@ -30,15 +30,16 @@ services:
 
   api:
     container_name: api
-    build:
-      context: crates
-      target: dev
+    image: rust:1.79
+    working_dir: /usr/src/app
+    command: cargo run api
     environment:
       NO_BUILD_SCRIPT: true
       JWT_SECRET: dev
       POSTGRES_USER: sonne
       POSTGRES_PASSWORD: sonne
     volumes:
+      - ./crates:/usr/src/app
       - uploads-dev:/usr/src/app/uploads
     expose:
       - 3000

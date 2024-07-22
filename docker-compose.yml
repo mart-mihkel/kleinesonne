@@ -19,6 +19,7 @@ services:
       target: prod
     depends_on:
       - api
+      - redis
 
   api:
     container_name: api
@@ -31,12 +32,20 @@ services:
     volumes:
       - uploads:/usr/src/app/uploads
     environment:
-      UPLOAD_DIR: /usr/src/app/uploads
       JWT_SECRET: /run/secrets/jwt-secret
       POSTGRES_USER: sonne
       POSTGRES_PASSWORD: /run/secrets/db-password
     depends_on:
       - db
+
+  redis:
+    container_name: redis
+    image: redis:7-alpine
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - redis:/data
+    expose:
+      - 6379
 
   db:
     image: postgres:16-alpine
@@ -53,8 +62,9 @@ services:
       - 5432
 
 volumes:
-  db-data:
   uploads:
+  redis:
+  db-data:
 
 secrets:
   db-password:

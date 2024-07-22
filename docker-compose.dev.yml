@@ -35,7 +35,6 @@ services:
       target: dev
     environment:
       NO_BUILD_SCRIPT: true
-      UPLOAD_DIR: /usr/src/app/uploads
       JWT_SECRET: dev
       POSTGRES_USER: sonne
       POSTGRES_PASSWORD: sonne

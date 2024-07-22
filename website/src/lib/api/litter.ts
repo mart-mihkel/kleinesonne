@@ -2,7 +2,7 @@ import type { Breed } from "$lib/enums";
 import type { ApiResponse, Litter, Name, SsrFetch } from "$lib/types";
 
 export const API_LITTER = "/api/litter";
-const SSR_LITTER = "http://api:3000/litter";
+export const SSR_LITTER = "http://api:3000/litter";
 
 export async function fetchLitterNames(
     ssr?: SsrFetch,
@@ -71,42 +71,6 @@ export async function fetchAvaialbleLittersByBreed(
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
-        : { res: { type: "error", error: body.error } };
-}
-
-export async function uploadLitter(
-    fetch: SsrFetch,
-    litter: Litter,
-    jwt: string,
-): Promise<ApiResponse<number>> {
-    const options = {
-        headers: { "Content-Type": "application/json", Authorization: jwt },
-        method: "PUT",
-        body: JSON.stringify(litter),
-    };
-
-    const res = await fetch(SSR_LITTER + "/new", options);
-    const body = await res.json();
-    return res.ok
-        ? { res: { type: "data", data: body.data } }
-        : { res: { type: "error", error: body.error } };
-}
-
-export async function updateLitter(
-    fetch: SsrFetch,
-    litter: Litter,
-    jwt: string,
-): Promise<ApiResponse<never>> {
-    const options = {
-        headers: { "Content-Type": "application/json", Authorization: jwt },
-        method: "PUT",
-        body: JSON.stringify(litter),
-    };
-
-    const res = await fetch(SSR_LITTER + "/update", options);
-    const body = await res.json();
-    return res.ok
-        ? { res: { type: "success" } }
         : { res: { type: "error", error: body.error } };
 }
 

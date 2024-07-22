@@ -1,21 +1,19 @@
 import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import { formArticle, formDog, formLitter, formPuppy } from "$lib/forms";
 import {
-    login,
-    authenticate,
-    updateArticle,
-    updatePuppy,
-    updateLitter,
-    updateDog,
-    updateFamily,
-    uploadArticle,
-    uploadDog,
-    uploadLitter,
-    uploadPuppy,
-    uploadImages,
-    UNEXPECTED_ERROR,
-} from "$lib/api";
+    formArticle,
+    formDog,
+    formFamily,
+    formLitter,
+    formPuppy,
+} from "$lib/forms";
+import { UNEXPECTED_ERROR } from "$lib/api";
+import { authenticate, login } from "$lib/server/auth";
+import { updateArticle, uploadArticle } from "$lib/server/news";
+import { uploadImages } from "$lib/server/uploads";
+import { updateDog, updateFamily, uploadDog } from "$lib/server/dog";
+import { updateLitter, uploadLitter } from "$lib/server/litter";
+import { updatePuppy, uploadPuppy } from "$lib/server/puppy";
 
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
     const error = { jwt: undefined };
@@ -123,7 +121,7 @@ export const actions: Actions = {
             return fail(500, { error: img.res.error });
         }
 
-        const fam = await updateFamily(fetch, dog);
+        const fam = await updateFamily(dog.name, dog.father, dog.mother);
         if (fam.res.type === "error") {
             return fail(500, { error: fam.res.error });
         }
@@ -152,13 +150,38 @@ export const actions: Actions = {
             return fail(500, { error: img.res.error });
         }
 
-        const fam = await updateFamily(fetch, dog);
+        const fam = await updateFamily(dog.name, dog.father, dog.mother);
         if (fam.res.type === "error") {
             return fail(500, { error: fam.res.error });
         }
 
         return { success: true };
     },
+    familyUpdate: async ({ request, cookies }) => {
+        const jwt = cookies.get("jwt");
+        if (jwt === undefined) {
+            return fail(401, { error: "Unauthorized" });
+        }
+
+        const data = await request.formData();
+        const family = await formFamily(data);
+        if (family === undefined) {
+            return fail(400, { error: "Incomplete form" });
+        }
+
+        const { res } = await updateFamily(
+            family.name,
+            family.father?.name,
+            family.mother?.name,
+        );
+
+        if (res.type === "error") {
+            return fail(500, { error: res.error });
+        }
+
+        return { success: true };
+    },
+
     litterCreate: async ({ fetch, request, cookies }) => {
         const jwt = cookies.get("jwt");
         if (jwt === undefined) {

@@ -1,10 +1,9 @@
 <script lang="ts">
-    import {
-        NewsForm,
-        LitterForm,
-        DogForm,
-        PuppyForm,
-    } from "$lib/components/admin";
+    import DogForm from "$lib/components/forms/DogForm.svelte";
+    import FamilyForm from "$lib/components/forms/FamilyForm.svelte";
+    import LitterForm from "$lib/components/forms/LitterForm.svelte";
+    import NewsForm from "$lib/components/forms/NewsForm.svelte";
+    import PuppyForm from "$lib/components/forms/PuppyForm.svelte";
     import type { PageData } from "./$types";
 
     export let data: PageData;
@@ -17,6 +16,7 @@
     {#if jwt !== undefined}
         <NewsForm {jwt} />
         <DogForm {jwt} />
+        <FamilyForm {jwt} />
         <LitterForm {jwt} />
         <PuppyForm {jwt} />
     {:else}

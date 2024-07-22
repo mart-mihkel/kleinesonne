@@ -1,7 +1,7 @@
-import type { ApiResponse, Name, Puppy, SsrFetch } from "$lib/types";
+import type { ApiResponse, Name, Puppy } from "$lib/types";
 
 export const API_PUPPY = "/api/puppy";
-const SSR_PUPPY = "http://api:3000/puppy";
+export const SSR_PUPPY = "http://api:3000/puppy";
 
 export async function fetchPuppyNames(
     litter_id: number,
@@ -62,42 +62,6 @@ export async function fetchAvailablePuppies(
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
-        : { res: { type: "error", error: body.error } };
-}
-
-export async function uploadPuppy(
-    fetch: SsrFetch,
-    puppy: Puppy,
-    jwt: string,
-): Promise<ApiResponse<number>> {
-    const options = {
-        headers: { "Content-Type": "application/json", Authorization: jwt },
-        method: "PUT",
-        body: JSON.stringify(puppy),
-    };
-
-    const res = await fetch(SSR_PUPPY + "/new", options);
-    const body = await res.json();
-    return res.ok
-        ? { res: { type: "data", data: body.data } }
-        : { res: { type: "error", error: body.error } };
-}
-
-export async function updatePuppy(
-    fetch: SsrFetch,
-    puppy: Puppy,
-    jwt: string,
-): Promise<ApiResponse<never>> {
-    const options = {
-        headers: { "Content-Type": "application/json", Authorization: jwt },
-        method: "PUT",
-        body: JSON.stringify(puppy),
-    };
-
-    const res = await fetch(SSR_PUPPY + "/update", options);
-    const body = await res.json();
-    return res.ok
-        ? { res: { type: "success" } }
         : { res: { type: "error", error: body.error } };
 }
 

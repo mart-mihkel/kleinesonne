@@ -1,49 +1,8 @@
+import type { ApiResponse, Dog, Name, SsrFetch } from "$lib/types";
 import { Gender, Breed } from "$lib/enums";
-import type { ApiResponse, Dog, Family, Name, SsrFetch } from "$lib/types";
 
 export const API_DOG = "/api/dog";
-
-const SSR_DOG = "http://api:3000/dog";
-
-export async function fetchFamily(
-    fetch: SsrFetch,
-    name: string,
-): Promise<ApiResponse<Family>> {
-    const options = {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify({ name }),
-    };
-
-    const res = await fetch(SSR_DOG + "/family", options);
-    const body = await res.json();
-    return res.ok
-        ? { res: { type: "data", data: body.data } }
-        : { res: { type: "error", error: body.error } };
-}
-
-export async function updateFamily(
-    fetch: SsrFetch,
-    dog: Dog,
-): Promise<ApiResponse<Family>> {
-    const family: Family = {
-        name: dog.name,
-        father: { name: dog.father },
-        mother: { name: dog.mother },
-    };
-
-    const options = {
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-        body: JSON.stringify({ family }),
-    };
-
-    const res = await fetch(SSR_DOG + "/family", options);
-    const body = await res.json();
-    return res.ok
-        ? { res: { type: "data", data: body.data } }
-        : { res: { type: "error", error: body.error } };
-}
+export const SSR_DOG = "http://api:3000/dog";
 
 export async function fetchDogNames(): Promise<ApiResponse<Name[]>> {
     const options = {
@@ -121,42 +80,6 @@ export async function fetchRetiredDogs(
     const body = await res.json();
     return res.ok
         ? { res: { type: "data", data: body.data } }
-        : { res: { type: "error", error: body.error } };
-}
-
-export async function uploadDog(
-    fetch: SsrFetch,
-    dog: Dog,
-    jwt: string,
-): Promise<ApiResponse<number>> {
-    const options = {
-        headers: { "Content-Type": "application/json", Authorization: jwt },
-        method: "PUT",
-        body: JSON.stringify(dog),
-    };
-
-    const res = await fetch(SSR_DOG + "/new", options);
-    const body = await res.json();
-    return res.ok
-        ? { res: { type: "data", data: body.data } }
-        : { res: { type: "error", error: body.error } };
-}
-
-export async function updateDog(
-    fetch: SsrFetch,
-    dog: Dog,
-    jwt: string,
-): Promise<ApiResponse<never>> {
-    const options = {
-        headers: { "Content-Type": "application/json", Authorization: jwt },
-        method: "PUT",
-        body: JSON.stringify(dog),
-    };
-
-    const res = await fetch(SSR_DOG + "/update", options);
-    const body = await res.json();
-    return res.ok
-        ? { res: { type: "success" } }
         : { res: { type: "error", error: body.error } };
 }
 

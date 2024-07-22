@@ -13,6 +13,7 @@
         "format": "prettier --write ."
     },
     "dependencies": {
+        "ioredis": "^5.4.1",
         "marked": "^13.0.2",
         "nanoid": "^3.3.7",
         "svelte-i18n": "^4.0.0"

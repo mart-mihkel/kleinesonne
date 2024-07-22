@@ -2,15 +2,47 @@ import { Gender, Breed } from "$lib/enums";
 import type { ApiResponse, Dog, Family, Name, SsrFetch } from "$lib/types";
 
 export const API_DOG = "/api/dog";
+
 const SSR_DOG = "http://api:3000/dog";
 
 export async function fetchFamily(
-    ssr: SsrFetch,
+    fetch: SsrFetch,
     name: string,
 ): Promise<ApiResponse<Family>> {
-    // TODO: graphdb
-    console.log("fetch family ", ssr, name);
-    return { res: { type: "success" } };
+    const options = {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ name }),
+    };
+
+    const res = await fetch(SSR_DOG + "/family", options);
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
+}
+
+export async function updateFamily(
+    fetch: SsrFetch,
+    dog: Dog,
+): Promise<ApiResponse<Family>> {
+    const family: Family = {
+        name: dog.name,
+        father: { name: dog.father },
+        mother: { name: dog.mother },
+    };
+
+    const options = {
+        headers: { "Content-Type": "application/json" },
+        method: "PUT",
+        body: JSON.stringify({ family }),
+    };
+
+    const res = await fetch(SSR_DOG + "/family", options);
+    const body = await res.json();
+    return res.ok
+        ? { res: { type: "data", data: body.data } }
+        : { res: { type: "error", error: body.error } };
 }
 
 export async function fetchDogNames(): Promise<ApiResponse<Name[]>> {

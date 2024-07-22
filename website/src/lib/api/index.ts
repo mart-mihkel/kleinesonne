@@ -24,6 +24,8 @@ export {
     fetchDog,
     fetchAliveDogs,
     fetchRetiredDogs,
+    fetchFamily,
+    updateFamily,
     uploadDog,
     updateDog,
     deleteDog,

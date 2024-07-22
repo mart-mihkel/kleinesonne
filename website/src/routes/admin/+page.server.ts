@@ -2,12 +2,13 @@ import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { formArticle, formDog, formLitter, formPuppy } from "$lib/forms";
 import {
-    authenticate,
     login,
+    authenticate,
     updateArticle,
     updatePuppy,
     updateLitter,
     updateDog,
+    updateFamily,
     uploadArticle,
     uploadDog,
     uploadLitter,
@@ -122,6 +123,11 @@ export const actions: Actions = {
             return fail(500, { error: img.res.error });
         }
 
+        const fam = await updateFamily(fetch, dog);
+        if (fam.res.type === "error") {
+            return fail(500, { error: fam.res.error });
+        }
+
         return { success: true };
     },
     dogUpdate: async ({ fetch, request, cookies }) => {
@@ -144,6 +150,11 @@ export const actions: Actions = {
         const img = await uploadImages(fetch, images, jwt);
         if (img.res.type === "error") {
             return fail(500, { error: img.res.error });
+        }
+
+        const fam = await updateFamily(fetch, dog);
+        if (fam.res.type === "error") {
+            return fail(500, { error: fam.res.error });
         }
 
         return { success: true };

@@ -1,6 +1,8 @@
 <script lang="ts">
     import Facebook from "$lib/svg/Facebook.svelte";
     import Locale from "./Locale.svelte";
+    import MobileNav from "./MobileNav.svelte";
+    import Nav from "./Nav.svelte";
     import ThemeToggle from "./ThemeToggle.svelte";
 </script>
 
@@ -23,3 +25,7 @@
         <Facebook />
     </a>
 </header>
+<div class="border-b border-black dark:border-white dark:bg-black">
+    <MobileNav />
+    <Nav />
+</div>

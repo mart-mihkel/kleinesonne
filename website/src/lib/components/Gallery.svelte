@@ -97,7 +97,7 @@
                 class="absolute right-2 top-2"
                 on:click|preventDefault={close}
             >
-                <Close />
+                <Close gallery />
             </button>
         </div>
     </div>

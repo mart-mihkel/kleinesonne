@@ -5,6 +5,8 @@
     import { format } from "svelte-i18n";
     import Empty from "../notice/Empty.svelte";
     import Error from "../notice/Error.svelte";
+    import Close from "$lib/svg/Close.svelte";
+    import Menu from "$lib/svg/Menu.svelte";
 
     export let names: Name[] | undefined;
 
@@ -16,21 +18,29 @@
         active = id;
         dispatch("select", id);
     }
+
+    function toggle() {
+        extended = !extended;
+    }
 </script>
 
-{#if extended}
-    <div class="flex flex-col" transition:slide>
-        {#if names === undefined}
-            <Error message={$format("litter.names.error")} />
-        {:else if names.length === 0}
-            <Empty text={$format("litter.names.empty")} />
-        {:else}
-            <button
-                class="p-2 font-medium md:hidden"
-                on:click={() => (extended = false)}
-            >
-                <p>{$format("litter.close")}</p>
-            </button>
+<div class="flex flex-col" transition:slide>
+    {#if names === undefined}
+        <Error message={$format("litter.names.error")} />
+    {:else if names.length === 0}
+        <Empty text={$format("litter.names.empty")} />
+    {:else}
+        <button
+            class="flex w-full items-center justify-center md:hidden"
+            on:click={toggle}
+        >
+            {#if extended}
+                <Close />
+            {:else}
+                <Menu />
+            {/if}
+        </button>
+        {#if extended}
             {#each names as { id, name }}
                 <button
                     class="text-nowrap p-2 font-semibold transition-colors duration-300 hover:bg-gray-200 dark:border-white dark:hover:bg-gray-500"
@@ -42,9 +52,5 @@
                 </button>
             {/each}
         {/if}
-    </div>
-{:else}
-    <button class="p-2 font-medium" on:click={() => (extended = true)}>
-        {$format("litter.open")}
-    </button>
-{/if}
+    {/if}
+</div>

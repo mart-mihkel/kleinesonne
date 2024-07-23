@@ -51,8 +51,8 @@ services:
     image: redis:7-alpine
     volumes:
       - redis-dev:/data
-    expose:
-      - 6379
+    ports:
+      - 6379:6379
 
   db:
     image: postgres:16-alpine

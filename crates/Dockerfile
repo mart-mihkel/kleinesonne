@@ -1,9 +1,15 @@
+FROM rust:1.79-alpine AS build
+WORKDIR /usr/src/app
+
+COPY . .
+RUN apk add musl-dev
+RUN cargo build --release --package api --bin api
+
+
+
 FROM alpine
-
-# avoid running rust compiler on a low ram ec2 instance by having it built in vc
-COPY ./release-bin /usr/local/bin/api
-
 ENV UPLOAD_DIR=/usr/src/app/uploads
+COPY --from=build /usr/src/app/target/release/api /usr/local/bin/api
 
 EXPOSE 3000
-ENTRYPOINT api
+ENTRYPOINT [ "api" ]

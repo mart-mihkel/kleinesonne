@@ -24,9 +24,6 @@ services:
     image: martmihkel/kleinesonne-api:latest
     container_name: api
     restart: always
-    secrets:
-      - jwt-secret
-      - db-password
     volumes:
       - uploads:/usr/src/app/uploads
     environment:

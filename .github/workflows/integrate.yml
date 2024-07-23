@@ -24,12 +24,12 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: website
+          context: ./website
           tags: ${{ secrets.DOCKERHUB_USER }}/kleinesonne-website:latest
       -
         name: build and push api
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: api
+          context: ./api
           tags: ${{ secrets.DOCKERHUB_USER }}/kleinesonne-api:latest

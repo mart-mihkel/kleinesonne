@@ -33,5 +33,5 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           push: true
-          context: ./api
+          context: ./crates
           tags: ${{ secrets.DOCKERHUB_USER }}/kleinesonne-api:latest

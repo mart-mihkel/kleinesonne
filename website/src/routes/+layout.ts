@@ -7,7 +7,7 @@ export const load: LayoutLoad = async () => {
     register("en", () => import("$lib/locales/en.json"));
     register("ee", () => import("$lib/locales/ee.json"));
 
-    const fallback = "en";
+    const fallback = "ee";
     const storage = browser ? localStorage.getItem("locale") : fallback;
     const navigator = browser ? window.navigator.language : fallback;
     const initial = storage ?? navigator;

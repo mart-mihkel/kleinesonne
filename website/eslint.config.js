@@ -6,10 +6,10 @@ import globals from "globals";
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
+    prettier,
     js.configs.recommended,
     ...ts.configs.recommended,
     ...svelte.configs["flat/recommended"],
-    prettier,
     ...svelte.configs["flat/prettier"],
     {
         languageOptions: {
@@ -28,6 +28,6 @@ export default [
         },
     },
     {
-        ignores: ["build/", ".svelte-kit/", "dist/"],
+        ignores: ["build/", ".svelte-kit/"],
     },
 ];

@@ -1,13 +1,9 @@
 Dockerfile*
 docker-compose*
 
-.cargo
-.git
 .gitignore
 .dockerignore
 
 /target
-README.md
-LICENSE
 
 db/build.rs

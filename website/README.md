@@ -1,4 +1,4 @@
-# website
+# Kleinesonne website
 
 ## Install
 
@@ -11,5 +11,5 @@ npm ci
 From project root
 
 ```bash
-docker compose -f docker-compose.dev.yml up db api website
+docker compose -f docker-compose.dev.yml up
 ```

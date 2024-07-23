@@ -1,12 +1,9 @@
 Dockerfile*
 docker-compose*
 
-.env
-.git
 .gitignore
 .dockerignore
 
 node_modules
 README.md
-LICENSE
 

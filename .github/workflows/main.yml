@@ -42,14 +42,15 @@ jobs:
     needs: [build-website, build-api]
     steps:
       - uses: appleboy/ssh-action@v1.0.3
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PG_USER: ${{ secrets.PG_USER }}
+          PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER}}
           key: ${{ secrets.EC2_PRIVKEY }}
-          envs:
-            JWT_SECRET: ${{ secrets.JWT_SECRET }}
-            PG_USER: ${{ secrets.PG_USER }}
-            PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+          envs: JWT_SECRET,PG_USER,PG_PASSWORD
           script: |
             cd /home/${{ secrets.EC2_USER}}/kleinesonne
             git pull origin master

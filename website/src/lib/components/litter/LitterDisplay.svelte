@@ -37,9 +37,9 @@
     {#if litter === undefined || promise === undefined}
         <Error message={$format("litter.display.error")} />
     {:else}
-        <a href="/litters/{litter.name}" class="text-2xl font-semibold">
+        <h2 class="text-2xl font-semibold">
             {$format("litter.litter", { values: { name: litter.name } })}
-        </a>
+        </h2>
         <p class="pb-2 text-lg font-medium">
             {new Date(litter.dob).toDateString()}
         </p>

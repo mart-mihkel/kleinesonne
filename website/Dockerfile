@@ -17,6 +17,10 @@ RUN npm install --verbose --frozen-lockfile --production
 FROM node:22-alpine
 WORKDIR /usr/src/app
 
+ENV NODE_ENV=production
+ENV ORIGIN=https://kleinesonne.ee
+ENV PORT=5173
+
 COPY --from=build /usr/src/app/node_modules node_modules
 COPY --from=build /usr/src/app/package.json package.json
 COPY --from=build /usr/src/app/build build

@@ -4,25 +4,25 @@
     import { Breed } from "$lib/enums";
     import { format } from "svelte-i18n";
 
-    const australian = {
+    $: australian = {
         title: $format(`nav.dog.${Breed.AUSTRALIAN}`),
         src: ["/aus-adult.webp", "/aus-puppy.webp", "/aus-draw.webp"],
         opts: { values: { breed: $format(`nav.dog.${Breed.AUSTRALIAN}`) } },
     };
 
-    const entlebuch = {
+    $: entlebuch = {
         title: $format(`nav.dog.${Breed.ENTLEBUCH}`),
         src: ["/ent-adult.webp", "/ent-puppy.webp", "/ent-draw.webp"],
         opts: { values: { breed: $format(`nav.dog.${Breed.ENTLEBUCH}`) } },
     };
 
-    const bernese = {
+    $: bernese = {
         title: $format(`nav.dog.${Breed.BERNESE}`),
         src: ["/ber-adult.webp", "/ber-puppy.webp", "/ber-draw.webp"],
         opts: { values: { breed: $format(`nav.dog.${Breed.BERNESE}`) } },
     };
 
-    const fci = $format("about.fci");
+    $: fci = $format("about.fci");
 </script>
 
 <div class="flex flex-col gap-8 pb-4 md:px-[5%] lg:px-[25%]">

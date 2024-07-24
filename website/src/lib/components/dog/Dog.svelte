@@ -3,7 +3,6 @@
     import Error from "../notice/Error.svelte";
     import type { Dog } from "$lib/types";
     import { format } from "svelte-i18n";
-    import def from "$lib/assets/default.webp";
 
     export let dog: Dog | undefined;
 </script>
@@ -15,7 +14,7 @@
         <div class="md:w-1/2 md:p-2">
             <img
                 class="size-full object-cover"
-                src={dog.thumbnail ?? def}
+                src={dog.thumbnail ?? "/default.webp"}
                 alt="Dog thumbnail"
                 loading="lazy"
             />

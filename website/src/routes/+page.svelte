@@ -2,6 +2,7 @@
     import Arrow from "$lib/svg/Arrow.svelte";
     import { Breed } from "$lib/enums";
     import { format } from "svelte-i18n";
+    import DogPage from "$lib/components/dog/DogPage.svelte";
 </script>
 
 <a
@@ -18,10 +19,9 @@
         <div
             class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
-            <enhanced:img
+            <img
                 class="size-full object-cover"
-                sizes="(min-width:1900px) 600px,(min-widht:800px) 600px, (min-width:450px) 300px"
-                src="/static/aus.webp"
+                src="/aus.webp"
                 alt=""
                 fetchpriority="high"
                 loading="eager"
@@ -41,10 +41,9 @@
         <div
             class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
-            <enhanced:img
+            <img
                 class="size-full object-cover"
-                sizes="(min-width:1900px) 600px,(min-widht:800px) 600px, (min-width:450px) 300px"
-                src="/static/ent.webp"
+                src="/ent.webp"
                 alt=""
                 fetchpriority="high"
                 loading="eager"
@@ -64,10 +63,9 @@
         <div
             class="size-full brightness-50 transition-all duration-700 group-hover:brightness-100"
         >
-            <enhanced:img
+            <img
                 class="size-full object-cover"
-                sizes="(min-width:1900px) 600px,(min-widht:800px) 600px, (min-width:450px) 300px"
-                src="/static/ber.webp"
+                src="/ber.webp"
                 alt=""
                 fetchpriority="high"
                 loading="eager"
@@ -81,9 +79,4 @@
         </p>
     </a>
 </div>
-<div class="flex flex-col gap-4 py-4 md:px-[5%] lg:px-[25%]">
-    <h2 class="p-4 text-center text-4xl font-bold">{$format("about.title")}</h2>
-    <p class="text-justify">
-        {$format("about.text")}
-    </p>
-</div>
+<DogPage />

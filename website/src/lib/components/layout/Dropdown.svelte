@@ -6,7 +6,7 @@
         text: string;
     };
 
-    export let href = "";
+    export let href: string | undefined;
     export let items: Item[];
 
     let show = false;

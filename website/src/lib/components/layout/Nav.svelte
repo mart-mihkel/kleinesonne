@@ -4,7 +4,13 @@
     import { Breed } from "$lib/enums";
     import Dropdown from "./Dropdown.svelte";
 
-    const puppies = [
+    const i18opts = {
+        aus: { values: { breed: $format(`nav.dog.${Breed.AUSTRALIAN}`) } },
+        ent: { values: { breed: $format(`nav.dog.${Breed.ENTLEBUCH}`) } },
+        ber: { values: { breed: $format(`nav.dog.${Breed.BERNESE}`) } },
+    };
+
+    $: puppies = [
         {
             href: "/puppies/" + Breed.AUSTRALIAN,
             text: $format(`nav.puppy.${Breed.AUSTRALIAN}`),
@@ -19,18 +25,18 @@
         },
     ];
 
-    const dogs = [
+    $: dogs = [
         {
             href: "/dogs/" + Breed.AUSTRALIAN,
-            text: $format(`nav.dog.${Breed.AUSTRALIAN}`),
+            text: $format("dog.our", i18opts.aus),
         },
         {
             href: "/dogs/" + Breed.ENTLEBUCH,
-            text: $format(`nav.dog.${Breed.ENTLEBUCH}`),
+            text: $format("dog.our", i18opts.ent),
         },
         {
             href: "/dogs/" + Breed.BERNESE,
-            text: $format(`nav.dog.${Breed.BERNESE}`),
+            text: $format("dog.our", i18opts.ber),
         },
     ];
 </script>

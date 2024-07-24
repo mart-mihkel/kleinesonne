@@ -29,13 +29,14 @@ services:
       - redis
 
   api:
-    container_name: api
     image: rust:1.79
+    container_name: api
     working_dir: /usr/src/app
     command: cargo run api
     environment:
       NO_BUILD_SCRIPT: true
       JWT_SECRET: dev
+      UPLOAD_DIR: /usr/src/app/uploads
       POSTGRES_USER: sonne
       POSTGRES_PASSWORD: sonne
     volumes:
@@ -47,8 +48,8 @@ services:
       - db
 
   redis:
-    container_name: redis
     image: redis:7-alpine
+    container_name: redis
     volumes:
       - redis-dev:/data
     ports:

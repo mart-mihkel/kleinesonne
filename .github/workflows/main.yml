@@ -44,14 +44,15 @@ jobs:
       - uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER}}
+          username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_PRIVKEY }}
           script: |
-            cd /home/${{ secrets.EC2_USER}}/kleinesonne
+            cd /home/${{ secrets.EC2_USER }}/kleinesonne
+            rm -f .env
+            git pull origin master
             echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
             echo "PG_USER=${{ secrets.PG_USER }}" >> .env
             echo "PG_PASSWORD=${{ secrets.PG_PASSWORD }}" >> .env
-            git pull origin master
             docker compose down
             docker compose pull
             docker compose up -d

@@ -4,8 +4,8 @@ import { waitLocale } from "svelte-i18n";
 import { register, init } from "svelte-i18n";
 
 export const load: LayoutLoad = async () => {
-    register("en", () => import("$lib/locales/en.json"));
     register("ee", () => import("$lib/locales/ee.json"));
+    register("en", () => import("$lib/locales/en.json"));
 
     const fallback = "ee";
     const storage = browser ? localStorage.getItem("locale") : fallback;

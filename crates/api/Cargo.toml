@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 db = { path = "../db" }
-tokio = { version = "1.38.0", features = ["macros", "rt-multi-thread", "fs"] }
+tokio = { version = "1.38.2", features = ["macros", "rt-multi-thread", "fs"] }
 tokio-util = { version = "0.7.11", features = ["io"] }
 tokio-postgres = "0.7.10"
 axum = "0.7.5"
